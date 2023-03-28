@@ -1,6 +1,6 @@
 import React from "react";
 
-function Section({ reverse, image, color, children }) {
+function Section({ reverse = false, image, color, children }) {
   return (
     <div className="relative">
       <div
@@ -8,7 +8,10 @@ function Section({ reverse, image, color, children }) {
           reverse && "flex-row-reverse"
         } justify-center items-stretch min-h-[500px] w-full `}
       >
-        <div className={`bg-[${color}] w-[35%] hidden md:block`}></div>
+        <div
+          style={{ background: `${color}` }}
+          className={`w-[35%] hidden md:block`}
+        ></div>
         <div className="w-full md:w-[65%] h-full ">
           <img
             className="object-cover w-full h-[600px] sm:h-full max-h-[95vh]"
