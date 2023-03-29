@@ -14,7 +14,7 @@ function Section({ reverse = false, image, color, children }) {
         ></div>
         <div className="w-full md:w-[65%] h-full ">
           <img
-            className="object-cover w-full h-[600px] sm:h-full max-h-[95vh]"
+            className="object-cover w-full h-[600px] sm:h-full max-h-[95vh] min-h-[95vh]"
             height={500}
             src={image.src}
           />
