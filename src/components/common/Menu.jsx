@@ -28,7 +28,7 @@ function Menu({ open, setOpen }) {
       <div
         className={`block md:hidden py-6 px-1 bg-white shadow-md fixed top-0 ${
           open ? "left-0" : "left-[-1000px]"
-        } w-3/4 sm:w-1/2 h-screen overflow-y-auto transition-all duration-500`}
+        } w-3/4 sm:w-1/2 h-screen overflow-y-auto transition-all duration-500 z-50`}
       >
         <div className="flex justify-between items-center w-full mb-4">
           <p className="text-4xl font-light uppercase">m&s</p>
@@ -41,13 +41,25 @@ function Menu({ open, setOpen }) {
         </div>
 
         <div className="flex flex-col justify-start items-start gap-5 ">
-          {[...Array(10).keys()].map((item) => (
+          {[
+            "headphones",
+            "earphones",
+            "power bank",
+            "speakers",
+            "wireless",
+            "pc accesories",
+            "case",
+            "camera",
+            "premium",
+          ].map((item, i) => (
             <Link
-              key={item}
+              key={i}
               href="/"
               className="bg-gray-100 px-5 py-2 w-full rounded"
             >
-              <p className=" font-light text-gray-700 w-full">Menu {item}</p>
+              <p className=" font-light text-gray-700 w-full capitalize">
+                {item}
+              </p>
             </Link>
           ))}
         </div>
