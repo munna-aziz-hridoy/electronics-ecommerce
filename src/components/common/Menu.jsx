@@ -40,7 +40,7 @@ function Menu({ open, setOpen }) {
           </p>
         </div>
 
-        <div className="flex flex-col justify-start items-start gap-5 ">
+        <div className="flex flex-col justify-start items-start gap-1 ">
           {[
             "headphones",
             "earphones",
