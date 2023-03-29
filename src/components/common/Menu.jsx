@@ -5,9 +5,22 @@ function Menu({ open, setOpen }) {
   return (
     <>
       <div className="md:flex justify-between items-center gap-5 py-2 mt-4 hidden">
-        {[...Array(10).keys()].map((item) => (
-          <Link key={item} href="/">
-            <p className=" font-light text-gray-700">Menu {item}</p>
+        {[
+          "headphones",
+          "earphones",
+          "power bank",
+          "speakers",
+          "wireless",
+          "pc accesories",
+          "case",
+          "camera",
+          "premium",
+        ].map((item, i) => (
+          <Link key={i} href="/">
+            <p className=" font-light text-gray-700 hover:text-black duration-150 capitalize">
+              {" "}
+              {item}
+            </p>
           </Link>
         ))}
       </div>
