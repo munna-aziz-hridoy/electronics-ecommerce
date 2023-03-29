@@ -20,11 +20,9 @@ function Section({ reverse = false, image, color, children }) {
           />
         </div>
       </div>
-      <div className="absolute w-full h-full  top-0 ">
+      <div className="absolute w-full h-full  top-0 bg-black/50 md:bg-transparent">
         <div className="container mx-auto flex justify-center items-center h-full ">
-          <div className="w-full h-full flex items-center p-2 bg-black/50 md:bg-transparent">
-            {children}
-          </div>
+          <div className="w-full h-full flex items-center p-2">{children}</div>
         </div>
       </div>
     </div>
