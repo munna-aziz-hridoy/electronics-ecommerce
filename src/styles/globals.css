@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap");
+
+* {
+  font-family: "Alegreya Sans", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.menu_item:hover .sub_menu {
+  display: block;
+}
+
+.sub_menu {
+  display: none;
+}
+
+.sub_menu:hover {
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888888af;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555555df;
+}
