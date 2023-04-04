@@ -12,7 +12,7 @@ import ProductCard from "./common/ProductCard";
 
 import CategorySectionTop from "./section/CategorySectionTop";
 import CategorySectionSecond from "./section/CategorySectionSecond";
-import CatgorySectionThird from "./section/CatgorySectionThird";
+import CategorySectionThird from "./section/CatgorySectionThird";
 import CategorySectionBottom from "./section/CategorySectionBottom";
 
 export {
@@ -28,7 +28,7 @@ export {
   Image,
   CategorySectionTop,
   CategorySectionSecond,
-  CatgorySectionThird,
+  CategorySectionThird as CatgorySectionThird,
   CategorySectionBottom,
   ProductCard,
 };
