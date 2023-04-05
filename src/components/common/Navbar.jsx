@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Container, Menu } from "..";
+import Link from "next/link";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -40,9 +41,11 @@ function Navbar() {
 
             <div className="flex justify-end items-center gap-4">
               <p className="font-medium capitalize  text-gray-900">sign in</p>
-              <div className=" relative w-8 h-6 bg-[#bbd850] flex justify-center items-center rounded border-[1px] border-gray-900 text-sm cursor-pointer before:content[''] before:absolute before:border-[1px] before:border-gray-900 before:rounded-full before:w-4 before:h-6 before:top-[-15px] before:z-[-1]">
-                2
-              </div>
+              <Link href="/cart">
+                <span className=" relative w-8 h-6 bg-[#bbd850] flex justify-center items-center rounded border-[1px] border-gray-900 text-sm cursor-pointer before:content[''] before:absolute before:border-[1px] before:border-gray-900 before:rounded-full before:w-4 before:h-6 before:top-[-15px] before:z-[-1]">
+                  2
+                </span>
+              </Link>
             </div>
           </div>
 
