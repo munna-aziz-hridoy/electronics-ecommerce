@@ -1,9 +1,9 @@
 import React from 'react'
 
-function SignMeUp() {
+function SignMeUp({class_name}) {
   return (
     <div>
-      <div className='flex flex-col justify-center items-center gap-5'>
+      <div className={`flex flex-col justify-center items-center gap-5 ${class_name}`}>
         <h3 className='text-2xl text-center'>Don't miss out</h3>
         <p className='text-center md:w-1/3'>
           Register to receive exclusive offers tailored to you, plus rewards and
