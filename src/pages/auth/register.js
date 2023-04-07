@@ -7,12 +7,12 @@ const register = () => {
   return (
     <Container>
       <div className="flex justify-center items-center">
-        <div className="w-full md:w-1/2 lg:w-[35%] my-10">
+        <div className="w-full md:w-1/2 lg:w-[35%] my-10 p-2">
           <h2 className="text-2xl font-bold text-center text-gray-700 mb-10">
             Register
           </h2>
           <div className="flex justify-center items-center gap-3">
-            <div className="">
+            <div className="w-1/2">
               <p className="text-sm font-semibold text-gray-700 my-2">
                 First Name
               </p>
@@ -21,7 +21,7 @@ const register = () => {
                 className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
               />
             </div>{" "}
-            <div className="">
+            <div className="w-1/2">
               <p className="text-sm font-semibold text-gray-700 my-2">
                 Last Name
               </p>
