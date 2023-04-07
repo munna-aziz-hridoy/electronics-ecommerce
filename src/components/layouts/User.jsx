@@ -8,7 +8,7 @@ function User({ children }) {
       <Header />
       <Navbar />
 
-      <div className="min-h-[80vh]">{children}</div>
+      <div className="min-h-[70vh]">{children}</div>
 
       <Footer />
     </div>

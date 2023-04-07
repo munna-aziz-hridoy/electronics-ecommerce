@@ -1,9 +1,12 @@
 import React, { Fragment } from "react";
+import Link from "next/link";
+
+import { BsTruck, BsX } from "react-icons/bs";
+import { CiDeliveryTruck } from "react-icons/ci";
+
 import { Container, ProductCard } from "@/components";
 
 import earbud from "@/assets/earbud1.jpg";
-import { BsTruck, BsX } from "react-icons/bs";
-import { CiDeliveryTruck } from "react-icons/ci";
 import { products } from "@/assets/data/products";
 
 function Cart() {
@@ -107,9 +110,14 @@ function Cart() {
                   $178
                 </p>
               </div>
-              <button className="w-full p-2 bg-[#BDD755] text-gray-800 my-5">
-                Checkout
-              </button>
+              <Link
+                href="/checkout"
+                className="flex justify-center items-center text-center"
+              >
+                <span className="w-full p-2 bg-[#BDD755] text-gray-800 my-5 text-center">
+                  Checkout
+                </span>
+              </Link>
               <div className="w-full h-[1px] bg-gray-200" />
 
               <h2 className="text-xl font-medium text-gray-700 capitalize mt-5">

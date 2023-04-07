@@ -15,15 +15,18 @@ function MenuItem({ menuItem }) {
 
         <span className="absolute top-8 p-2 border-[1px] border-gray-200 rounded-sm shadow z-50  min-w-[300px] bg-white sub_menu">
           {subMenu.map((item, i) => (
-            <span
-              key={i}
-              className="flex justify-start items-center gap-2 my-1 hover:bg-gray-300 p-2 rounded"
-            >
-              <img src={item.image.src} alt="" className="w-10 h-10 rounded" />
-              <span className="text-xs font-medium text-gray-800 capitalize">
-                {item.name}
+            <Link key={i} href={`/c/${menuItem}/${item?.name}`}>
+              <span className="flex justify-start items-center gap-2 my-1 hover:bg-gray-300 p-2 rounded">
+                <img
+                  src={item.image.src}
+                  alt=""
+                  className="w-10 h-10 rounded"
+                />
+                <span className="text-xs font-medium text-gray-800 capitalize">
+                  {item.name}
+                </span>
               </span>
-            </span>
+            </Link>
           ))}
         </span>
       </p>
@@ -77,6 +80,12 @@ function MenuItemMobile({ menuItem, setOpen }) {
 }
 
 function Menu({ open, setOpen }) {
+  const router = useRouter();
+
+  if (router.asPath.includes("checkout")) {
+    return null;
+  }
+
   return (
     <>
       <div className="md:flex justify-between items-center gap-5 mt-5 hidden">
