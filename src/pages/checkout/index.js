@@ -9,7 +9,7 @@ import Link from "next/link";
 const Checkout = () => {
   return (
     <Container>
-      <div className="flex justify-between gap-10 my-5 md:my-12 py-2">
+      <div className="flex flex-col md:flex-row justify-between gap-10 my-5 md:my-12 p-2 ">
         <div className="w-full md:w-[65%]">
           <h2 className="text-2xl font-semibold text-gray-700 capitalize">
             1. Delivery Method

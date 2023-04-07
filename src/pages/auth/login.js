@@ -7,7 +7,7 @@ const Login = () => {
   return (
     <Container>
       <div className="flex justify-center items-center">
-        <div className="w-full md:w-1/2 lg:w-[35%] mt-10">
+        <div className="w-full md:w-1/2 lg:w-[35%] mt-10 p-2">
           <h2 className="text-2xl font-bold text-center text-gray-700 mb-10">
             Login
           </h2>
