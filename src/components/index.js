@@ -10,6 +10,7 @@ import Container from "./common/Container";
 import Button from "./common/Button";
 import Image from "./common/Image";
 import ProductCard from "./common/ProductCard";
+import AddressForm from "./common/AddressForm";
 
 import CategorySectionTop from "./section/CategorySectionTop";
 import CategorySectionSecond from "./section/CategorySectionSecond";
@@ -32,8 +33,10 @@ export {
   Image,
   CategorySectionTop,
   CategorySectionSecond,
-  CategorySectionThird as CatgorySectionThird,
+  CategorySectionThird,
   CategorySectionBottom,
   ProductCard,
   AdminSideBar,
+  AddressForm,
 }
+

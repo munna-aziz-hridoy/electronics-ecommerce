@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function SectionContent({
@@ -33,12 +34,14 @@ function SectionContent({
         </p>
         <div className="flex items-center gap-3 mt-4">
           {categories.map((item) => (
-            <div className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] relative cursor-pointer">
-              <img src={item?.image?.src} className="w-full h-full" />
-              <p className="absolute bottom-0 bg-white h-6 sm:h-8 w-full text-center flex justify-center items-center text-gray-900 font-medium">
-                {item.name}
-              </p>
-            </div>
+            <Link href={`/c/category/${item.name}`}>
+              <div className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] relative cursor-pointer">
+                <img src={item?.image?.src} className="w-full h-full" />
+                <p className="absolute bottom-0 bg-white h-6 sm:h-8 w-full text-center flex justify-center items-center text-gray-900 font-medium">
+                  {item.name}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
