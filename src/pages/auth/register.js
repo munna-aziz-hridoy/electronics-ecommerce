@@ -1,68 +1,108 @@
-import React from "react";
-import Link from "next/link";
-import { FaGoogle } from "react-icons/fa";
-import { Container } from "@/components";
+import React from 'react'
+import Link from 'next/link'
+import { FaGoogle } from 'react-icons/fa'
+import { Container } from '@/components'
+import { useForm } from 'react-hook-form'
 
 const register = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = (data) => console.log(data)
+  
   return (
     <Container>
-      <div className="flex justify-center items-center">
-        <div className="w-full md:w-1/2 lg:w-[35%] my-10 p-2">
-          <h2 className="text-2xl font-bold text-center text-gray-700 mb-10">
+      <div className='flex justify-center items-center'>
+        <form
+          className='w-full md:w-1/2 lg:w-[35%] my-10 p-2'
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <h2 className='text-2xl font-bold text-center text-gray-700 mb-10'>
             Register
           </h2>
-          <div className="flex justify-center items-center gap-3">
-            <div className="w-1/2">
-              <p className="text-sm font-semibold text-gray-700 my-2">
+          <div className='flex justify-center items-center gap-3'>
+            <div className='w-1/2'>
+              <p className='text-sm font-semibold text-gray-700 my-2'>
                 First Name
               </p>
               <input
-                type="text"
-                className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
+                {...register('firstName', { required: true })}
+                type='text'
+                className='w-full px-2 py-2 border border-gray-200 outline-none shadow'
               />
-            </div>{" "}
-            <div className="w-1/2">
-              <p className="text-sm font-semibold text-gray-700 my-2">
+              {errors.firstName && (
+                <span className='text-red-500 text-sm'>
+                  This field is required
+                </span>
+              )}
+            </div>{' '}
+            <div className='w-1/2'>
+              <p className='text-sm font-semibold text-gray-700 my-2'>
                 Last Name
               </p>
               <input
-                type="text"
-                className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
+                {...register('lastName', { required: true })}
+                type='text'
+                className='w-full px-2 py-2 border border-gray-200 outline-none shadow'
               />
+              {errors.lastName && (
+                <span className='text-red-500 text-sm'>
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
-          <div className="">
-            <p className="text-sm font-semibold text-gray-700 my-2">Email</p>
+          <div className=''>
+            <p className='text-sm font-semibold text-gray-700 my-2'>Email</p>
             <input
-              type="text"
-              className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
+              type='text'
+              {...register('email', { required: true })}
+              className='w-full px-2 py-2 border border-gray-200 outline-none shadow'
             />
+            {errors.email && (
+              <span className='text-red-500 text-sm'>
+                This field is required
+              </span>
+            )}
           </div>
-          <div className="">
-            <p className="text-sm font-semibold text-gray-700 my-2">Password</p>
+          <div className=''>
+            <p className='text-sm font-semibold text-gray-700 my-2'>Password</p>
             <input
-              type="text"
-              className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
+              type='password'
+              {...register('password', { required: true, minLength: 6 })}
+              className='w-full px-2 py-2 border border-gray-200 outline-none shadow'
             />
+            {errors.password && (
+              <span className='text-red-500 text-sm'>
+                This field is required and minimum six character
+              </span>
+            )}
           </div>
-          <button className="flex justify-center items-center p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-4 w-full">
+          <button
+            type='submit'
+            className='flex justify-center items-center p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-4 w-full'
+          >
             Register
           </button>
-          <div className="w-full h-[1px] bg-gray-300 my-3" />
-          <button className="flex justify-center items-center p-2 border border-gray-300 gap-4  bg-white mt-4 w-full">
+          <div className='w-full h-[1px] bg-gray-300 my-3' />
+          {/* <button className="flex justify-center items-center p-2 border border-gray-300 gap-4  bg-white mt-4 w-full">
             <FaGoogle />
             Sign up with google
-          </button>
-          <p className="text-sm font-semibold text-gray-700 capitalize text-center mt-4">
-            Already Have account?{" "}
-            <Link className="text-blue-700" href="/auth/login">
+          </button> */}
+          <p className='text-sm font-semibold text-gray-700 capitalize text-center mt-4'>
+            Already Have account?
+            <Link className='text-blue-700' href='/auth/login'>
               Login
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default register;
+export default register
