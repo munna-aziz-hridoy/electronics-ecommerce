@@ -31,12 +31,12 @@ const Login = () => {
             Login
           </button>
           <div className="w-full h-[1px] bg-gray-300 my-3" />
-          <button className="flex justify-center items-center p-2 border border-gray-300 gap-4  bg-white mt-4 w-full">
+          {/* <button className="flex justify-center items-center p-2 border border-gray-300 gap-4  bg-white mt-4 w-full">
             <FaGoogle />
             Sign in with google
-          </button>
+          </button> */}
           <p className="text-sm font-semibold text-gray-700 capitalize text-center mt-4">
-            Don't have account?{" "}
+            Don't have account?
             <Link className="text-blue-700" href="/auth/register">
               Create Account
             </Link>
