@@ -29,16 +29,19 @@ function Footer() {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-14">
-              {footerData.footer_link.map((item) => {
+              {footerData.footer_link.map((item, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <h2 className="text-lg md:text-2xl font-light text-gray-900 capitalize ">
                       {item.name}
                     </h2>
                     <div className="flex flex-col items-start gap-2 md:gap-5 mt-10">
-                      {item.links.map((link) => {
+                      {item.links.map((link, i) => {
                         return (
-                          <p className="text-gray-600 font-light text-xs md:text-base capitalize">
+                          <p
+                            key={i}
+                            className="text-gray-600 font-light text-xs md:text-base capitalize"
+                          >
                             {link}
                           </p>
                         );
@@ -59,8 +62,11 @@ function Footer() {
 
         <Container>
           <div className="flex flex-wrap justify-center items-center gap-5  p-2 ">
-            {footerData.social_icon.map((social) => (
-              <span className="text-white bg-[#161616] w-10 h-10 rounded-full text-xl flex justify-center items-center cursor-pointer">
+            {footerData.social_icon.map((social, i) => (
+              <span
+                key={i}
+                className="text-white bg-[#161616] w-10 h-10 rounded-full text-xl flex justify-center items-center cursor-pointer"
+              >
                 {social.icon}
               </span>
             ))}

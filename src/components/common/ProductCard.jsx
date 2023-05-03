@@ -3,7 +3,7 @@ import { Image } from "..";
 
 function ProductCard({ product }) {
   return (
-    <div className=" cursor-pointer shadow-sm rounded m-2 my-4 md:m-0">
+    <div className=" cursor-pointer shadow-sm rounded m-2 my-4 md:m-0 bg-white">
       <div className="w-full h-[400px]">
         <Image src={product.image} className="rounded-t" />
       </div>
