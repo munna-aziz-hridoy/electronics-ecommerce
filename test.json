@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Mi note 10",
+    "category": "1c985d6b-3311-42f3-aa28-e898d361b992",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure",
+    "short_description": "Sint commodi repudiandae consequuntur voluptatum  laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure",
+    "price": 12890,
+    "extras": [
+      {
+        "item": "with back cover",
+        "price": 480,
+        "images": [
+          "https://dekorabd.com/wp-content/uploads/2022/07/mi_a1_new-compressed.jpg",
+          "https://ruperhat.com/wp-content/uploads/2021/01/Untitled-12.jpg"
+        ]
+      }
+    ],
+    "images": [
+      "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-redmi-note10-11.jpg",
+      "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-redmi-note10-1.jpg"
+    ]
+  },
+
+  {
+    "email": "taha@gmail.com",
+    "password": "password"
+  },
+
+  {
+    "product": "b5a24ced-f024-43cb-a17c-f44f1e6895cd",
+    "quantity": 3,
+    "extras": [
+      {
+        "item": "with back cover",
+        "price": 480,
+        "images": [
+          "https://dekorabd.com/wp-content/uploads/2022/07/mi_a1_new-compressed.jpg",
+          "https://ruperhat.com/wp-content/uploads/2021/01/Untitled-12.jpg"
+        ]
+      }
+    ]
+  }
+]
