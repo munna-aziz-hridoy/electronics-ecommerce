@@ -2,8 +2,16 @@ import React from "react";
 import { Container } from "@/components";
 import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
+import { useForm } from 'react-hook-form'
 
 const Login = () => {
+
+   const {
+     register,
+     handleSubmit,
+     watch,
+     formState: { errors },
+   } = useForm()
   return (
     <Container>
       <div className="flex justify-center items-center">

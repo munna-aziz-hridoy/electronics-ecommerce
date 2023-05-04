@@ -1,6 +1,7 @@
 import React from 'react'
+
 import Link from 'next/link'
-import { FaGoogle } from 'react-icons/fa'
+// import { FaGoogle } from 'react-icons/fa'
 import { Container } from '@/components'
 import { useForm } from 'react-hook-form'
 
