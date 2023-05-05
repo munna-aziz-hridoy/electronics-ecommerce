@@ -17,5 +17,6 @@ export const getToken = () => {
 
 // Remove
 export const removeToken = () => {
+  console.log('hello')
   destroyCookie(null, 'userToken')
 }

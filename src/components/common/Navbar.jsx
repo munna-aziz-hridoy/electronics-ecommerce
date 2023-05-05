@@ -4,8 +4,13 @@ import { useRouter } from 'next/router'
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { Container, Menu } from '..'
+import { getToken, removeToken } from '@/allApis/token'
+import { destroyCookie } from 'nookies'
 
 function Navbar() {
+  // const token = getToken()
+  // console.log(token)
+
   const [openMenu, setOpenMenu] = useState(false)
 
   const router = useRouter()
@@ -47,9 +52,19 @@ function Navbar() {
             {/* nav last */}
 
             <div className='flex justify-end items-center gap-4'>
+              <button
+                onClick={() => destroyCookie(null, 'userToken')}
+                className='font-medium capitalize  text-gray-900 bg-red-500'
+              >
+                sign out
+              </button>
+
               <Link href='/auth/login'>
-                <p className='font-medium capitalize  text-gray-900'>sign in</p>
+                <button className='font-medium capitalize  text-gray-900'>
+                  sign in
+                </button>
               </Link>
+
               <Link href='/cart'>
                 <span className=" relative w-8 h-6 bg-[#bbd850] flex justify-center items-center rounded border-[1px] border-gray-900 text-sm cursor-pointer before:content[''] before:absolute before:border-[1px] before:border-gray-900 before:rounded-full before:w-4 before:h-6 before:top-[-15px] before:z-[-1]">
                   2
