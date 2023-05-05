@@ -4,6 +4,7 @@ import Link from 'next/link'
 // import { FaGoogle } from 'react-icons/fa'
 import { Container } from '@/components'
 import { useForm } from 'react-hook-form'
+import { resisterUser } from '@/allApis/LoginRegister'
 
 const register = () => {
   const {
@@ -13,8 +14,14 @@ const register = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
-  
+  const onSubmit = (data) => {
+    resisterUser({
+      name: data?.firstName +' '+ data?.lastName,
+      email: data?.email,
+      password: data?.password,
+    })
+  }
+
   return (
     <Container>
       <div className='flex justify-center items-center'>
