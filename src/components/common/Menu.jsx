@@ -3,9 +3,10 @@ import React, { useState } from "react";
 
 import { IoIosArrowDown } from "react-icons/io";
 
-import { menu, subMenu } from "../../assets/data/menu";
+import {  subMenu } from "../../assets/data/menu";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
+import { getCategory } from "@/allApis/category";
 
 function MenuItem({ menuItem }) {
   return (
@@ -80,6 +81,9 @@ function MenuItemMobile({ menuItem, setOpen }) {
 }
 
 function Menu({ open, setOpen }) {
+
+  const menu = getCategory()
+ console.log(menu)
   const router = useRouter();
 
   if (router.asPath.includes("checkout")) {
@@ -89,9 +93,9 @@ function Menu({ open, setOpen }) {
   return (
     <>
       <div className="md:flex justify-between items-center gap-5 mt-5 hidden">
-        {menu.map((item, i) => (
+        {/* {menu?.map((item, i) => (
           <MenuItem key={i} menuItem={item} />
-        ))}
+        ))} */}
       </div>
 
       <div
@@ -110,9 +114,9 @@ function Menu({ open, setOpen }) {
         </div>
 
         <div className="flex flex-col justify-start items-start gap-1 ">
-          {menu.map((item, i) => (
+          {/* {menu?.map((item, i) => (
             <MenuItemMobile key={i} menuItem={item} setOpen={setOpen} />
-          ))}
+          ))} */}
         </div>
       </div>
     </>
