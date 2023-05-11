@@ -1,18 +1,17 @@
-import { addNewCategory } from '@/allApis/getAllCategory'
+import { addNewUser } from '@/allApis/getAllUser'
 import { Button, Modal } from 'flowbite-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
+const AddUserModal = ({ setOpenModal, openModal, refetch }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    addNewCategory(data, refetch, setOpenModal)
+    addNewUser(data, refetch, setOpenModal)
   }
-
   return (
     <React.Fragment>
       <Modal
@@ -25,15 +24,15 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
         <Modal.Body>
           <div className=''>
             <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
-              Add New Category
+              Add New User
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className='mb-4'>
                 <label
                   for='name'
-                  class='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  class='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
-                  Category Name
+                  User Name
                 </label>
                 <input
                   {...register('name', { required: true })}
@@ -45,31 +44,47 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   required
                 />
               </div>
-              <div className='mt-4'>
+              <div className='mb-4'>
                 <label
-                  for='category'
-                  class='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  for='email'
+                  class='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
-                  Previous Categories
+                  User Email
                 </label>
-                <select
-                  className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  {...register('parent_id', { required: true })}
-                >
-                  <option value=''>N/A</option>
-                  {category?.map((category) => (
-                    <option key={category?.id} value={category?.id}>
-                      {category?.name}
-                    </option>
-                  ))}
-                </select>
+                <input
+                  {...register('email', { required: true })}
+                  type='email'
+                  name='email'
+                  id='email'
+                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  placeholder='example@example.com'
+                  required
+                />
               </div>
+              <div className='mb-4'>
+                <label
+                  for='password'
+                  class='block  text-sm font-bold text-gray-600 dark:text-white'
+                >
+                  User Password
+                </label>
+                <input
+                  {...register('password', { required: true })}
+                  type='password'
+                  name='password'
+                  id='password'
+                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  placeholder='password'
+                  required
+                />
+              </div>
+
               <div className='flex justify-between mt-5 mx-1'>
                 <Button
                   type='submit'
                   className='bg-lime-500 hover:bg-lime-600 '
                 >
-                  Add Category
+                  Add User
                 </Button>
                 <Button color='failure' onClick={() => setOpenModal(false)}>
                   Cancel
@@ -83,4 +98,4 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
   )
 }
 
-export default CategoryModal
+export default AddUserModal

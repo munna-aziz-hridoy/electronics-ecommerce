@@ -24,9 +24,8 @@ export const useRemoveCategory = ({ id }) => {
   })
 }
 
-// ADD DATA
+// ADD New Category
 export const addNewCategory = (data, refetch, setOpenModal) => {
-  console.log(data)
   fetch(`${serverUrl}/api/category`, {
     method: 'POST',
     headers: {
