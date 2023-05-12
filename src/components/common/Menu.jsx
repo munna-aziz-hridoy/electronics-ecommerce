@@ -1,9 +1,9 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { IoIosArrowDown } from "react-icons/io";
 
-import {  subMenu } from "../../assets/data/menu";
+import { subMenu, menu } from "../../assets/data/menu";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
 import { getCategory } from "@/allApis/category";
@@ -81,10 +81,11 @@ function MenuItemMobile({ menuItem, setOpen }) {
 }
 
 function Menu({ open, setOpen }) {
-
-  const menu = getCategory()
- console.log(menu)
+  //   const menu = getCategory()
+  //  console.log(menu)
   const router = useRouter();
+
+  useEffect(() => {}, []);
 
   if (router.asPath.includes("checkout")) {
     return null;
@@ -93,9 +94,9 @@ function Menu({ open, setOpen }) {
   return (
     <>
       <div className="md:flex justify-between items-center gap-5 mt-5 hidden">
-        {/* {menu?.map((item, i) => (
+        {menu?.map((item, i) => (
           <MenuItem key={i} menuItem={item} />
-        ))} */}
+        ))}
       </div>
 
       <div
