@@ -3,7 +3,7 @@ import { Button, Modal } from 'flowbite-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
+const AddProductModal = ({ setOpenModal, openModal, category, refetch }) => {
   const {
     register,
     handleSubmit,
@@ -54,10 +54,8 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                 </label>
                 <select
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  {...register('parent_id')}
+                  {...register('category', { required: true })}
                 >
-                  <option value='NA'>N/A</option>
-
                   {category?.map((category) => (
                     <option key={category?.id} value={category?.id}>
                       {category?.name}
@@ -65,12 +63,29 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   ))}
                 </select>
               </div>
+              <div>
+                <label
+                  for='description'
+                  class='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                >
+                  Description
+                </label>
+                <input
+                  {...register('description', { required: true })}
+                  type='text'
+                  name='description'
+                  id='description'
+                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  placeholder='Category Name'
+                  required
+                />
+              </div>
               <div className='flex justify-between mt-5 mx-1'>
                 <Button
                   type='submit'
                   className='bg-lime-500 hover:bg-lime-600 '
                 >
-                  Add Category
+                  Add Product
                 </Button>
                 <Button color='failure' onClick={() => setOpenModal(false)}>
                   Cancel
@@ -84,4 +99,4 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
   )
 }
 
-export default CategoryModal
+export default AddProductModal

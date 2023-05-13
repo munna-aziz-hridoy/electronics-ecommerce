@@ -1,4 +1,4 @@
-import { useGetAllCategory } from '@/allApis/getAllCategory'
+import { useGetAllCategory } from '@/allApis/CategoryApis'
 import CategoryTR from '@/components/common/Admin/CategoryTR'
 import CategoryModal from '@/components/common/Admin/Modal/CategoryModal'
 import React, { useState } from 'react'
