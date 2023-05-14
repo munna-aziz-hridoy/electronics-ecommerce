@@ -1,13 +1,13 @@
-import { serverUrl } from '@config/index'
+import { serverUrl } from "@config/index"
 import { useQuery } from '@tanstack/react-query'
-import { toast } from 'react-hot-toast'
+import { toast } from "react-hot-toast"
 
-// Get All Category Data
-export const useGetAllCategory = () => {
+// Get All Product Data
+export const useGetAllProduct = () => {
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['useGetAllCategory'],
+    queryKey: ['useGetAllProduct'],
     queryFn: () =>
-      fetch(`${serverUrl}/api/category`, {
+      fetch(`${serverUrl}/api/product`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -17,9 +17,9 @@ export const useGetAllCategory = () => {
   return { isLoading, error, data, refetch }
 }
 
-// ADD New Category
-export const addNewCategory = (data, refetch, setOpenModal) => {
-  fetch(`${serverUrl}/api/category`, {
+// ADD New Product
+export const newProductAdd = (data) => {
+  fetch(`${serverUrl}/api/product`, {
     method: 'POST',
     headers: {
       // authorization: `Bearer ${getToken()}`,
@@ -32,22 +32,11 @@ export const addNewCategory = (data, refetch, setOpenModal) => {
       console.log(json)
       if (!json.error && !json.message) {
         toast.success('Successfully Added ')
-        refetch()
-        setOpenModal(false)
+        // refetch()
+      
       } else {
         toast.error(json.message || 'Something is wrong!')
       }
     })
 }
 
-// Get Delete Category
-export const removeCategory = (id, refetch) => {
-  fetch(`${serverUrl}/api/category/${id}`, {
-    method: 'DELETE',
-  }).then((res) => {
-    if (res?.status === 200) {
-      refetch()
-      toast.success('Successfully Deleted ')
-    }
-  })
-}

@@ -1,13 +1,12 @@
-import { useGetAllProduct } from '@/allApis/getAllProduct'
+import { useGetAllProduct } from '@/allApis/ProductApis'
 import ProductTR from '@/components/common/Admin/ProductTR'
 import Link from 'next/link'
 import React from 'react'
 
 const ProductManage = () => {
   const { data, isLoading, refetch } = useGetAllProduct()
-  if (isLoading) {
-    ;<h1>Loading...</h1>
-  }
+  if (isLoading) return<h1>Loading...</h1>
+ 
 
   return (
     <>
