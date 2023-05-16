@@ -1,8 +1,7 @@
 import React from "react";
-import { Section, SectionContent } from "@/components";
+import { Section, SectionContent, SignMeUp } from "@/components";
 
 import { homeData } from "../assets/data/home";
-import SignMeUp from "@/components/common/SignMeUp";
 
 function Home({}) {
   return (
