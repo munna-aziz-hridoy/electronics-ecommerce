@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 
 import { Container } from "@/components";
 import { loginUser } from "@/allApis";
+import { useRouter } from "next/router";
+import useAuthStore from "@/store/auth";
 
 const Login = () => {
   const {
@@ -13,8 +15,17 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { push } = useRouter();
+
+  const { addUser } = useAuthStore();
+
   const loginSubmit = (data) => {
-    loginUser(data);
+    loginUser(data).then((data) => {
+      if (data?.user) {
+        addUser(data?.user);
+        push("/");
+      }
+    });
   };
   return (
     <Container>

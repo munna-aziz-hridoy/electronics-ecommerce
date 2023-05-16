@@ -25,4 +25,5 @@ export const loginUser = async (body) => {
   if (json?.token?.length > 10) {
     setToken(json.token);
   }
+  return json;
 };

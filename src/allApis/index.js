@@ -2,12 +2,13 @@ import {
   getAllCategory,
   removeCategory,
   addNewCategory,
-} from "./getAllCategory";
+  getCategory,
+} from "./CategoryApis";
 
 import { loginUser, resisterUser } from "./LoginRegister";
-import { getCategory } from "./category";
-import { getAllProduct } from "./getAllProduct";
+
 import { getAllUser, addNewUser } from "./getAllUser";
+import { getAllProduct, newProductAdd } from "./ProductApis";
 
 export {
   getAllCategory,
@@ -19,4 +20,5 @@ export {
   getAllProduct,
   getAllUser,
   addNewUser,
+  newProductAdd,
 };

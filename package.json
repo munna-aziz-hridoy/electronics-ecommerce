@@ -27,7 +27,8 @@
     "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
     "recoil": "^0.7.7",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

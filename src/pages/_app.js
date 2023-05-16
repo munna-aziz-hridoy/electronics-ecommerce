@@ -1,16 +1,17 @@
+import { Toaster } from "react-hot-toast";
+
 import Layout from "@/components/layouts";
+import CartProvider from "@/context/cart";
 
 import "@/styles/globals.css";
-import { Toaster } from "react-hot-toast";
-import { RecoilRoot } from "recoil";
 
 export default function App({ Component, pageProps }) {
   return (
-    <Layout>
-      <RecoilRoot>
+    <CartProvider>
+      <Layout>
         <Component {...pageProps} />
         <Toaster />
-      </RecoilRoot>
-    </Layout>
+      </Layout>
+    </CartProvider>
   );
 }

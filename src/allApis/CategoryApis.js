@@ -11,7 +11,35 @@ export const getAllCategory = () => {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return [];
+        }
+      }),
+  });
+
+  return { isLoading, error, data, refetch };
+};
+
+// Get parent category
+
+export const getCategory = (id) => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["useGetCategory"],
+    queryFn: () =>
+      fetch(`${serverUrl}/api/category/${id}`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      }).then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return [];
+        }
+      }),
   });
 
   return { isLoading, error, data, refetch };
