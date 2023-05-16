@@ -17,24 +17,15 @@ export const useGetAllCategory = () => {
   return { isLoading, error, data, refetch }
 }
 
-// Get All Category Data
-export const useRemoveCategory = ({ id }) => {
-  fetch(`${serverUrl}/api/category/${id}`, {
-    method: 'DELETE',
-  })
-}
-
 // ADD New Category
 export const addNewCategory = (data, refetch, setOpenModal) => {
   fetch(`${serverUrl}/api/category`, {
     method: 'POST',
     headers: {
       // authorization: `Bearer ${getToken()}`,
-      'Content-type': 'application/json; charset=UTF-8',
+      'Content-type': 'application/json;',
     },
-    body: JSON.stringify({
-      ...data,
-    }),
+    body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then((json) => {
@@ -47,4 +38,16 @@ export const addNewCategory = (data, refetch, setOpenModal) => {
         toast.error(json.message || 'Something is wrong!')
       }
     })
+}
+
+// Get Delete Category
+export const removeCategory = (id, refetch) => {
+  fetch(`${serverUrl}/api/category/${id}`, {
+    method: 'DELETE',
+  }).then((res) => {
+    if (res?.status === 200) {
+      refetch()
+      toast.success('Successfully Deleted ')
+    }
+  })
 }

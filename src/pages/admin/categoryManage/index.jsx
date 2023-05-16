@@ -1,4 +1,4 @@
-import { useGetAllCategory } from '@/allApis/getAllCategory'
+import { useGetAllCategory } from '@/allApis/CategoryApis'
 import CategoryTR from '@/components/common/Admin/CategoryTR'
 import CategoryModal from '@/components/common/Admin/Modal/CategoryModal'
 import React, { useState } from 'react'
@@ -7,9 +7,8 @@ const CategoryManage = () => {
   const [openModal, setOpenModal] = useState(false)
   const { data, refetch, isLoading } = useGetAllCategory()
 
-  if (isLoading) {
-    ;<h1>Loading...</h1>
-  }
+  if (isLoading) return <h1>Loading...</h1>
+
   return (
     <>
       <button

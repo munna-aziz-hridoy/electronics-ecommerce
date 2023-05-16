@@ -1,10 +1,11 @@
-import { useRemoveCategory } from '@/allApis/getAllCategory'
+import { removeCategory } from '@/allApis/CategoryApis'
 import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
 const CategoryTR = ({ category, refetch }) => {
   const { name, id, slug, parent_id } = category
+  console.log(id)
   return (
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
       <th
@@ -20,7 +21,7 @@ const CategoryTR = ({ category, refetch }) => {
             <BiEdit />
           </button>
           <button
-            onClick={() => useRemoveCategory(id)}
+            onClick={() => removeCategory(id, refetch)}
             className='duration-300 rounded-md p-1 hover:bg-red-600 hover:text-gray-50 '
           >
             <MdDelete />
