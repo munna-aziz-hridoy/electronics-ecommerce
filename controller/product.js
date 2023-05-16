@@ -66,7 +66,7 @@ export const products = async (req, res) => {
 
 export const product = async (req, res) => {
   const id = req.query.product_id;
-
+  
   if (req.method === "GET") {
     try {
       const result = await Product.find({ id }, "-_id -created_at -__v");

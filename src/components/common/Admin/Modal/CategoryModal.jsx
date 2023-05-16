@@ -1,4 +1,4 @@
-import { addNewCategory } from '@/allApis/getAllCategory'
+import { addNewCategory } from '@/allApis/CategoryApis'
 import { Button, Modal } from 'flowbite-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -54,9 +54,10 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                 </label>
                 <select
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  {...register('parent_id', { required: true })}
+                  {...register('parent_id')}
                 >
-                  <option value=''>N/A</option>
+                  <option value='NA'>N/A</option>
+
                   {category?.map((category) => (
                     <option key={category?.id} value={category?.id}>
                       {category?.name}

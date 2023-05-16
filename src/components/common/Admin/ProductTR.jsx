@@ -4,6 +4,7 @@ import { MdDelete } from 'react-icons/md'
 
 const ProductTR = ({ product, refetch }) => {
   const { name, id, category, price, description, short_description } = product
+  console.log(product)
   return (
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
       <th
