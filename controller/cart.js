@@ -100,8 +100,6 @@ export const cart = async (req, res) => {
 
         const cart = new Cart(doc);
 
-        console.log(cart);
-
         const result = await cart.save();
 
         response.SUCCESS(res, result);

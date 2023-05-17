@@ -1,5 +1,5 @@
 import React from "react";
-import { getAllCategory, newProductAdd } from "@/allApis";
+import { newProductAdd, getAllSubCategory } from "@/allApis";
 import { Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
 
@@ -9,7 +9,7 @@ const addNewProduct = () => {
     data: category,
     refetch,
     isLoading: categoryLoading,
-  } = getAllCategory();
+  } = getAllSubCategory();
 
   // Main hook-form
   const {

@@ -36,7 +36,7 @@ export const products = async (req, res) => {
     if (!images) return response.BAD_REQUEST(res, "images can't be empty");
 
     try {
-      const cat = await Category.find({ id: category }, "-_id -__v");
+      const cat = await Category.findOne({ id: category }, "-_id -__v");
 
       const id = uuid();
 
@@ -70,7 +70,7 @@ export const categoryProducts = async (req, res) => {
   if (req.method === "GET") {
     try {
       const products = await Product.find(
-        { category: { id: category } },
+        { "category.slug": category },
         "-_id -created_at -__v"
       );
 

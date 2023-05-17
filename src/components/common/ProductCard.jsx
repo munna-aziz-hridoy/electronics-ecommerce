@@ -33,7 +33,7 @@ function ProductCard({ product, sub = false }) {
           <span className=" text-blue-800 font-bold">${product.price}</span>
         </p>
         <p className="text-sm font-light capitalize text-gray-500">
-          Brand: {product.brand}
+          Brand: {product?.brand}
         </p>
       </div>
     </div>

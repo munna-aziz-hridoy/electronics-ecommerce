@@ -20,8 +20,6 @@ function ProductDetails() {
     }
   }, [query]);
 
-  console.log(selectedProduct);
-
   return (
     <Container>
       {!selectedProduct ? (

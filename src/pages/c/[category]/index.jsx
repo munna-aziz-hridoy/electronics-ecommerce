@@ -19,7 +19,7 @@ function Category() {
       {/* top */}
       <div className="flex flex-col justify-center items-center">
         <h2 className="text-2xl font-light capitalize my-5">
-          {query.category}
+          {query?.category?.split("_")[0]}
         </h2>
         <div className="flex justify-center items-center gap-8 flex-wrap">
           {subMenu.map((item, i) => (

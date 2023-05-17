@@ -13,8 +13,6 @@ export const category = async (req, res) => {
 
   if (req.method === "GET") {
     try {
-      console.log();
-
       const result = await Category.find({}, "-_id -created_at -__v");
 
       response.SUCCESS(res, result);
@@ -36,8 +34,7 @@ export const category = async (req, res) => {
       const category = new Category({
         name,
         slug,
-        parent_id:
-          parent_id.length < 5 || parent_id === null ? parent_id : null,
+        parent_id: parent_id === "NA" ? null : parent_id,
         id,
       });
 
@@ -47,6 +44,8 @@ export const category = async (req, res) => {
     } catch (error) {
       response.INTERNAL_SERVER_ERROR(res, error);
     }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
   }
 };
 
@@ -121,5 +120,24 @@ export const subCategory = async (req, res) => {
     } catch (error) {
       response.INTERNAL_SERVER_ERROR(res, error);
     }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
+export const allSubCategories = async (req, res) => {
+  if (req.method === "GET") {
+    try {
+      const result = await Category.find(
+        { parent_id: { $ne: null } },
+        "-_id -created_at -__v"
+      );
+
+      response.SUCCESS(res, result);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
   }
 };

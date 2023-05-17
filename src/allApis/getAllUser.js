@@ -31,7 +31,6 @@ export const addNewUser = (data, refetch, setOpenModal) => {
   })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       if (!json.error && !json.message) {
         toast.success("Successfully Added ");
         refetch();

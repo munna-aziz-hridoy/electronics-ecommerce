@@ -1,11 +1,12 @@
-import { getAllCategory } from "@/allApis";
+import { getAllCategory, getCategory } from "@/allApis";
 import CategoryTR from "@/components/common/Admin/CategoryTR";
 import CategoryModal from "@/components/common/Admin/Modal/CategoryModal";
 import React, { useState } from "react";
 
 const CategoryManage = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { data, refetch, isLoading } = getAllCategory();
+  const { data: allCategory, isLoading, refetch } = getAllCategory();
+  const { data, refetch: parentRefetch } = getCategory();
 
   if (isLoading) return <h1>Loading...</h1>;
 
@@ -33,11 +34,12 @@ const CategoryManage = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((category) => (
+            {allCategory?.map((category) => (
               <CategoryTR
                 key={category.id}
                 category={category}
                 refetch={refetch}
+                parentRefetch={parentRefetch}
               />
             ))}
           </tbody>
@@ -49,6 +51,7 @@ const CategoryManage = () => {
         setOpenModal={setOpenModal}
         category={data}
         refetch={refetch}
+        parentRefetch={parentRefetch}
       />
     </>
   );
