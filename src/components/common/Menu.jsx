@@ -1,15 +1,13 @@
 import Link from 'next/link'
-import React, { Fragment,  useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useRouter } from 'next/router'
 import { BsX } from 'react-icons/bs'
-import { getCategory } from '@/allApis'
+import { getCategory, getParentCategory } from '@/allApis/CategoryApis'
 
 function MenuItem({ menuItem }) {
   const { data, isLoading, refetch } = getCategory(menuItem.id)
   if (isLoading) return <h1>Loading...</h1>
-
-
 
   return (
     <>
@@ -37,6 +35,9 @@ function MenuItemMobile({ menuItem, setOpen }) {
   const [openSubMenu, setOpenSubMenu] = useState(false)
 
   const { data, isLoading, refetch } = getCategory(menuItem.id)
+  if (isLoading) return <h1>Loading...</h1>
+
+  console.log(menuItem.id)
 
   return (
     <div className='w-full'>
@@ -86,7 +87,7 @@ function Menu({ open, setOpen }) {
   const router = useRouter()
 
   // useEffect(() => {}, []);
-  const { data, isLoading, refetch } = getCategory('null')
+  const { data, isLoading, refetch } = getParentCategory()
 
   if (isLoading) return <h1>Loading....</h1>
 
@@ -99,7 +100,7 @@ function Menu({ open, setOpen }) {
       <div className='md:flex justify-between items-center gap-5 mt-5 hidden'>
         {data?.map((item, i) => (
           <MenuItem key={i} menuItem={item} />
-        ))}
+        ))}{' '}
       </div>
 
       <div

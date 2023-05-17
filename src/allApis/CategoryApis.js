@@ -18,6 +18,20 @@ export const getAllCategory = () => {
 }
 
 // Get parent category
+export const getParentCategory = () => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ['getParentCategory'],
+    queryFn: () =>
+      fetch(`${serverUrl}/api/category/null`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      }).then((res) => res.json()),
+  })
+    return { isLoading, error, data, refetch }
+}
+
+// Get parent category
 export const getCategory = (id) => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['getCategory'],
@@ -26,7 +40,7 @@ export const getCategory = (id) => {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
-      }).then((res) => res.json()),
+      }).then((res) =>  res.json()),
   })
 
   return { isLoading, error, data, refetch }
