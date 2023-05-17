@@ -86,7 +86,6 @@ function Menu({ open, setOpen }) {
   const router = useRouter();
 
   useEffect(() => {}, []);
-
   if (router.asPath.includes("checkout")) {
     return null;
   }
