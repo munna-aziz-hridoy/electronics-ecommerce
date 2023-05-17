@@ -3,11 +3,26 @@ import { useQuery } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 // Get All Category Data
-export const useGetAllCategory = () => {
+export const getAllCategory = () => {
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['useGetAllCategory'],
+    queryKey: ['getAllCategory'],
     queryFn: () =>
       fetch(`${serverUrl}/api/category`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      }).then((res) => res.json()),
+  })
+
+  return { isLoading, error, data, refetch }
+}
+
+// Get parent category
+export const getCategory = (id) => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ['getCategory'],
+    queryFn: () =>
+      fetch(`${serverUrl}/api/category/${id}`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },

@@ -64,9 +64,28 @@ export const products = async (req, res) => {
   }
 };
 
+export const categoryProducts = async (req, res) => {
+  const category = req.query.category;
+
+  if (req.method === "GET") {
+    try {
+      const products = await Product.find(
+        { category: { id: category } },
+        "-_id -created_at -__v"
+      );
+
+      response.SUCCESS(res, products);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
 export const product = async (req, res) => {
   const id = req.query.product_id;
-  
+
   if (req.method === "GET") {
     try {
       const result = await Product.find({ id }, "-_id -created_at -__v");

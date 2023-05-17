@@ -17,7 +17,13 @@ import CategorySectionSecond from "./section/CategorySectionSecond";
 import CategorySectionThird from "./section/CatgorySectionThird";
 import CategorySectionBottom from "./section/CategorySectionBottom";
 
-import AdminSideBar from './common/Admin/AdminSideBar'
+import AdminSideBar from "./common/Admin/AdminSideBar";
+import SignMeUp from "./common/SignMeUp";
+import CategoryTR from "./common/Admin/CategoryTR";
+import CategoryModal from "./common/Admin/Modal/CategoryModal";
+import ProductTR from "./common/Admin/ProductTR";
+import UserTR from "./common/Admin/UserTR";
+import AddUserModal from "./common/Admin/Modal/AddUserModal";
 
 export {
   Header,
@@ -38,5 +44,10 @@ export {
   ProductCard,
   AdminSideBar,
   AddressForm,
-}
-
+  SignMeUp,
+  CategoryTR,
+  CategoryModal,
+  ProductTR,
+  UserTR,
+  AddUserModal,
+};

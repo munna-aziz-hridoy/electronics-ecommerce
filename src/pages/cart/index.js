@@ -14,6 +14,7 @@ function Cart() {
     <Fragment>
       {" "}
       <Container>
+        <p></p>
         <div className="flex flex-col md:flex-row gap-5 my-10 p-2">
           <div className="w-full md:w-[65%]">
             <div className="border-2 border-gray-200 rounded shadow p-4 ">

@@ -1,29 +1,29 @@
-import { serverUrl } from '@config/index'
-import { useQuery } from '@tanstack/react-query'
-import { toast } from 'react-hot-toast'
+import { serverUrl } from "@config/index";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 
 // Get All User Data
-export const useGetAllUser = () => {
+export const getAllUser = () => {
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['useGetAllUser'],
+    queryKey: ["useGetAllUser"],
     queryFn: () =>
       fetch(`${serverUrl}/api/user`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
       }).then((res) => res.json()),
-  })
+  });
 
-  return { isLoading, error, data, refetch }
-}
+  return { isLoading, error, data, refetch };
+};
 
 // ADD New User
 export const addNewUser = (data, refetch, setOpenModal) => {
   fetch(`${serverUrl}/api/user`, {
-    method: 'POST',
+    method: "POST",
     headers: {
       // authorization: `Bearer ${getToken()}`,
-      'Content-type': 'application/json; charset=UTF-8',
+      "Content-type": "application/json; charset=UTF-8",
     },
     body: JSON.stringify({
       ...data,
@@ -31,13 +31,13 @@ export const addNewUser = (data, refetch, setOpenModal) => {
   })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json)
+      console.log(json);
       if (!json.error && !json.message) {
-        toast.success('Successfully Added ')
-        refetch()
-        setOpenModal(false)
+        toast.success("Successfully Added ");
+        refetch();
+        setOpenModal(false);
       } else {
-        toast.error(json.message || 'Something is wrong!')
+        toast.error(json.message || "Something is wrong!");
       }
-    })
-}
+    });
+};
