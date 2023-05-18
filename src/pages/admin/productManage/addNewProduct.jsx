@@ -182,7 +182,7 @@ const addNewProduct = () => {
             className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
             htmlFor='multiple_files'
           >
-            Select Product Images
+            Selected Product Images
           </label>
           <div className='flex justify-start items-center gap-5'>
             {productImages.map((productImage, index) => {
@@ -198,12 +198,23 @@ const addNewProduct = () => {
               )
             })}
           </div>
-          {/* <input
-            className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-            id='multiple_files'
-            type='file'
-            multiple
-          /> */}
+          <div>
+            <button
+              type='button'
+              class='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+            >
+              Add Image
+            </button>
+            {productImages?.length > 0 && (
+              <button
+                onClick={() => setProductImages(null)}
+                type='button'
+                class='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+              >
+                Remove All
+              </button>
+            )}
+          </div>
         </div>
 
         <Button type='submit'>Add Product</Button>
