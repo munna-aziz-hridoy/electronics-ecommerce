@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import ImageUploadModal from '@/components/common/Admin/Modal/ImageUploadModal'
 import { Spinner } from '@/components'
-import JoditEditor from 'jodit-react'
+// import JoditEditor from 'jodit-react'
 
 const addNewProduct = () => {
   // States
@@ -83,7 +83,7 @@ const addNewProduct = () => {
           </select>
         </div>
 
-        <div className='mb-4'>
+        {/* <div className='mb-4'>
           <label
             htmlFor='description'
             className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
@@ -95,7 +95,7 @@ const addNewProduct = () => {
             value={content}
             onChange={(newContent) => setContent(newContent)}
           />
-        </div>
+        </div> */}
         <div className='mb-4'>
           <label
             htmlFor='short_description'

@@ -8,7 +8,7 @@ const ImageUploadModal = ({ allStates }) => {
   // Cloudinary Img Upload
   const [imageSrc, setImageSrc] = useState(null)
   const [uploadData, setUploadData] = useState(null)
-  const [uploadButtonDisable, setUploadButtonDisable] = useState(false);
+  const [uploadButtonDisable, setUploadButtonDisable] = useState(false)
 
   useEffect(() => {
     if (uploadData?.secure_url) {
@@ -23,7 +23,10 @@ const ImageUploadModal = ({ allStates }) => {
    */
 
   function handleOnChange(changeEvent) {
+
+
     const reader = new FileReader()
+ console.log(changeEvent.target.files) 
 
     reader.onload = function (onLoadEvent) {
       setImageSrc(onLoadEvent.target.result)
@@ -40,7 +43,7 @@ const ImageUploadModal = ({ allStates }) => {
 
   async function handleOnSubmit(event) {
     event.preventDefault()
-setUploadButtonDisable(true)
+    setUploadButtonDisable(true)
     const form = event.currentTarget
     const fileInput = Array.from(form.elements).find(
       ({ name }) => name === 'file'
@@ -116,11 +119,11 @@ setUploadButtonDisable(true)
                     </p>
                   </div>
                   <input
-                    name='file'
+                    className='hidden'
                     id='dropzone-file'
+                    name='file'
                     type='file'
                     multiple
-                    className='hidden'
                   />
                 </label>
               </div>
