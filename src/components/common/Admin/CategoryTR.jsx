@@ -21,7 +21,7 @@ const CategoryTR = ({ category, refetch }) => {
       >
         {name}
       </th>
-      <td className='px-6 py-2'>{parent_id}</td>
+      <td className='px-6 py-2'>{parent_id || 'No Parent'}</td>
       <td className='px-6 py-2'>
         <div className='flex justify-end items-center gap-7 pr-4 text-2xl '>
           <button className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '>

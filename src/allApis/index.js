@@ -3,12 +3,13 @@ import {
   removeCategory,
   addNewCategory,
   getParentCategory,
-} from './CategoryApis'
+  getAllSubCategory,
+} from "./CategoryApis";
 
-import { loginUser, resisterUser } from './LoginRegister'
+import { loginUser, resisterUser } from "./LoginRegister";
 
-import { getAllUser, addNewUser } from './getAllUser'
-import { getAllProduct, newProductAdd } from './ProductApis'
+import { getAllUser, addNewUser } from "./getAllUser";
+import { getAllProduct, newProductAdd } from "./ProductApis";
 
 export {
   getAllCategory,
@@ -21,4 +22,5 @@ export {
   getAllUser,
   addNewUser,
   newProductAdd,
-}
+  getAllSubCategory,
+};

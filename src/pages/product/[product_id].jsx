@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { Container, ProductCard, SignMeUp } from '@/components'
-import { products } from '@/assets/data/products'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { Container, ProductCard, SignMeUp, Spinner } from "@/components";
+import { products } from "@/assets/data/products";
+import { AiOutlineHeart } from "react-icons/ai";
 
 function ProductDetails() {
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -20,12 +20,10 @@ function ProductDetails() {
     }
   }, [query])
 
-  console.log(selectedProduct)
-
   return (
     <Container>
       {!selectedProduct ? (
-        <p>Loading</p>
+        <Spinner />
       ) : (
         <div className='px-1 md:px-10'>
           <div className='flex flex-col md:flex-row justify-center items-start gap-10 mt-10 mb-16'>

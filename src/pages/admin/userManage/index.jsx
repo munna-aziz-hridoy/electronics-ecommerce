@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { getAllUser } from "@/allApis";
-import { UserTR, AddUserModal } from "@/components";
+import { UserTR, AddUserModal, Spinner } from "@/components";
 
 const UserManage = () => {
   const [openModal, setOpenModal] = useState(false);
   const { data, isLoading, refetch } = getAllUser();
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   return (

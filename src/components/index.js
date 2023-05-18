@@ -25,6 +25,8 @@ import ProductTR from "./common/Admin/ProductTR";
 import UserTR from "./common/Admin/UserTR";
 import AddUserModal from "./common/Admin/Modal/AddUserModal";
 
+import Spinner from "./common/Spinner";
+
 export {
   Header,
   Navbar,
@@ -50,4 +52,5 @@ export {
   ProductTR,
   UserTR,
   AddUserModal,
+  Spinner,
 };

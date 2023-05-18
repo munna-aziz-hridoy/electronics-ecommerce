@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { getAllCategory, newProductAdd } from '@/allApis'
+import {  getAllSubCategory, newProductAdd } from '@/allApis'
 import { Button } from 'flowbite-react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import ImageUploadModal from '@/components/common/Admin/Modal/ImageUploadModal'
+import { Spinner } from "@/components";
 
 const addNewProduct = () => {
   // States
@@ -16,7 +17,7 @@ const addNewProduct = () => {
     data: category,
     refetch,
     isLoading: categoryLoading,
-  } = getAllCategory()
+  } = getAllSubCategory();
 
   // Main hook-form
   const {
@@ -33,8 +34,7 @@ const addNewProduct = () => {
     })
   }
 
-  // Loading
-  if (categoryLoading) return <h1>Loading...</h1>
+  if (categoryLoading) return <Spinner />;
 
   return (
     <div>

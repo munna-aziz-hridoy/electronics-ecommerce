@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image } from "..";
 import { useRouter } from "next/router";
 import { AiOutlineHeart } from "react-icons/ai";
+import { CartContext } from "@/context/cart";
 
 function ProductCard({ product, sub = false }) {
   const { push } = useRouter();
+
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    increaseQuantity,
+    decreaseQuantity,
+  } = useContext(CartContext);
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    addToCart(product);
+  };
 
   return (
     <div
@@ -14,7 +29,10 @@ function ProductCard({ product, sub = false }) {
       <div className={`w-full ${sub ? "h-[300px]" : "h-[400px]"} relative`}>
         <Image src={product.image} className="rounded-t" />
         <div className="absolute bottom-0 h-16 w-full flex gap-2">
-          <button className="flex justify-center items-center text-center w-3/4 h-full">
+          <button
+            onClick={handleAddToCart}
+            className="flex justify-center items-center text-center w-3/4 h-full"
+          >
             <span className="w-full h-full p-2 bg-[#BDD755] hover:bg-white text-gray-800  text-center flex justify-center items-center font-semibold border-2 border-transparent hover:border-[#BDD755] duration-150">
               Add to cart
             </span>
@@ -32,9 +50,9 @@ function ProductCard({ product, sub = false }) {
           Price:{" "}
           <span className=" text-blue-800 font-bold">${product.price}</span>
         </p>
-        <p className="text-sm font-light capitalize text-gray-500">
-          Brand: {product.brand}
-        </p>
+        {/* <p className="text-sm font-light capitalize text-gray-500">
+          Brand: {product?.brand}
+        </p> */}
       </div>
     </div>
   );

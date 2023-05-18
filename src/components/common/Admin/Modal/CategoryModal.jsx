@@ -1,30 +1,36 @@
-import { addNewCategory } from '@/allApis/CategoryApis'
-import { Button, Modal } from 'flowbite-react'
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import { addNewCategory } from "@/allApis/CategoryApis";
+import { Button, Modal } from "flowbite-react";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
+const CategoryModal = ({
+  setOpenModal,
+  openModal,
+  category,
+  refetch,
+  parentRefetch,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
   const onSubmit = (data) => {
-    addNewCategory(data, refetch, setOpenModal)
-  }
+    addNewCategory(data, refetch, setOpenModal, parentRefetch);
+  };
 
   return (
     <React.Fragment>
       <Modal
         show={openModal}
-        size='sm'
+        size="sm"
         popup={true}
         onClose={() => setOpenModal(false)}
       >
         <Modal.Header />
         <Modal.Body>
-          <div className=''>
-            <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
+          <div className="">
+            <h3 className="text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400">
               Add New Category
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -36,16 +42,16 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   Category Name
                 </label>
                 <input
-                  {...register('name', { required: true })}
-                  type='text'
-                  name='name'
-                  id='name'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  placeholder='Category Name'
+                  {...register("name", { required: true })}
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Category Name"
                   required
                 />
               </div>
-              <div className='mt-4'>
+              <div className="mt-4">
                 <label
                   htmlFor='category'
                   className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
@@ -53,10 +59,10 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   Previous Categories
                 </label>
                 <select
-                  className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  {...register('parent_id')}
+                  className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  {...register("parent_id")}
                 >
-                  <option value='NA'>N/A</option>
+                  <option value="NA">N/A</option>
 
                   {category?.map((category) => (
                     <option key={category?.id} value={category?.id}>
@@ -65,14 +71,14 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   ))}
                 </select>
               </div>
-              <div className='flex justify-between mt-5 mx-1'>
+              <div className="flex justify-between mt-5 mx-1">
                 <Button
-                  type='submit'
-                  className='bg-lime-500 hover:bg-lime-600 '
+                  type="submit"
+                  className="bg-lime-500 hover:bg-lime-600 "
                 >
                   Add Category
                 </Button>
-                <Button color='failure' onClick={() => setOpenModal(false)}>
+                <Button color="failure" onClick={() => setOpenModal(false)}>
                   Cancel
                 </Button>
               </div>
@@ -81,7 +87,7 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
         </Modal.Body>
       </Modal>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default CategoryModal
+export default CategoryModal;

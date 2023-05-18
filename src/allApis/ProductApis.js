@@ -29,7 +29,6 @@ export const newProductAdd = (data) => {
   })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       if (!json.error && !json.message) {
         toast.success("Successfully Added ");
         // refetch()
