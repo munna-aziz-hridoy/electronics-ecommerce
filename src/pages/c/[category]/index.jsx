@@ -7,12 +7,15 @@ import {
   CategorySectionSecond,
   CategorySectionThird,
   CategorySectionBottom,
+  Spinner,
 } from "@/components";
 
-import { subMenu } from "@/assets/data/menu";
+import useGetSubcategoriesBySlug from "@/hooks/useGetSubcategoriesBySlug";
 
 function Category() {
   const { query, push } = useRouter();
+
+  const { loading, subCategories } = useGetSubcategoriesBySlug(query?.category);
 
   return (
     <Container>
@@ -21,23 +24,27 @@ function Category() {
         <h2 className="text-2xl font-light capitalize my-5">
           {query?.category?.split("_")[0]}
         </h2>
-        <div className="flex justify-center items-center gap-8 flex-wrap">
-          {subMenu.map((item, i) => (
-            <div
-              onClick={() => push(`/c/${query.category}/${item.name}`)}
-              key={i}
-              className="flex flex-col justify-center items-center gap-3 cursor-pointer"
-            >
-              <img
-                src={item.image.src}
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full"
-              />
-              <p className="text-sm font-semibold text-gray-800 capitalize">
-                {item.name}
-              </p>
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="flex justify-center items-center gap-8 flex-wrap">
+            {subCategories?.map((item, i) => (
+              <div
+                onClick={() => push(`/c/${query.category}/${item.slug}`)}
+                key={i}
+                className="flex flex-col justify-center items-center gap-3 cursor-pointer"
+              >
+                <img
+                  src={item?.image}
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full"
+                />
+                <p className="text-sm font-semibold text-gray-800 capitalize">
+                  {item?.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* section one */}

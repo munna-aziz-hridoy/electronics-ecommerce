@@ -1,11 +1,12 @@
 import { getAllProduct } from "@/allApis";
+import { Spinner } from "@/components";
 import ProductTR from "@/components/common/Admin/ProductTR";
 import Link from "next/link";
 import React from "react";
 
 const ProductManage = () => {
   const { data, isLoading, refetch } = getAllProduct();
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <>

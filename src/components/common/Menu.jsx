@@ -1,24 +1,15 @@
 import Link from "next/link";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
 import { getCategory, getParentCategory } from "@/allApis/CategoryApis";
-import { serverUrl } from "@config/index";
+
+import useGetSubcategoriesById from "@/hooks/useGetSubcategoriesById";
+import { Spinner } from "..";
 
 function MenuItem({ menuItem }) {
-  // const { data, isLoading, refetch } = getCategory(menuItem.id);
-  // if (isLoading) return <h1>Loading...</h1>;
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(`${serverUrl}/api/category/${menuItem?.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
+  const { data, loading } = useGetSubcategoriesById(menuItem?.id);
 
   return (
     <>
@@ -46,7 +37,7 @@ function MenuItemMobile({ menuItem, setOpen }) {
   const [openSubMenu, setOpenSubMenu] = useState(false);
 
   const { data, isLoading, refetch } = getCategory(menuItem.id);
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="w-full">
@@ -91,14 +82,11 @@ function MenuItemMobile({ menuItem, setOpen }) {
 }
 
 function Menu({ open, setOpen }) {
-  //   const menu = getCategory()
-
   const router = useRouter();
 
-  // useEffect(() => {}, []);
   const { data, isLoading, refetch } = getParentCategory();
 
-  if (isLoading) return <h1>Loading....</h1>;
+  if (isLoading) return <Spinner />;
 
   if (router.asPath.includes("checkout")) {
     return null;

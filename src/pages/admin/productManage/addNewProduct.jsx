@@ -2,6 +2,7 @@ import React from "react";
 import { newProductAdd, getAllSubCategory } from "@/allApis";
 import { Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
+import { Spinner } from "@/components";
 
 const addNewProduct = () => {
   // Category Data
@@ -25,7 +26,7 @@ const addNewProduct = () => {
     });
   };
 
-  if (categoryLoading) return <h1>Loading...</h1>;
+  if (categoryLoading) return <Spinner />;
 
   return (
     <div>

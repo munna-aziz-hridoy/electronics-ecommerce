@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import Link from "next/link";
 
 import { BsTruck, BsX } from "react-icons/bs";
@@ -8,8 +8,19 @@ import { Container, ProductCard } from "@/components";
 
 import earbud from "@/assets/earbud1.jpg";
 import { products } from "@/assets/data/products";
+import { CartContext } from "@/context/cart";
 
 function Cart() {
+  const {
+    cart,
+    removeFromCart,
+    clearCart,
+    increaseQuantity,
+    decreaseQuantity,
+  } = useContext(CartContext);
+
+  console.log(cart);
+
   return (
     <Fragment>
       {" "}
@@ -17,60 +28,81 @@ function Cart() {
         <p></p>
         <div className="flex flex-col md:flex-row gap-5 my-10 p-2">
           <div className="w-full md:w-[65%]">
-            <div className="border-2 border-gray-200 rounded shadow p-4 ">
-              <div className="flex justify-between items-center border-b border-gray-200 pb-5">
-                <h2 className="text-2xl font-semibold capitalize text-gray-800">
-                  Your Bag
-                </h2>
-                <div className="flex justify-center items-center gap-5">
-                  <p className="font-light text-lg text-gray-500">Qyt</p>
-                  <p className="font-light text-lg text-gray-500">Sub total</p>
-                </div>
+            {cart?.item?.length === 0 ? (
+              <div className="border-2 border-gray-200 rounded shadow p-4 ">
+                <p className="text-center font-semibold text-lg">
+                  Your bag is empty
+                </p>
               </div>
-              {/*  */}
-
-              {[1, 2].map((item) => {
-                return (
-                  <div
-                    key={item}
-                    className="flex justify-between items-center my-8 border-b pb-4"
-                  >
-                    <div className="flex gap-3">
-                      <img src={earbud.src} className="w-16 h-16" />
-                      <div>
-                        <h2 className="text-xl font-semibold text-gray-800 capitalize">
-                          Bluetooth Earbuds
-                        </h2>
-                        <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
-                          Gaming bluetooth earbuds, best and premium quality
-                        </p>
-                        <p className="text-green-600 text-sm font-semibold capitalize">
-                          Price: $12
-                        </p>
-                        <span className="font-light text-lg text-gray-400 flex items-center gap-3">
-                          <BsX fontSize={26} /> Remove
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex gap-5">
-                      <div className="flex items-center justify-between">
-                        <p className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer">
-                          +
-                        </p>
-                        <input
-                          className=" h-8 w-14 border border-gray-200 pl-4"
-                          value={2}
-                        />
-                        <p className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer">
-                          -
-                        </p>
-                      </div>
-                      <p className=" text-gray-500 text-xl font-light">$34</p>
-                    </div>
+            ) : (
+              <div className="border-2 border-gray-200 rounded shadow p-4 ">
+                <div className="flex justify-between items-center border-b border-gray-200 pb-5">
+                  <h2 className="text-2xl font-semibold capitalize text-gray-800">
+                    Your Bag
+                  </h2>
+                  <div className="flex justify-center items-center gap-5">
+                    <p className="font-light text-lg text-gray-500">Qyt</p>
+                    <p className="font-light text-lg text-gray-500">
+                      Sub total
+                    </p>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+                {/*  */}
+
+                {cart?.items?.map((item, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="flex justify-between items-center my-8 border-b pb-4"
+                    >
+                      <div className="flex gap-3">
+                        <img src={earbud.src} className="w-16 h-16" />
+                        <div>
+                          <h2 className="text-xl font-semibold text-gray-800 capitalize">
+                            {item?.name}
+                          </h2>
+                          <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
+                            {item?.short_description?.slice(0, 50)}...
+                          </p>
+                          <p className="text-green-600 text-sm font-semibold capitalize">
+                            Price: ${item?.price}
+                          </p>
+                          <span
+                            onClick={() => removeFromCart(item)}
+                            className="font-light text-lg text-gray-400 flex items-center gap-3 mt-2 cursor-pointer"
+                          >
+                            <BsX fontSize={26} /> Remove
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex gap-5">
+                        <div className="flex items-center justify-between">
+                          <p
+                            onClick={() => increaseQuantity(item)}
+                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
+                          >
+                            +
+                          </p>
+                          <input
+                            className=" h-8 w-14 border border-gray-200 pl-4"
+                            value={item?.quantity}
+                          />
+                          <p
+                            onClick={() => decreaseQuantity(item)}
+                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
+                          >
+                            -
+                          </p>
+                        </div>
+                        <p className=" text-gray-500 text-xl font-light">
+                          ${item?.price * item?.quantity + item?.extra_price}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {/*  */}
             <div className="border-2 border-gray-200 rounded shadow p-4 my-8">
               <div className=" border-b border-gray-200 pb-5">
@@ -108,7 +140,7 @@ function Cart() {
                   Total
                 </p>
                 <p className="text-2xl font-medium text-gray-700 capitalize">
-                  $178
+                  ${cart?.total_price || 0}
                 </p>
               </div>
               <Link

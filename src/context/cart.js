@@ -55,17 +55,23 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (product) => {
+    console.log(product);
+
     setCart((prev) => {
       const { user, items, total_price, total_products } = prev;
 
-      const newItems = items.filter((item) => item.id === product.id);
+      const newItems = items.filter((item) => item.id !== product.id);
 
-      const prices = newItems
-        .map((item) => item.price * item.quantity + item.extra_price)
-        .reduce((a, b) => a + b);
-      const quantities = newItems
-        .map((item) => item.quantity)
-        .reduce((a, b) => a + b);
+      const prices =
+        newItems.length !== 0
+          ? newItems
+              .map((item) => item.price * item.quantity + item.extra_price)
+              .reduce((a, b) => a + b)
+          : 0;
+      const quantities =
+        newItems.length !== 0
+          ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
+          : 0;
 
       return {
         user,
@@ -133,12 +139,16 @@ const CartProvider = ({ children }) => {
         newItems.splice(existsIndex, 0, exists);
       }
 
-      const prices = newItems
-        .map((item) => item.price * item.quantity + item.extra_price)
-        .reduce((a, b) => a + b);
-      const quantities = newItems
-        .map((item) => item.quantity)
-        .reduce((a, b) => a + b);
+      const prices =
+        newItems.length !== 0
+          ? newItems
+              .map((item) => item.price * item.quantity + item.extra_price)
+              .reduce((a, b) => a + b)
+          : 0;
+      const quantities =
+        newItems.length !== 0
+          ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
+          : 0;
 
       return {
         user,

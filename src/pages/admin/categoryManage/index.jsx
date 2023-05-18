@@ -1,4 +1,5 @@
 import { getAllCategory, getCategory } from "@/allApis";
+import { Spinner } from "@/components";
 import CategoryTR from "@/components/common/Admin/CategoryTR";
 import CategoryModal from "@/components/common/Admin/Modal/CategoryModal";
 import React, { useState } from "react";
@@ -8,7 +9,7 @@ const CategoryManage = () => {
   const { data: allCategory, isLoading, refetch } = getAllCategory();
   const { data, refetch: parentRefetch } = getCategory();
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <>
