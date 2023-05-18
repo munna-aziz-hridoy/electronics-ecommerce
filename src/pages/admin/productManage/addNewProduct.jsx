@@ -174,7 +174,6 @@ const addNewProduct = () => {
       {/* Image Upload Modal  */}
       <ImageUploadModal
         allStates={{
-          uploadedImages,
           setUploadedImages,
           openModal,
           setOpenModal,

@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { Modal } from 'flowbite-react'
 
 const ImageUploadModal = ({ allStates }) => {
-  const { uploadedImages, setUploadedImages, openModal, setOpenModal } =
+  const {  setUploadedImages, openModal, setOpenModal } =
     allStates
 
   // Cloudinary Img Upload
-  const [imageSrc, setImageSrc] = useState(null)
-  const [uploadData, setUploadData] = useState(null)
+  const [imageSrc, setImageSrc] = useState([])
+  const [uploadData, setUploadData] = useState([])
+  const u = []
   const [uploadButtonDisable, setUploadButtonDisable] = useState(false)
 
   useEffect(() => {
-    if (uploadData?.secure_url) {
-      setUploadedImages([...uploadedImages, uploadData?.secure_url])
+    if (uploadData?.length > 0) {
+      uploadData.map((result) => u.push(result?.secure_url))
+      setUploadedImages(u)
       setOpenModal(false)
     }
   }, [uploadData])
@@ -21,19 +23,23 @@ const ImageUploadModal = ({ allStates }) => {
    * handleOnChange
    * @description Triggers when the file input changes (ex: when a file is selected)
    */
-
   function handleOnChange(changeEvent) {
+    const selectedFiles = Array.from(changeEvent.target.files) // Convert FileList to an array
 
+    const filePromises = selectedFiles.map((file) => {
+      return new Promise((resolve) => {
+        const fileReader = new FileReader()
+        fileReader.onload = (event) => {
+          resolve(event.target.result)
+        }
+        fileReader.readAsDataURL(file)
+      })
+    })
 
-    const reader = new FileReader()
- console.log(changeEvent.target.files) 
-
-    reader.onload = function (onLoadEvent) {
-      setImageSrc(onLoadEvent.target.result)
-      setUploadData(undefined)
-    }
-
-    reader.readAsDataURL(changeEvent.target.files[0])
+    Promise.all(filePromises).then((results) => {
+      setImageSrc(results)
+      setUploadData([])
+    })
   }
 
   /**
@@ -57,21 +63,57 @@ const ImageUploadModal = ({ allStates }) => {
 
     formData.append('upload_preset', 'electronics e-commerce')
 
-    const data = await fetch(
-      'https://api.cloudinary.com/v1_1/dqbxqqhx0/image/upload',
-      {
-        method: 'POST',
-        body: formData,
+    const promises = Array.from(imageSrc).map((image) => {
+      const formDataCopy = new FormData()
+      for (const [key, value] of formData.entries()) {
+        formDataCopy.append(key, value)
       }
-    ).then((r) => {
-      setUploadButtonDisable(false)
-      return r.json()
+      formDataCopy.set('file', image)
+
+      return fetch('https://api.cloudinary.com/v1_1/dqbxqqhx0/image/upload', {
+        method: 'POST',
+        body: formDataCopy,
+      }).then((r) => r.json())
     })
 
-    setImageSrc(data.secure_url)
+    const uploadResults = await Promise.all(promises)
+    uploadResults.map((result) => setImageSrc([...imageSrc, result.secure_url]))
 
-    setUploadData(data)
+    setUploadData(uploadResults)
+    setUploadButtonDisable(false)
   }
+
+  // async function handleOnSubmit(event) {
+  //   event.preventDefault()
+  //   setUploadButtonDisable(true)
+  //   const form = event.currentTarget
+  //   const fileInput = Array.from(form.elements).find(
+  //     ({ name }) => name === 'file'
+  //   )
+
+  //   const formData = new FormData()
+
+  //   for (const file of fileInput?.files) {
+  //     formData.append('file', file)
+  //   }
+
+  //   formData.append('upload_preset', 'electronics e-commerce')
+
+  //   const data = await fetch(
+  //     'https://api.cloudinary.com/v1_1/dqbxqqhx0/image/upload',
+  //     {
+  //       method: 'POST',
+  //       body: formData,
+  //     }
+  //   ).then((r) => {
+  //     setUploadButtonDisable(false)
+  //     return r.json()
+  //   })
+
+  //   setImageSrc(data.secure_url)
+
+  //   setUploadData(data)
+  // }
 
   return (
     <React.Fragment>
@@ -128,21 +170,28 @@ const ImageUploadModal = ({ allStates }) => {
                 </label>
               </div>
 
-              {imageSrc && !uploadData && (
+              {imageSrc?.length>0 && uploadData?.length<1 && (
                 <>
-                  <div className='relative inline'>
-                    <img
-                      className=' object-cover h-32 w-32 rounded-lg mt-10 mb-8'
-                      alt='Image'
-                      src={imageSrc}
-                    />
-                    <button
-                      onClick={() => setImageSrc(null)}
-                      type='button'
-                      className='absolute top-1 left-1 bg-red-700 rounded-full text-white hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium  text-lg px-2 text-center mr-2 mb-2 '
-                    >
-                      x
-                    </button>
+                  <div className='flex gap-4 items-center'>
+                    {imageSrc.map((img) => {
+                      return (
+                        <div className='relative inline'>
+                          <img
+                            className=' object-cover h-32 w-32 rounded-lg mt-10 mb-8'
+                            alt='Image'
+                            src={img}
+                          />
+
+                          <button
+                            onClick={() => setImageSrc([])}
+                            type='button'
+                            className='absolute top-12 left-1 bg-red-700 rounded-full text-white hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium  text-lg px-2 text-center mr-2 mb-2 '
+                          >
+                            x
+                          </button>
+                        </div>
+                      )
+                    })}
                   </div>
                   <p>
                     <button
