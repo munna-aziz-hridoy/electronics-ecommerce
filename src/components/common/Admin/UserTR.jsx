@@ -1,4 +1,4 @@
-import { removeUser } from '@/allApis/getAllUser'
+import { removeUser } from '@/allApis/AllUserApis'
 import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'

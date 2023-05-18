@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
-import {  getAllSubCategory, newProductAdd } from '@/allApis'
+import React, { useState,useRef } from 'react'
+import { getAllSubCategory, newProductAdd } from '@/allApis'
 import { Button } from 'flowbite-react'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import ImageUploadModal from '@/components/common/Admin/Modal/ImageUploadModal'
-import { Spinner } from "@/components";
+import { Spinner } from '@/components'
+import JoditEditor from 'jodit-react'
 
 const addNewProduct = () => {
   // States
   //  Product Image (Selected Image) && Image Add Model
   const [uploadedImages, setUploadedImages] = useState([])
   const [openModal, setOpenModal] = useState(false)
+  // editor
+  const editor = useRef(null)
+  const [content, setContent] = useState('')
 
   // Category Data Get
   const {
     data: category,
     refetch,
     isLoading: categoryLoading,
-  } = getAllSubCategory();
+  } = getAllSubCategory()
 
   // Main hook-form
   const {
@@ -31,10 +35,11 @@ const addNewProduct = () => {
     newProductAdd({
       ...data,
       images: uploadedImages,
+      description: `${content}`,
     })
   }
 
-  if (categoryLoading) return <Spinner />;
+  if (categoryLoading) return <Spinner />
 
   return (
     <div>
@@ -67,6 +72,9 @@ const addNewProduct = () => {
             className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
             {...register('category')}
           >
+            <option disabled selected>
+              Select Category
+            </option>
             {category?.map((category) => (
               <option key={category?.id} value={category?.id}>
                 {category?.name}
@@ -82,13 +90,11 @@ const addNewProduct = () => {
           >
             Description
           </label>
-          <textarea
-            {...register('description', { required: true })}
-            id='short_description'
-            rows='4'
-            className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            placeholder='Write a description about this product...'
-          ></textarea>
+          <JoditEditor
+            ref={editor}
+            value={content}
+            onChange={(newContent) => setContent(newContent)}
+          />
         </div>
         <div className='mb-4'>
           <label

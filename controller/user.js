@@ -141,17 +141,17 @@ export const admin = async (req, res) => {
 };
 
 export const user = async (req, res) => {
-  const id = req.query.user;
+  const id = req.query.user
 
-  if (req.method === "GET") {
+  if (req.method === 'GET') {
     try {
-      const result = await User.find({ id }, "-_id -created_at -__v");
+      const result = await User.find({ id }, '-_id -created_at -__v')
 
-      response.SUCCESS(res, result);
+      response.SUCCESS(res, result)
     } catch (error) {
-      response.INTERNAL_SERVER_ERROR(res, error);
+      response.INTERNAL_SERVER_ERROR(res, error)
     }
-  } else if (req.method === "PATCH") {
+  } else if (req.method === 'PATCH') {
     try {
       const doc = {
         name: name || result?.name,
@@ -162,11 +162,23 @@ export const user = async (req, res) => {
         state: state || result?.state,
         address: address || result?.address,
         avatar: avatar || result?.avatar,
-      };
+      }
 
-      const result = await User.findOneAndUpdate({ id }, doc);
+      const result = await User.findOneAndUpdate({ id }, doc)
     } catch (error) {
-      response.INTERNAL_SERVER_ERROR(res, error);
+      response.INTERNAL_SERVER_ERROR(res, error)
+    }
+  } else if (req.method === 'DELETE') {
+    try {
+      const exists = await User.find({ id })
+
+      if (!exists) return response.NOT_FOUND(res)
+
+      const result = await User.deleteOne({ id })
+
+      response.SUCCESS(res, result)
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error)
     }
   }
 };

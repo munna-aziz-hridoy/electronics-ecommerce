@@ -1,4 +1,4 @@
-import { addNewUser } from '@/allApis/getAllUser'
+import { addNewUser } from '@/allApis/AllUserApis'
 import { Button, Modal } from 'flowbite-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
