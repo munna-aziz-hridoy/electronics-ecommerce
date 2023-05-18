@@ -19,8 +19,6 @@ function Cart() {
     decreaseQuantity,
   } = useContext(CartContext);
 
-  console.log(cart);
-
   return (
     <Fragment>
       {" "}

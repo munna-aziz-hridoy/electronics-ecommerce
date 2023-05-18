@@ -72,6 +72,12 @@ export const subCategory = async (req, res) => {
         );
       }
 
+      const parentCategory = await Category.findOne({ id: id }, "name");
+
+      result = result?.map((item) => {
+        return { ...item, parent_name: parentCategory?.name };
+      });
+
       response.SUCCESS(res, result);
     } catch (error) {
       response.INTERNAL_SERVER_ERROR(res, error);

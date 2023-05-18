@@ -15,9 +15,29 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      setCart({ user: user?.id, items: [] });
+      const prevCartStr = localStorage.getItem("ec_cart");
+
+      if (prevCartStr) {
+        const prevCart = JSON.parse(prevCartStr);
+
+        // console.log(prevCart);
+
+        if (prevCart?.user === user?.id) {
+          setCart(prevCart);
+        }
+      }
     }
   }, [user]);
+
+  useEffect(() => {
+    if (user && !cart.user) {
+      console.log("working");
+
+      setCart((prev) => {
+        return { user: user, ...prev };
+      });
+    }
+  }, [user, cart]);
 
   const addToCart = (product) => {
     setCart((prev) => {
@@ -45,6 +65,16 @@ const CartProvider = ({ children }) => {
         .map((item) => item.quantity)
         .reduce((a, b) => a + b);
 
+      localStorage.setItem(
+        "ec_cart",
+        JSON.stringify({
+          user,
+          items: newItems,
+          total_price: prices,
+          total_products: quantities,
+        })
+      );
+
       return {
         user,
         items: newItems,
@@ -55,8 +85,6 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (product) => {
-    console.log(product);
-
     setCart((prev) => {
       const { user, items, total_price, total_products } = prev;
 
@@ -73,6 +101,16 @@ const CartProvider = ({ children }) => {
           ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
           : 0;
 
+      localStorage.setItem(
+        "ec_cart",
+        JSON.stringify({
+          user,
+          items: newItems,
+          total_price: prices,
+          total_products: quantities,
+        })
+      );
+
       return {
         user,
         items: newItems,
@@ -84,6 +122,8 @@ const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCart((prev) => {
+      localStorage.removeItem("ec_cart");
+
       return { ...prev, items: [], total_price: 0, total_products: 0 };
     });
   };
@@ -108,6 +148,16 @@ const CartProvider = ({ children }) => {
       const quantities = newItems
         .map((item) => item.quantity)
         .reduce((a, b) => a + b);
+
+      localStorage.setItem(
+        "ec_cart",
+        JSON.stringify({
+          user,
+          items: newItems,
+          total_price: prices,
+          total_products: quantities,
+        })
+      );
 
       return {
         user,
@@ -149,6 +199,16 @@ const CartProvider = ({ children }) => {
         newItems.length !== 0
           ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
           : 0;
+
+      localStorage.setItem(
+        "ec_cart",
+        JSON.stringify({
+          user,
+          items: newItems,
+          total_price: prices,
+          total_products: quantities,
+        })
+      );
 
       return {
         user,

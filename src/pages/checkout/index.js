@@ -1,12 +1,64 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { footerData } from "@/assets/data/footer";
 import { AddressForm, Container } from "@/components";
 import { FaCartArrowDown, FaStore, FaTruck } from "react-icons/fa";
 
 import earbud from "@/assets/earbud1.jpg";
 import Link from "next/link";
+import { CartContext } from "@/context/cart";
 
 const Checkout = () => {
+  const [street, setStreet] = useState("");
+  const [postCode, setPostCode] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+
+  const [error, setError] = useState(true);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+    }
+  }, [error]);
+
+  const { cart } = useContext(CartContext);
+
+  const handlePlaseOrder = () => {
+    if (!state || !street || !postCode || !city || !country || !address)
+      return setError(true);
+
+    const { items, ...rest } = cart;
+
+    const products = items?.map((item) => {
+      return {
+        id: item?.id,
+        name: item?.name,
+        extras: item?.extras,
+        images: item?.images,
+        quantity: item?.quantity,
+      };
+    });
+
+    const data = {
+      ...rest,
+      items: products,
+      shipping_address: {
+        street,
+        postCode,
+        state,
+        city,
+        country,
+        address,
+      },
+    };
+
+    console.log(data);
+  };
+
   return (
     <Container>
       <div className="flex flex-col md:flex-row justify-between gap-10 my-5 md:my-12 p-2 ">
@@ -30,7 +82,21 @@ const Checkout = () => {
           </h2>
           <div className="w-full h-[1px] bg-gray-300 my-3" />
 
-          <AddressForm />
+          <AddressForm
+            setAddress={setAddress}
+            setCity={setCity}
+            setCountry={setCountry}
+            setPostCode={setPostCode}
+            setState={setState}
+            setStreet={setStreet}
+            address={address}
+            city={city}
+            country={country}
+            postCode={postCode}
+            state={state}
+            street={street}
+            error={error}
+          />
 
           <h2 className="text-2xl font-semibold text-gray-700 capitalize mt-10">
             3. Payment Method
@@ -48,43 +114,47 @@ const Checkout = () => {
             ))}
           </div>
 
-          <Link href="/order-complete">
-            <span className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16">
-              Place Order
-            </span>
-          </Link>
+          <button
+            onClick={handlePlaseOrder}
+            className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
+          >
+            Place Order
+          </button>
         </div>
         <div className="w-full md:w-[35%]">
           <div className="border-2 border-gray-200 rounded shadow p-4">
             <div className="flex justify-between items-center">
               <p className="flex items-center gap-3 text-gray-800 font-semibold capitalize">
-                <FaCartArrowDown fontSize={20} />2 Items
+                <FaCartArrowDown fontSize={20} />
+                {cart?.total_products || 0} Items
               </p>
-              <p className="text-gray-800 font-semibold capitalize">$189</p>
+              <p className="text-gray-800 font-semibold capitalize">
+                ${cart?.total_price || 0}
+              </p>
             </div>
             <div className="w-full h-[1px] bg-gray-300 my-3" />
 
-            {[1, 2].map((item) => {
+            {cart?.items?.map((item, i) => {
               return (
                 <div
-                  key={item}
+                  key={i}
                   className="flex justify-between items-center my-8 border-b pb-4"
                 >
                   <div className="flex gap-3">
                     <img src={earbud.src} className="w-16 h-16" />
                     <div>
                       <h2 className="text-xl font-semibold text-gray-800 capitalize">
-                        Bluetooth Earbuds
+                        {item?.name}
                       </h2>
                       <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
-                        Gaming bluetooth earbuds, best and premium quality
+                        {item?.description?.slice(0, 20)}...
                       </p>
                       <div className="flex justify-between items-center">
                         <p className=" text-gray-500 text-sm font-light">
-                          Qty: 2
+                          Qty: {item?.quantity}
                         </p>
                         <p className="text-green-600 text-lg font-semibold capitalize">
-                          Price: $12
+                          Price: ${item?.quantity * item?.price}
                         </p>
                       </div>
                     </div>
@@ -96,11 +166,15 @@ const Checkout = () => {
             <div>
               <div className="flex justify-between items-center">
                 <p className="text-gray-600 text-medium text-lg">Order Value</p>
-                <p className="text-gray-600 text-medium text-lg">$120</p>
+                <p className="text-gray-600 text-medium text-lg">
+                  ${cart?.total_price || 0}
+                </p>
               </div>
               <div className="flex justify-between items-center mt-6">
                 <p className="text-gray-800 font-bold text-2xl">Total pay</p>
-                <p className="text-gray-800 font-bold text-2xl">$120</p>
+                <p className="text-gray-800 font-bold text-2xl">
+                  ${cart?.total_price || 0}
+                </p>
               </div>
             </div>
           </div>
