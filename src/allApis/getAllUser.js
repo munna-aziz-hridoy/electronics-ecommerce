@@ -43,7 +43,7 @@ export const addNewUser = (data, refetch, setOpenModal) => {
 };
 
 
-//  Delete Product
+//  Delete user
 export const removeUser = (id, refetch) => {
   fetch(`${serverUrl}/api/user/${id}`, {
     method: 'DELETE',
