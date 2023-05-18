@@ -1,9 +1,17 @@
+import { removeUser } from '@/allApis/getAllUser'
 import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
 const UserTR = ({ user, refetch }) => {
   const { name, id, email } = user
+  const handleDelete = () => {
+    const del = window.confirm('Do you want to delete?')
+    if (del) {
+      removeUser(id, refetch)
+    }
+  }
+
   return (
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
       <th
@@ -18,7 +26,10 @@ const UserTR = ({ user, refetch }) => {
           <button className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '>
             <BiEdit />
           </button>
-          <button className='duration-300 rounded-md p-1 hover:bg-red-600 hover:text-gray-50 '>
+          <button
+            onClick={handleDelete}
+            className='duration-300 rounded-md p-1 hover:bg-red-600 hover:text-gray-50 '
+          >
             <MdDelete />
           </button>
         </div>

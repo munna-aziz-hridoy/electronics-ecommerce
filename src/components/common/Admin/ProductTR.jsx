@@ -1,10 +1,16 @@
+import { removeProduct } from '@/allApis/ProductApis'
 import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
 const ProductTR = ({ product, refetch }) => {
   const { name, id, category, price, description, short_description } = product
-  console.log(product)
+  const handleDelete = () => {
+    const del = window.confirm('Do you want delete?')
+    if (del) {
+      removeProduct(id, refetch)
+    }
+  }
   return (
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
       <th
@@ -30,7 +36,10 @@ const ProductTR = ({ product, refetch }) => {
           <button className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '>
             <BiEdit />
           </button>
-          <button className='duration-300 rounded-md p-1 hover:bg-red-600 hover:text-gray-50 '>
+          <button
+            onClick={handleDelete}
+            className='duration-300 rounded-md p-1 hover:bg-red-600 hover:text-gray-50 '
+          >
             <MdDelete />
           </button>
         </div>

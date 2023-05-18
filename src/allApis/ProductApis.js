@@ -38,3 +38,15 @@ export const newProductAdd = (data) => {
       }
     });
 };
+
+//  Delete Product
+export const removeProduct = (id, refetch) => {
+  fetch(`${serverUrl}/api/product/${id}`, {
+    method: 'DELETE',
+  }).then((res) => {
+    if (res?.status === 200) {
+      refetch()
+      toast.success('Successfully Deleted ')
+    }
+  })
+}
