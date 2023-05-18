@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { Modal } from 'flowbite-react'
+import { RxCross2 } from 'react-icons/rx'
+import { GoCloudUpload } from 'react-icons/go'
 
-const ImageUploadModal = ({ allStates }) => {
-  const {  setUploadedImages, openModal, setOpenModal } =
-    allStates
+const ImageUploadModal = ({ allStates, isMultiple }) => {
+  const { setUploadedImages, openModal, setOpenModal } = allStates
 
   // Cloudinary Img Upload
+  const u = []
   const [imageSrc, setImageSrc] = useState([])
   const [uploadData, setUploadData] = useState([])
-  const u = []
   const [uploadButtonDisable, setUploadButtonDisable] = useState(false)
+
+  // remove Img
+  const removeImg = (image) => {
+    const isExist = imageSrc.filter((img) => img !== image)
+    setImageSrc(isExist)
+  }
 
   useEffect(() => {
     if (uploadData?.length > 0) {
@@ -83,38 +90,6 @@ const ImageUploadModal = ({ allStates }) => {
     setUploadButtonDisable(false)
   }
 
-  // async function handleOnSubmit(event) {
-  //   event.preventDefault()
-  //   setUploadButtonDisable(true)
-  //   const form = event.currentTarget
-  //   const fileInput = Array.from(form.elements).find(
-  //     ({ name }) => name === 'file'
-  //   )
-
-  //   const formData = new FormData()
-
-  //   for (const file of fileInput?.files) {
-  //     formData.append('file', file)
-  //   }
-
-  //   formData.append('upload_preset', 'electronics e-commerce')
-
-  //   const data = await fetch(
-  //     'https://api.cloudinary.com/v1_1/dqbxqqhx0/image/upload',
-  //     {
-  //       method: 'POST',
-  //       body: formData,
-  //     }
-  //   ).then((r) => {
-  //     setUploadButtonDisable(false)
-  //     return r.json()
-  //   })
-
-  //   setImageSrc(data.secure_url)
-
-  //   setUploadData(data)
-  // }
-
   return (
     <React.Fragment>
       <Modal
@@ -125,7 +100,7 @@ const ImageUploadModal = ({ allStates }) => {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className='m-10'>
+          <div className='m-5'>
             <form
               method='post'
               onChange={handleOnChange}
@@ -157,7 +132,7 @@ const ImageUploadModal = ({ allStates }) => {
                       drag and drop
                     </p>
                     <p className='text-xs text-gray-500 dark:text-gray-400'>
-                      SVG, PNG, JPG or GIF (MAX. 800x400px)
+                      SVG, PNG, JPG 
                     </p>
                   </div>
                   <input
@@ -165,29 +140,29 @@ const ImageUploadModal = ({ allStates }) => {
                     id='dropzone-file'
                     name='file'
                     type='file'
-                    multiple
+                    multiple={isMultiple}
                   />
                 </label>
               </div>
 
-              {imageSrc?.length>0 && uploadData?.length<1 && (
+              {imageSrc?.length > 0 && uploadData?.length < 1 && (
                 <>
-                  <div className='flex gap-4 items-center'>
-                    {imageSrc.map((img) => {
+                  <div className='flex flex-wrap gap-5 items-center mt-10 mb-8'>
+                    {imageSrc.map((img, index) => {
                       return (
-                        <div className='relative inline'>
+                        <div key={index} className='relative inline'>
                           <img
-                            className=' object-cover h-32 w-32 rounded-lg mt-10 mb-8'
+                            className=' object-cover h-28 w-28 rounded-lg '
                             alt='Image'
                             src={img}
                           />
 
                           <button
-                            onClick={() => setImageSrc([])}
+                            onClick={() => removeImg(img)}
                             type='button'
-                            className='absolute top-12 left-1 bg-red-700 rounded-full text-white hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium  text-lg px-2 text-center mr-2 mb-2 '
+                            className='absolute -top-3 -right-3 bg-gray-200 rounded-full text-red-700 hover:text-white  border-2 border-red-700  hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 duration-300 text-lg p-1 text-center font-bold '
                           >
-                            x
+                            <RxCross2 />
                           </button>
                         </div>
                       )
@@ -198,8 +173,9 @@ const ImageUploadModal = ({ allStates }) => {
                       disabled={uploadButtonDisable}
                       className=' hover:text-white relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800'
                     >
-                      <span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
-                        Upload Files
+                      <span className='relative px-5 py-2.5 flex justify-center items-center gap-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+                        <GoCloudUpload /> Upload
+                        {imageSrc.length === 1 ? 'Image' : 'Images'}
                       </span>
                     </button>
                   </p>

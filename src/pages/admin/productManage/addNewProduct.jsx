@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { getAllSubCategory, newProductAdd } from '@/allApis'
 import { Button } from 'flowbite-react'
 import { useForm } from 'react-hook-form'
@@ -178,6 +178,7 @@ const addNewProduct = () => {
           openModal,
           setOpenModal,
         }}
+        isMultiple={true}
       />
     </div>
   )
