@@ -29,8 +29,8 @@ const AddUserModal = ({ setOpenModal, openModal, refetch }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='mb-4'>
                 <label
-                  for='name'
-                  class='block  text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='name'
+                  className='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
                   User Name
                 </label>
@@ -39,15 +39,15 @@ const AddUserModal = ({ setOpenModal, openModal, refetch }) => {
                   type='text'
                   name='name'
                   id='name'
-                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='User Name'
                   required
                 />
               </div>
               <div className='mb-4'>
                 <label
-                  for='email'
-                  class='block  text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='email'
+                  className='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
                   User Email
                 </label>
@@ -56,15 +56,15 @@ const AddUserModal = ({ setOpenModal, openModal, refetch }) => {
                   type='email'
                   name='email'
                   id='email'
-                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='example@example.com'
                   required
                 />
               </div>
               <div className='mb-4'>
                 <label
-                  for='password'
-                  class='block  text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='password'
+                  className='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
                   User Password
                 </label>
@@ -73,7 +73,7 @@ const AddUserModal = ({ setOpenModal, openModal, refetch }) => {
                   type='password'
                   name='password'
                   id='password'
-                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='password'
                   required
                 />

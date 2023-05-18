@@ -30,8 +30,8 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
-                  for='name'
-                  class='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='name'
+                  className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
                 >
                   Category Name
                 </label>
@@ -40,15 +40,15 @@ const CategoryModal = ({ setOpenModal, openModal, category, refetch }) => {
                   type='text'
                   name='name'
                   id='name'
-                  class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='Category Name'
                   required
                 />
               </div>
               <div className='mt-4'>
                 <label
-                  for='category'
-                  class='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='category'
+                  className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
                 >
                   Previous Categories
                 </label>
