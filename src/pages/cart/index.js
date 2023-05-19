@@ -9,6 +9,9 @@ import { Container, ProductCard } from "@/components";
 import earbud from "@/assets/earbud1.jpg";
 import { products } from "@/assets/data/products";
 import { CartContext } from "@/context/cart";
+import useAuthStore from "@/store/auth";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 function Cart() {
   const {
@@ -18,6 +21,18 @@ function Cart() {
     increaseQuantity,
     decreaseQuantity,
   } = useContext(CartContext);
+
+  const { user } = useAuthStore();
+  const { push } = useRouter();
+
+  const handleCheckout = () => {
+    if (!user) {
+      toast.error("Please login to continue shoppping");
+      return push("/auth/login");
+    }
+
+    push("/checkout");
+  };
 
   return (
     <Fragment>
@@ -141,14 +156,14 @@ function Cart() {
                   ${cart?.total_price || 0}
                 </p>
               </div>
-              <Link
-                href="/checkout"
-                className="flex justify-center items-center text-center"
+              <button
+                onClick={handleCheckout}
+                className="flex justify-center items-center text-center w-full"
               >
                 <span className="w-full p-2 bg-[#BDD755] text-gray-800 my-5 text-center">
                   Checkout
                 </span>
-              </Link>
+              </button>
               <div className="w-full h-[1px] bg-gray-200" />
 
               <h2 className="text-xl font-medium text-gray-700 capitalize mt-5">

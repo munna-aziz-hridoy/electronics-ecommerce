@@ -70,13 +70,21 @@ export const subCategory = async (req, res) => {
           { parent_id: id },
           "-_id -created_at -__v"
         );
+
+        const parentCategory = await Category.findOne({ id: id }, "name");
+
+        result = result?.map((item) => {
+          const { name, slug, id, parent_id } = item;
+
+          return {
+            name,
+            slug,
+            id,
+            parent_id,
+            parent_name: parentCategory?.name,
+          };
+        });
       }
-
-      const parentCategory = await Category.findOne({ id: id }, "name");
-
-      result = result?.map((item) => {
-        return { ...item, parent_name: parentCategory?.name };
-      });
 
       response.SUCCESS(res, result);
     } catch (error) {

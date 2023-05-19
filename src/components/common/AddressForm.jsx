@@ -22,6 +22,7 @@ const AddressForm = ({
           <p className="text-sm font-semibold text-gray-700 my-2">Street</p>
           <input
             onChange={(e) => setStreet(e.target.value)}
+            value={street}
             type="text"
             className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
           />
@@ -35,6 +36,7 @@ const AddressForm = ({
           <p className="text-sm font-semibold text-gray-700 my-2">Post Code</p>
           <input
             onChange={(e) => setPostCode(e.target.value)}
+            value={postCode}
             type="text"
             className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
           />
@@ -50,6 +52,7 @@ const AddressForm = ({
           <p className="text-sm font-semibold text-gray-700 my-2">State</p>
           <input
             onChange={(e) => setState(e.target.value)}
+            value={state}
             type="text"
             className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
           />
@@ -63,6 +66,7 @@ const AddressForm = ({
           <p className="text-sm font-semibold text-gray-700 my-2">City</p>
           <input
             onChange={(e) => setCity(e.target.value)}
+            value={city}
             type="text"
             className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
           />
@@ -77,6 +81,7 @@ const AddressForm = ({
         <p className="text-sm font-semibold text-gray-700 my-2">Country</p>
         <input
           onChange={(e) => setCountry(e.target.value)}
+          value={country}
           type="text"
           className="w-full px-2 py-2 border border-gray-200 outline-none shadow"
         />
@@ -90,6 +95,7 @@ const AddressForm = ({
         <p className="text-sm font-semibold text-gray-700 my-2">Address</p>
         <textarea
           onChange={(e) => setAddress(e.target.value)}
+          value={address}
           type="text"
           rows={4}
           className="w-full px-2 py-2 border border-gray-200 outline-none shadow"

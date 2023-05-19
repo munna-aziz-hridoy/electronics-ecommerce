@@ -1,11 +1,20 @@
 import React from "react";
 import { Container } from "..";
+import useAuthStore from "@/store/auth";
+import { removeToken } from "@/allApis/token";
 
 const classes = {
-  header_text: "text-white capitalize font-semibold text-xs",
+  header_text: "text-white capitalize font-semibold text-xs cursor-pointer",
 };
 
 function Header() {
+  const { user, removeUser } = useAuthStore();
+
+  const handleLogout = () => {
+    removeToken();
+    removeUser();
+  };
+
   return (
     <div className="h-8 bg-black">
       <Container>
@@ -18,6 +27,14 @@ function Header() {
             <p className={classes.header_text}>help</p>
             <p className="text-white font-black">|</p>
             <p className={classes.header_text}>contact</p>
+            {user && (
+              <>
+                <p className="text-white font-black">|</p>
+                <p onClick={handleLogout} className={classes.header_text}>
+                  Logout
+                </p>
+              </>
+            )}
           </div>
         </div>
       </Container>

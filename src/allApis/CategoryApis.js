@@ -42,8 +42,11 @@ export const getParentCategory = () => {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
-      }).then((res) => res.json()),
+      }).then((res) => {
+        return res.json();
+      }),
   });
+
   return { isLoading, error, data, refetch };
 };
 

@@ -86,6 +86,8 @@ function Menu({ open, setOpen }) {
 
   const { data, isLoading, refetch } = getParentCategory();
 
+  // console.log(data);
+
   if (isLoading) return <Spinner />;
 
   if (router.asPath.includes("checkout")) {
