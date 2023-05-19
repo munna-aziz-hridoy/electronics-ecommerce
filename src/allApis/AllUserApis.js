@@ -23,11 +23,9 @@ export const addNewUser = (data, refetch, setOpenModal) => {
     method: "POST",
     headers: {
       // authorization: `Bearer ${getToken()}`,
-      "Content-type": "application/json; charset=UTF-8",
+      "content-type": "application/json",
     },
-    body: JSON.stringify({
-      ...data,
-    }),
+    body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then((json) => {

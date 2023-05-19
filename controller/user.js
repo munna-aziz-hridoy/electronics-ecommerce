@@ -4,13 +4,19 @@ import { Response } from "@helper/response";
 import { v4 as uuid } from "uuid";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Order } from "@models/order";
+import { mergeArrays } from "@helper/index";
 
 const response = new Response();
 
 export const users = async (req, res) => {
   // create user
   if (req.method === "POST") {
-    const { name, email, password } = JSON.parse(req.body);
+    const body = req.body;
+
+    if (!body) return response.BAD_REQUEST(res, "Data is required");
+
+    const { name, email, password } = body;
 
     if (!name) return response.BAD_REQUEST(res, "Name can't be empty");
     if (!email) return response.BAD_REQUEST(res, "Email can't be empty");
@@ -180,6 +186,8 @@ export const user = async (req, res) => {
     } catch (error) {
       response.INTERNAL_SERVER_ERROR(res, error)
     }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
   }
 };
 
@@ -219,6 +227,99 @@ export const login = async (req, res) => {
     } catch (error) {
       response.INTERNAL_SERVER_ERROR(res, error);
     }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
+export const order = async (req, res) => {
+  const user_id = req.query.user_id;
+
+  if (req.method === "GET") {
+    try {
+      const order = await Order.find(
+        { user: user_id },
+        "-_id -created_at -__v"
+      );
+
+      response.SUCCESS(res, order);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
+  } else if (req.method === "POST") {
+    try {
+      const body = req.body;
+      const id = uuid();
+
+      const order = new Order({
+        id,
+        ...body,
+        paid: false,
+        delivery: false,
+      });
+
+      const result = await order.save();
+
+      response.SUCCESS(res, result);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
+export const orderId = async (req, res) => {
+  const order_id = req.query.order_id;
+
+  if (!order_id) return response.METHOD_NOT_ALLOWED(res, req);
+
+  if (req.method === "GET") {
+    const order = await Order.findOne(
+      { id: order_id },
+      "-_id -created_at -__v"
+    );
+  } else if (req.method === "PATCH") {
+    const order = await Order.findOne({ id: order_id });
+
+    if (!order) return response.NOT_FOUND(res);
+
+    const doc = {
+      paid: true,
+    };
+
+    const result = await Order.findOneAndUpdate({ id: order_id }, doc);
+
+    return response.SUCCESS(res, result);
+  } else if (req.method === "POST") {
+    const order = await Order.findOne({ id: order_id });
+
+    if (!order) return response.NOT_FOUND(res);
+
+    const doc = {
+      delivery: true,
+    };
+
+    const result = await Order.findOneAndUpdate({ id: order_id }, doc);
+
+    return response.SUCCESS(res, result);
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
+export const adminOrder = async (req, res) => {
+  if (req.method === "GET") {
+    const orders = Order.find({}, "-_id -created_at -__v");
+    const users = User.find({}, "-_id -created_at -__v");
+
+    if (!orders || users) return response.NOT_FOUND(res);
+
+    const fullOrders = mergeArrays(orders, users, "user", "id");
+
+    response.SUCCESS(res, { ...fullOrders });
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
   }
 };
 
