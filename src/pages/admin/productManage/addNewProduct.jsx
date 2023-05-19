@@ -8,7 +8,8 @@ import { Spinner } from '@/components'
 import { useRouter } from 'next/router'
 import { BsArrowBarLeft, BsBuildingFillAdd, BsImageFill } from 'react-icons/bs'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
-// import JoditEditor from 'jodit-react'
+import dynamic from 'next/dynamic'
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 const addNewProduct = () => {
   // States
@@ -87,7 +88,7 @@ const addNewProduct = () => {
           </select>
         </div>
 
-        {/* <div className='mb-4'>
+        <div className='mb-4'>
           <label
             htmlFor='description'
             className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
@@ -99,7 +100,7 @@ const addNewProduct = () => {
             defaultValue={content}
             onChange={(newContent) => setContent(newContent)}
           />
-        </div> */}
+        </div>
         <div className='mb-4'>
           <label
             htmlFor='short_description'

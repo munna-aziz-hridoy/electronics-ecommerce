@@ -1,6 +1,6 @@
 import { getAllProduct } from "@/allApis";
 import { Spinner } from "@/components";
-import ProductTR from "@/components/common/Admin/ProductTR";
+import ProductTR from "@/components/common/Admin/TR/ProductTR";
 import Link from "next/link";
 import React from "react";
 
