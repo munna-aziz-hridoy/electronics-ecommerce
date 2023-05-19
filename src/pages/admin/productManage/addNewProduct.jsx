@@ -5,6 +5,9 @@ import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import ImageUploadModal from '@/components/common/Admin/Modal/ImageUploadModal'
 import { Spinner } from '@/components'
+import { useRouter } from 'next/router'
+import { BsArrowBarLeft, BsBuildingFillAdd, BsImageFill } from 'react-icons/bs'
+import { RiDeleteBin2Fill } from 'react-icons/ri'
 // import JoditEditor from 'jodit-react'
 
 const addNewProduct = () => {
@@ -15,6 +18,7 @@ const addNewProduct = () => {
   // editor
   const editor = useRef(null)
   const [content, setContent] = useState('')
+   const router = useRouter()
 
   // Category Data Get
   const {
@@ -128,48 +132,69 @@ const addNewProduct = () => {
             required
           />
         </div>
-        <div className='mb-4'>
-          <label
-            className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
-            htmlFor='multiple_files'
-          >
-            Selected Product Images
-          </label>
-          <div className='flex justify-start items-center gap-5'>
-            {uploadedImages?.map((productImage, index) => {
-              return (
-                <Image
-                  key={index}
-                  className=' object-cover h-32 w-32 rounded-lg mb-8'
-                  alt='Image'
-                  height={100}
-                  width={100}
-                  src={productImage}
-                />
-              )
-            })}
-          </div>
+        <div className='flex justify-between items-end mb-4'>
           <div>
-            <button
-              onClick={() => setOpenModal(true)}
-              type='button'
-              className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
-            >
-              Add Product Image
-            </button>
             {uploadedImages?.length > 0 && (
-              <button
-                onClick={() => setUploadedImages(null)}
-                type='button'
-                className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+              <label
+                className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                htmlFor='multiple_files'
               >
-                Remove All
-              </button>
+                Selected Product Images
+              </label>
             )}
+            <div className='flex justify-start items-center gap-5'>
+              {uploadedImages?.map((productImage, index) => {
+                return (
+                  <Image
+                    key={index}
+                    className=' object-cover h-32 w-32 rounded-lg mb-8'
+                    alt='Image'
+                    height={100}
+                    width={100}
+                    src={productImage}
+                  />
+                )
+              })}
+            </div>
+            <div className='flex items-center'>
+              <button
+                onClick={() => setOpenModal(true)}
+                type='button'
+                className='hover:-translate-y-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+              >
+                <BsImageFill />
+                Add Product Image
+              </button>
+              {uploadedImages?.length > 0 && (
+                <button
+                  onClick={() => setUploadedImages([])}
+                  type='button'
+                  className='flex items-center gap-2 hover:translate-x-2 hover:translate-y-2 duration-300 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                >
+                  <RiDeleteBin2Fill />
+                  {uploadedImages?.length === 1 ? 'Remove' : 'Remove All'}
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className='flex gap-5'>
+            <button
+              onClick={() => router.back()}
+              type='button'
+              className='hover:-translate-x-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+            >
+              <BsArrowBarLeft />
+              Go Back
+            </button>
+            <Button
+              className='flex items-center hover:-translate-y-2 duration-300 '
+              type='submit'
+            >
+              <BsBuildingFillAdd className='mr-2' /> Add Product
+            </Button>
           </div>
         </div>
-
-        <Button type='submit'>Add Product</Button>
       </form>
       {/* Image Upload Modal  */}
       <ImageUploadModal
