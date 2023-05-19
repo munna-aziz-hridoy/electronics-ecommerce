@@ -108,10 +108,10 @@ const CategoryModal = ({
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   {...register('parent_id')}
                 >
-                  <option value='NA'>N/A</option>
+                  <option defaultValue='NA'>N/A</option>
 
                   {category?.map((category) => (
-                    <option key={category?.id} value={category?.id}>
+                    <option key={category?.id} defaultValue={category?.id}>
                       {category?.name}
                     </option>
                   ))}

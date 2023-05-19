@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { Container, ProductCard, SignMeUp, Spinner } from "@/components";
-import { products } from "@/assets/data/products";
-import { AiOutlineHeart } from "react-icons/ai";
+import { Container, ProductCard, SignMeUp, Spinner } from '@/components'
+import { products } from '@/assets/data/products'
+import { AiOutlineHeart } from 'react-icons/ai'
 
 function ProductDetails() {
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -57,7 +57,7 @@ function ProductDetails() {
                   <input
                     id='red-radio'
                     type='radio'
-                    value=''
+                    defaultValue=''
                     name='colored-radio'
                     className='w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   />
@@ -72,7 +72,7 @@ function ProductDetails() {
                   <input
                     id='green-radio'
                     type='radio'
-                    value=''
+                    defaultValue=''
                     name='colored-radio'
                     className='w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   />

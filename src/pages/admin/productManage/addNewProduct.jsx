@@ -18,7 +18,7 @@ const addNewProduct = () => {
   // editor
   const editor = useRef(null)
   const [content, setContent] = useState('')
-   const router = useRouter()
+  const router = useRouter()
 
   // Category Data Get
   const {
@@ -80,7 +80,7 @@ const addNewProduct = () => {
               Select Category
             </option>
             {category?.map((category) => (
-              <option key={category?.id} value={category?.id}>
+              <option key={category?.id} defaultValue={category?.id}>
                 {category?.name}
               </option>
             ))}
@@ -96,7 +96,7 @@ const addNewProduct = () => {
           </label>
           <JoditEditor
             ref={editor}
-            value={content}
+            defaultValue={content}
             onChange={(newContent) => setContent(newContent)}
           />
         </div> */}
