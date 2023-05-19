@@ -32,7 +32,7 @@ const Checkout = () => {
     }
   }, [error]);
 
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
 
   const handlePlaseOrder = () => {
     if (!state || !street || !postCode || !city || !country || !address)
@@ -61,21 +61,22 @@ const Checkout = () => {
         country,
         address,
       },
+      user: user?.id,
     };
 
-    console.log(data);
+    // console.log(data);
 
-    // const res = placeOrder(data);
-
-    // if (res?.id) {
-    //   push("/login");
-    //   setAddress("");
-    //   setCity("");
-    //   setCountry("");
-    //   setPostCode("");
-    //   setState("");
-    //   setStreet("");
-    // }
+    placeOrder(
+      data,
+      push,
+      setAddress,
+      setCity,
+      setCountry,
+      setPostCode,
+      setState,
+      setStreet,
+      clearCart
+    );
   };
 
   return (

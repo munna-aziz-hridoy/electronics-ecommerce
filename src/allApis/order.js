@@ -1,7 +1,17 @@
 import { serverUrl } from "@config/index";
 import toast from "react-hot-toast";
 
-export const placeOrder = (data) => {
+export const placeOrder = (
+  data,
+  push = null,
+  setAddress = null,
+  setCity = null,
+  setCountry = null,
+  setPostCode = null,
+  setState = null,
+  setStreet = null,
+  clearCart = null
+) => {
   const url = `${serverUrl}/api/user/order`;
 
   fetch(url, {
@@ -20,9 +30,17 @@ export const placeOrder = (data) => {
     .then((data) => {
       if (data?.id) {
         toast.success("Order placed");
-        return data;
+        push("/");
+        setAddress("");
+        setCity("");
+        setCountry("");
+        setPostCode("");
+        setState("");
+        setStreet("");
+        clearCart();
       } else {
         toast.error("Order place failed");
+        return;
       }
     });
 };
