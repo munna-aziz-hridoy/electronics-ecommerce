@@ -6,18 +6,12 @@ import { CiDeliveryTruck } from 'react-icons/ci'
 
 import { Container, ProductCard } from '@/components'
 
-<<<<<<< HEAD
-import earbud from '@/assets/earbud1.jpg'
-import { products } from '@/assets/data/products'
-import { CartContext } from '@/context/cart'
-=======
 import earbud from "@/assets/earbud1.jpg";
 import { products } from "@/assets/data/products";
 import { CartContext } from "@/context/cart";
 import useAuthStore from "@/store/auth";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
->>>>>>> main
 
 function Cart() {
   const {
