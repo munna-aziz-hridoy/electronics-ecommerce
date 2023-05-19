@@ -3,9 +3,13 @@ import { Image } from "..";
 import { useRouter } from "next/router";
 import { AiOutlineHeart } from "react-icons/ai";
 import { CartContext } from "@/context/cart";
+import useAuthStore from "@/store/auth";
+import toast from "react-hot-toast";
 
 function ProductCard({ product, sub = false }) {
   const { push } = useRouter();
+
+  const { user } = useAuthStore();
 
   const {
     cart,
@@ -18,7 +22,14 @@ function ProductCard({ product, sub = false }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    addToCart(product);
+    if (!user) {
+      toast.error("Please sign in to continue shopping");
+      return push("/auth/login");
+    }
+
+    const { id, images, category, name, price } = product;
+
+    addToCart({ id, images, category, name, price });
   };
 
   return (

@@ -5,7 +5,6 @@ export const CartContext = createContext(null)
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({
-    user: null,
     items: [],
     total_price: 0,
     total_products: 0,
@@ -22,22 +21,20 @@ const CartProvider = ({ children }) => {
 
         // console.log(prevCart);
 
-        if (prevCart?.user === user?.id) {
-          setCart(prevCart);
+        if (prevCart?.user?.id === user?.id) {
+          setCart({ ...prevCart, user });
         }
       }
     }
   }, [user])
 
   useEffect(() => {
-    if (user && !cart.user) {
-      console.log("working");
-
+    if (user && !cart?.user) {
       setCart((prev) => {
         return { user: user, ...prev };
       });
     }
-  }, [user, cart]);
+  }, [user]);
 
   const addToCart = (product) => {
     setCart((prev) => {

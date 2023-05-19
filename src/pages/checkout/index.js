@@ -4,8 +4,11 @@ import { AddressForm, Container } from "@/components";
 import { FaCartArrowDown, FaStore, FaTruck } from "react-icons/fa";
 
 import earbud from "@/assets/earbud1.jpg";
-import Link from "next/link";
+
 import { CartContext } from "@/context/cart";
+import { placeOrder } from "@/allApis/order";
+import { useRouter } from "next/router";
+import useAuthStore from "@/store/auth";
 
 const Checkout = () => {
   const [street, setStreet] = useState("");
@@ -16,6 +19,10 @@ const Checkout = () => {
   const [address, setAddress] = useState("");
 
   const [error, setError] = useState(true);
+
+  const { push } = useRouter();
+
+  const { user } = useAuthStore();
 
   useEffect(() => {
     if (error) {
@@ -57,6 +64,18 @@ const Checkout = () => {
     };
 
     console.log(data);
+
+    // const res = placeOrder(data);
+
+    // if (res?.id) {
+    //   push("/login");
+    //   setAddress("");
+    //   setCity("");
+    //   setCountry("");
+    //   setPostCode("");
+    //   setState("");
+    //   setStreet("");
+    // }
   };
 
   return (
