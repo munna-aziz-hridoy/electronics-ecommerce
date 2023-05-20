@@ -1,16 +1,16 @@
-import { createContext, useEffect, useState } from "react";
-import useAuthStore from "@/store/auth";
+import { createContext, useEffect, useState } from 'react'
+import useAuthStore from '@/store/auth'
 
-export const CartContext = createContext(null);
+export const CartContext = createContext(null)
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({
     items: [],
     total_price: 0,
     total_products: 0,
-  });
+  })
 
-  const { user } = useAuthStore();
+  const { user } = useAuthStore()
 
   useEffect(() => {
     if (user) {
@@ -26,7 +26,7 @@ const CartProvider = ({ children }) => {
         }
       }
     }
-  }, [user]);
+  }, [user])
 
   useEffect(() => {
     if (user && !cart?.user) {
@@ -38,29 +38,29 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCart((prev) => {
-      const { user, items } = prev;
+      const { user, items } = prev
 
-      let newItems = [...items, { ...product, quantity: 1 }];
+      let newItems = [...items, { ...product, quantity: 1 }]
 
       newItems = newItems.map((item) => {
-        const { price, ...rest } = item;
+        const { price, ...rest } = item
 
-        let extra_price = 0;
+        let extra_price = 0
         if (item?.extras) {
           extra_price = item.extras
             .map((extra) => extra.price)
-            .reduce((a, b) => a + b);
+            .reduce((a, b) => a + b)
         }
 
-        return { ...rest, price, extra_price };
-      });
+        return { ...rest, price, extra_price }
+      })
 
       const prices = newItems
         .map((item) => item.price * item.quantity + item.extra_price)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b)
       const quantities = newItems
         .map((item) => item.quantity)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b)
 
       localStorage.setItem(
         "ec_cart",
@@ -77,26 +77,26 @@ const CartProvider = ({ children }) => {
         items: newItems,
         total_price: prices,
         total_products: quantities,
-      };
-    });
-  };
+      }
+    })
+  }
 
   const removeFromCart = (product) => {
     setCart((prev) => {
-      const { user, items, total_price, total_products } = prev;
+      const { user, items, total_price, total_products } = prev
 
-      const newItems = items.filter((item) => item.id !== product.id);
+      const newItems = items.filter((item) => item.id !== product.id)
 
       const prices =
         newItems.length !== 0
           ? newItems
               .map((item) => item.price * item.quantity + item.extra_price)
               .reduce((a, b) => a + b)
-          : 0;
+          : 0
       const quantities =
         newItems.length !== 0
           ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
-          : 0;
+          : 0
 
       localStorage.setItem(
         "ec_cart",
@@ -113,9 +113,9 @@ const CartProvider = ({ children }) => {
         items: newItems,
         total_price: prices,
         total_products: quantities,
-      };
-    });
-  };
+      }
+    })
+  }
 
   const clearCart = () => {
     setCart((prev) => {
@@ -127,24 +127,24 @@ const CartProvider = ({ children }) => {
 
   const increaseQuantity = (product) => {
     setCart((prev) => {
-      const { user, items, total_price, total_products } = prev;
+      const { user, items, total_price, total_products } = prev
 
-      const exists = items.find((item) => item.id === product.id);
+      const exists = items.find((item) => item.id === product.id)
 
-      exists.quantity = exists.quantity + 1;
+      exists.quantity = exists.quantity + 1
 
-      const existsIndex = items.indexOf(product);
+      const existsIndex = items.indexOf(product)
 
-      const newItems = items.filter((item) => item.id !== product.id);
+      const newItems = items.filter((item) => item.id !== product.id)
 
-      newItems.splice(existsIndex, 0, exists);
+      newItems.splice(existsIndex, 0, exists)
 
       const prices = newItems
         .map((item) => item.price * item.quantity + item.extra_price)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b)
       const quantities = newItems
         .map((item) => item.quantity)
-        .reduce((a, b) => a + b);
+        .reduce((a, b) => a + b)
 
       localStorage.setItem(
         "ec_cart",
@@ -161,29 +161,29 @@ const CartProvider = ({ children }) => {
         items: newItems,
         total_price: prices,
         total_products: quantities,
-      };
-    });
-  };
+      }
+    })
+  }
 
   const decreaseQuantity = (product) => {
     setCart((prev) => {
-      const { user, items, total_price, total_products } = prev;
+      const { user, items, total_price, total_products } = prev
 
-      const exists = items.find((item) => item.id === product.id);
+      const exists = items.find((item) => item.id === product.id)
 
-      if (!exists) return prev;
+      if (!exists) return prev
 
-      let newItems;
+      let newItems
 
       if (exists.quantity === 1) {
-        newItems = items.filter((item) => item.id !== product.id);
+        newItems = items.filter((item) => item.id !== product.id)
       } else {
-        exists.quantity = exists.quantity - 1;
-        const existsIndex = items.indexOf(product);
+        exists.quantity = exists.quantity - 1
+        const existsIndex = items.indexOf(product)
 
-        newItems = items.filter((item) => item.id !== product.id);
+        newItems = items.filter((item) => item.id !== product.id)
 
-        newItems.splice(existsIndex, 0, exists);
+        newItems.splice(existsIndex, 0, exists)
       }
 
       const prices =
@@ -191,11 +191,11 @@ const CartProvider = ({ children }) => {
           ? newItems
               .map((item) => item.price * item.quantity + item.extra_price)
               .reduce((a, b) => a + b)
-          : 0;
+          : 0
       const quantities =
         newItems.length !== 0
           ? newItems.map((item) => item.quantity).reduce((a, b) => a + b)
-          : 0;
+          : 0
 
       localStorage.setItem(
         "ec_cart",
@@ -212,13 +212,13 @@ const CartProvider = ({ children }) => {
         items: newItems,
         total_price: prices,
         total_products: quantities,
-      };
-    });
-  };
+      }
+    })
+  }
 
   return (
     <CartContext.Provider
-      value={{
+      defaultValue={{
         cart,
         addToCart,
         removeFromCart,
@@ -229,7 +229,7 @@ const CartProvider = ({ children }) => {
     >
       {children}
     </CartContext.Provider>
-  );
-};
+  )
+}
 
-export default CartProvider;
+export default CartProvider

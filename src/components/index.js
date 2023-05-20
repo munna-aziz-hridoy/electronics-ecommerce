@@ -19,10 +19,10 @@ import CategorySectionBottom from "./section/CategorySectionBottom";
 
 import AdminSideBar from "./common/Admin/AdminSideBar";
 import SignMeUp from "./common/SignMeUp";
-import CategoryTR from "./common/Admin/CategoryTR";
+import CategoryTR from "./common/Admin/TR/CategoryTR";
 import CategoryModal from "./common/Admin/Modal/CategoryModal";
-import ProductTR from "./common/Admin/ProductTR";
-import UserTR from "./common/Admin/UserTR";
+import ProductTR from "./common/Admin/TR/ProductTR";
+import UserTR from "./common/Admin/TR/UserTR";
 import AddUserModal from "./common/Admin/Modal/AddUserModal";
 
 import Spinner from "./common/Spinner";

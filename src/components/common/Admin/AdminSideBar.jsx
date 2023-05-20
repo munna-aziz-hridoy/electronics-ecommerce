@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
+import { FaBoxOpen } from 'react-icons/fa'
 import { RiDashboardLine } from 'react-icons/ri'
 
 const AdminSideBar = ({ children }) => {
@@ -106,6 +106,17 @@ const AdminSideBar = ({ children }) => {
                 </svg>
                 <span className='flex-1 ml-3 whitespace-nowrap'>Products</span>
               </Link>
+            </li>
+            <li>
+              <Link
+                href='/admin/orderManage'
+                className=' flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+              >
+                <FaBoxOpen className='text-2xl text-gray-500' />
+
+                <span className='ml-3'>Orders </span>
+              </Link>
+              
             </li>
           </ul>
         </div>
