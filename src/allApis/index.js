@@ -8,7 +8,7 @@ import {
 
 import { loginUser, resisterUser } from "./LoginRegister";
 
-import { getAllUser, addNewUser } from "./getAllUser";
+import { getAllUser, addNewUser } from "./AllUserApis";
 import { getAllProduct, newProductAdd } from "./ProductApis";
 
 export {

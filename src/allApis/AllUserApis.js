@@ -38,3 +38,16 @@ export const addNewUser = (data, refetch, setOpenModal) => {
       }
     });
 };
+
+
+//  Delete user
+export const removeUser = (id, refetch) => {
+  fetch(`${serverUrl}/api/user/${id}`, {
+    method: 'DELETE',
+  }).then((res) => {
+    if (res?.status === 200) {
+      refetch()
+      toast.success('Successfully Deleted ')
+    }
+  })
+}
