@@ -11,6 +11,7 @@ const category = new Schema({
     type: String,
     require: true,
   },
+  image: String,
   id: {
     type: String,
     require: true,

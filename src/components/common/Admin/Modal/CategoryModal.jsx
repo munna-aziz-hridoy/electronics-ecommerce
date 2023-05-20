@@ -11,17 +11,22 @@ const CategoryModal = ({
   refetch,
   parentRefetch,
 }) => {
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [imgModal, setImgModal] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    addNewCategory(data, refetch, setOpenModal, parentRefetch);
+    addNewCategory(
+      { ...data, image: uploadedImages?.[0] || null },
+      refetch,
+      setOpenModal,
+      parentRefetch
+    );
   };
-
-  const [uploadedImages, setUploadedImages] = useState([]);
-  const [imgModal, setImgModal] = useState(false);
 
   return (
     <React.Fragment>

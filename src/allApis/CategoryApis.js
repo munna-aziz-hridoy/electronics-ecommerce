@@ -97,7 +97,7 @@ export const removeCategory = (id, refetch, parentRefetch) => {
   }).then((res) => {
     if (res?.status === 200) {
       refetch();
-      parentRefetch();
+      parentRefetch && parentRefetch();
       toast.success("Successfully Deleted ");
     }
   });
