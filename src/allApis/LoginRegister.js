@@ -3,7 +3,7 @@ import { setToken } from "./token";
 
 // User Registration
 export const resisterUser = async (body) => {
-  const res = await fetch(`${serverUrl}/api/user`, {
+  const res = await fetch(`/api/user`, {
     method: "POST",
     body: JSON.stringify({
       ...body,
@@ -17,7 +17,7 @@ export const resisterUser = async (body) => {
 
 // User Login
 export const loginUser = async (body) => {
-  const res = await fetch(`${serverUrl}/api/user/login`, {
+  const res = await fetch(`/api/user/login`, {
     method: "POST",
     body: JSON.stringify(body),
   });

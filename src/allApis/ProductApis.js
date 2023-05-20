@@ -7,7 +7,7 @@ export const getAllProduct = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["useGetAllProduct"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/product`, {
+      fetch(`/api/product`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -21,7 +21,7 @@ export const getSingleProduct = (id) => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["useGetAllProduct"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/product/${id}`, {
+      fetch(`/api/product/${id}`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -33,7 +33,7 @@ export const getSingleProduct = (id) => {
 
 // ADD New Product
 export const newProductAdd = (data) => {
-  fetch(`${serverUrl}/api/product`, {
+  fetch(`/api/product`, {
     method: "POST",
     headers: {
       // authorization: `Bearer ${getToken()}`,
@@ -54,7 +54,7 @@ export const newProductAdd = (data) => {
 
 //  Delete Product
 export const removeProduct = (id, refetch) => {
-  fetch(`${serverUrl}/api/product/${id}`, {
+  fetch(`/api/product/${id}`, {
     method: "DELETE",
   }).then((res) => {
     if (res?.status === 200) {

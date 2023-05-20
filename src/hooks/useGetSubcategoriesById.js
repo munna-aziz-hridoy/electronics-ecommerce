@@ -8,7 +8,7 @@ const useGetSubcategoriesById = (id) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${serverUrl}/api/category/${id}`)
+    fetch(`/api/category/${id}`)
       .then((res) => {
         if (res.status === 200) {
           return res.json();

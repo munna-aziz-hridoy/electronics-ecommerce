@@ -13,7 +13,7 @@ export const placeOrder = (
   setStreet = null,
   clearCart = null
 ) => {
-  const url = `${serverUrl}/api/user/order`;
+  const url = `/api/user/order`;
 
   fetch(url, {
     method: "POST",
@@ -50,7 +50,7 @@ export const getUserOrders = (id) => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getUserOrders"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/user/order?user_id=${id}`, {
+      fetch(`/api/user/order?user_id=${id}`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -66,7 +66,7 @@ export const getAllOrders = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getUserOrders"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/user/admin/order`, {
+      fetch(`/api/user/admin/order`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },

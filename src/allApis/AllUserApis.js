@@ -7,7 +7,7 @@ export const getAllUser = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["useGetAllUser"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/user`, {
+      fetch(`/api/user`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -19,7 +19,7 @@ export const getAllUser = () => {
 
 // ADD New User
 export const addNewUser = (data, refetch, setOpenModal) => {
-  fetch(`${serverUrl}/api/user`, {
+  fetch(`/api/user`, {
     method: "POST",
     headers: {
       // authorization: `Bearer ${getToken()}`,
@@ -39,15 +39,14 @@ export const addNewUser = (data, refetch, setOpenModal) => {
     });
 };
 
-
 //  Delete user
 export const removeUser = (id, refetch) => {
-  fetch(`${serverUrl}/api/user/${id}`, {
-    method: 'DELETE',
+  fetch(`/api/user/${id}`, {
+    method: "DELETE",
   }).then((res) => {
     if (res?.status === 200) {
-      refetch()
-      toast.success('Successfully Deleted ')
+      refetch();
+      toast.success("Successfully Deleted ");
     }
-  })
-}
+  });
+};

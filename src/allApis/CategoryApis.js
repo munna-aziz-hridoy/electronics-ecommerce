@@ -7,7 +7,7 @@ export const getAllCategory = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getAllCategory"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/category`, {
+      fetch(`/api/category`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -23,7 +23,7 @@ export const getAllSubCategory = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getAllSubCategory"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/category/subcategories`, {
+      fetch(`/api/category/subcategories`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -35,10 +35,12 @@ export const getAllSubCategory = () => {
 
 // Get parent category
 export const getParentCategory = () => {
+  console.log(serverUrl);
+
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getParentCategory"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/category/null`, {
+      fetch(`/api/category/null`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -55,7 +57,7 @@ export const getCategory = (id) => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getCategory"],
     queryFn: () =>
-      fetch(`${serverUrl}/api/category/${id}`, {
+      fetch(`/api/category/${id}`, {
         // headers: {
         //   authorization: `Bearer ${getToken()}`,
         // },
@@ -67,7 +69,7 @@ export const getCategory = (id) => {
 
 // ADD New Category
 export const addNewCategory = (data, refetch, setOpenModal, parentRefetch) => {
-  fetch(`${serverUrl}/api/category`, {
+  fetch(`/api/category`, {
     method: "POST",
     headers: {
       // authorization: `Bearer ${getToken()}`,
@@ -90,7 +92,7 @@ export const addNewCategory = (data, refetch, setOpenModal, parentRefetch) => {
 
 // Get Delete Category
 export const removeCategory = (id, refetch, parentRefetch) => {
-  fetch(`${serverUrl}/api/category/${id}`, {
+  fetch(`/api/category/${id}`, {
     method: "DELETE",
   }).then((res) => {
     if (res?.status === 200) {

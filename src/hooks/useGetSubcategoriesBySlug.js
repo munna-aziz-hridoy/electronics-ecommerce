@@ -12,7 +12,7 @@ const useGetSubcategoriesBySlug = (slug) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${serverUrl}/api/category/${parentCategory?.id}`)
+    fetch(`/api/category/${parentCategory?.id}`)
       .then((res) => {
         if (res.status === 200) {
           return res.json();

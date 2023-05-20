@@ -14,7 +14,7 @@ function SubCategory() {
   const { query } = useRouter();
 
   useEffect(() => {
-    fetch(`${serverUrl}/api/category/product?category=${query.sub_category}`)
+    fetch(`/api/category/product?category=${query.sub_category}`)
       .then((res) => {
         if (res.status === 200) {
           return res.json();
