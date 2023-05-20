@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
@@ -56,9 +56,12 @@ function Navbar() {
               {user ? (
                 <>
                   {" "}
-                  <p className="font-medium capitalize  text-gray-900">
-                    {user?.name}
-                  </p>
+                  <Link href="/user/profile">
+                    {" "}
+                    <p className="font-medium capitalize  text-gray-900">
+                      {user?.name}
+                    </p>
+                  </Link>
                   <Link href="/cart">
                     <span className=" relative w-8 h-6 bg-[#bbd850] flex justify-center items-center rounded border-[1px] border-gray-900 text-sm cursor-pointer before:content[''] before:absolute before:border-[1px] before:border-gray-900 before:rounded-full before:w-4 before:h-6 before:top-[-15px] before:z-[-1]">
                       {cart?.total_products || 0}

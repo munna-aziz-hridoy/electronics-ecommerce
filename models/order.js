@@ -15,9 +15,8 @@ const order = new Schema({
         },
       ],
       images: [{ type: String }],
-      quantity: {
-        type: Number,
-      },
+      quantity: Number,
+      price: Number,
     },
   ],
   shipping_address: {
@@ -32,6 +31,8 @@ const order = new Schema({
     type: String,
     require: true,
   },
+  total_price: Number,
+  total_products: Number,
   paid: Boolean,
   delivery: Boolean,
 

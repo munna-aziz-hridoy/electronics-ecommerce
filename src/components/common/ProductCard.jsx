@@ -37,8 +37,12 @@ function ProductCard({ product, sub = false }) {
       onClick={() => push(`/product/${product.id}`)}
       className=" cursor-pointer shadow-sm rounded m-2 my-4 md:m-0 bg-white drop-shadow-sm"
     >
-      <div className={`w-full ${sub ? "h-[300px]" : "h-[400px]"} relative`}>
-        <Image src={product.image} className="rounded-t" />
+      <div
+        className={`w-full ${
+          sub ? "h-[300px]" : "h-[400px]"
+        } relative overflow-hidden`}
+      >
+        <img src={product?.images?.[0]} className="rounded-t w-full h-full" />
         <div className="absolute bottom-0 h-16 w-full flex gap-2">
           <button
             onClick={handleAddToCart}

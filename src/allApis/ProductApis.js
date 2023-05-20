@@ -17,6 +17,20 @@ export const getAllProduct = () => {
   return { isLoading, error, data, refetch };
 };
 
+export const getSingleProduct = (id) => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["useGetAllProduct"],
+    queryFn: () =>
+      fetch(`${serverUrl}/api/product/${id}`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      }).then((res) => res.json()),
+  });
+
+  return { isLoading, error, data, refetch };
+};
+
 // ADD New Product
 export const newProductAdd = (data) => {
   fetch(`${serverUrl}/api/product`, {
@@ -41,11 +55,11 @@ export const newProductAdd = (data) => {
 //  Delete Product
 export const removeProduct = (id, refetch) => {
   fetch(`${serverUrl}/api/product/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   }).then((res) => {
     if (res?.status === 200) {
-      refetch()
-      toast.success('Successfully Deleted ')
+      refetch();
+      toast.success("Successfully Deleted ");
     }
-  })
-}
+  });
+};

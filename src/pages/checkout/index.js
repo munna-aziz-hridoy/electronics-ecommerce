@@ -47,6 +47,7 @@ const Checkout = () => {
         extras: item?.extras,
         images: item?.images,
         quantity: item?.quantity,
+        price: item?.price,
       };
     });
 
@@ -63,8 +64,6 @@ const Checkout = () => {
       },
       user: user?.id,
     };
-
-    // console.log(data);
 
     placeOrder(
       data,
@@ -161,7 +160,7 @@ const Checkout = () => {
                   className="flex justify-between items-center my-8 border-b pb-4"
                 >
                   <div className="flex gap-3">
-                    <img src={earbud.src} className="w-16 h-16" />
+                    <img src={item?.images?.[0]} className="w-16 h-16" />
                     <div>
                       <h2 className="text-xl font-semibold text-gray-800 capitalize">
                         {item?.name}

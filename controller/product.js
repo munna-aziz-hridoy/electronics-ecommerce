@@ -88,7 +88,7 @@ export const product = async (req, res) => {
 
   if (req.method === "GET") {
     try {
-      const result = await Product.find({ id }, "-_id -created_at -__v");
+      const result = await Product.findOne({ id }, "-_id -created_at -__v");
 
       response.SUCCESS(res, result);
     } catch (error) {

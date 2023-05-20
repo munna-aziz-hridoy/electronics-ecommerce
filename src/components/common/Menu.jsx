@@ -11,6 +11,8 @@ import { Spinner } from "..";
 function MenuItem({ menuItem }) {
   const { data, loading } = useGetSubcategoriesById(menuItem?.id);
 
+  console.log(menuItem);
+
   return (
     <>
       <p className="font-light text-gray-700 hover:text-black duration-150 capitalize relative menu_item h-10">
@@ -85,8 +87,6 @@ function Menu({ open, setOpen }) {
   const router = useRouter();
 
   const { data, isLoading, refetch } = getParentCategory();
-
-  // console.log(data);
 
   if (isLoading) return <Spinner />;
 

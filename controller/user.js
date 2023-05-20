@@ -147,17 +147,17 @@ export const admin = async (req, res) => {
 };
 
 export const user = async (req, res) => {
-  const id = req.query.user
+  const id = req.query.user;
 
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     try {
-      const result = await User.find({ id }, '-_id -created_at -__v')
+      const result = await User.find({ id }, "-_id -created_at -__v");
 
-      response.SUCCESS(res, result)
+      response.SUCCESS(res, result);
     } catch (error) {
-      response.INTERNAL_SERVER_ERROR(res, error)
+      response.INTERNAL_SERVER_ERROR(res, error);
     }
-  } else if (req.method === 'PATCH') {
+  } else if (req.method === "PATCH") {
     try {
       const doc = {
         name: name || result?.name,
@@ -168,23 +168,23 @@ export const user = async (req, res) => {
         state: state || result?.state,
         address: address || result?.address,
         avatar: avatar || result?.avatar,
-      }
+      };
 
-      const result = await User.findOneAndUpdate({ id }, doc)
+      const result = await User.findOneAndUpdate({ id }, doc);
     } catch (error) {
-      response.INTERNAL_SERVER_ERROR(res, error)
+      response.INTERNAL_SERVER_ERROR(res, error);
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === "DELETE") {
     try {
-      const exists = await User.find({ id })
+      const exists = await User.find({ id });
 
-      if (!exists) return response.NOT_FOUND(res)
+      if (!exists) return response.NOT_FOUND(res);
 
-      const result = await User.deleteOne({ id })
+      const result = await User.deleteOne({ id });
 
-      response.SUCCESS(res, result)
+      response.SUCCESS(res, result);
     } catch (error) {
-      response.INTERNAL_SERVER_ERROR(res, error)
+      response.INTERNAL_SERVER_ERROR(res, error);
     }
   } else {
     response.METHOD_NOT_ALLOWED(res, req);
@@ -237,10 +237,7 @@ export const order = async (req, res) => {
 
   if (req.method === "GET") {
     try {
-      const order = await Order.find(
-        { user: user_id },
-        "-_id -created_at -__v"
-      );
+      const order = await Order.find({ user: user_id }, "-_id -__v");
 
       response.SUCCESS(res, order);
     } catch (error) {
@@ -310,14 +307,50 @@ export const orderId = async (req, res) => {
 
 export const adminOrder = async (req, res) => {
   if (req.method === "GET") {
-    const orders = Order.find({}, "-_id -created_at -__v");
-    const users = User.find({}, "-_id -created_at -__v");
+    try {
+      let orders = await Order.find({}, "-_id -__v");
+      let users = await User.find({}, "-_id -created_at -__v");
 
-    if (!orders || users) return response.NOT_FOUND(res);
+      if (!orders || !users) return response.NOT_FOUND(res);
 
-    const fullOrders = mergeArrays(orders, users, "user", "id");
+      orders = orders?.map((order) => {
+        const {
+          id,
+          items,
+          shipping_address,
+          user,
+          total_price,
+          total_products,
+          paid,
+          delivery,
+          created_at,
+        } = order;
 
-    response.SUCCESS(res, { ...fullOrders });
+        return {
+          id,
+          items,
+          shipping_address,
+          user,
+          total_price,
+          total_products,
+          paid,
+          delivery,
+          created_at,
+        };
+      });
+
+      users = users?.map((user) => {
+        const { id, name, email } = user;
+
+        return { user_id: id, name, email };
+      });
+
+      const fullOrders = mergeArrays(orders, users, "user", "user_id");
+
+      response.SUCCESS(res, fullOrders);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
   } else {
     response.METHOD_NOT_ALLOWED(res, req);
   }
