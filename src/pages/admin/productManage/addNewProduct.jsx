@@ -8,7 +8,11 @@ import { Spinner } from '@/components'
 import { useRouter } from 'next/router'
 import { BsArrowBarLeft, BsBuildingFillAdd, BsImageFill } from 'react-icons/bs'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
+import { GiOverdose } from 'react-icons/gi'
+import { GrStackOverflow } from 'react-icons/gr'
 import dynamic from 'next/dynamic'
+import AddExtraModal from '@/components/common/Admin/Modal/AddExtraModal'
+import ExtraProduct from '@/components/common/Admin/Product/ExtraProduct'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 const addNewProduct = () => {
@@ -16,6 +20,11 @@ const addNewProduct = () => {
   //  Product Image (Selected Image) && Image Add Model
   const [uploadedImages, setUploadedImages] = useState([])
   const [openModal, setOpenModal] = useState(false)
+  const [openExtraModal, setOpenExtraModal] = useState(false)
+  const [extraData, setExtraData] = useState([])
+
+  console.log(extraData)
+
   // editor
   const editor = useRef(null)
   const [content, setContent] = useState('')
@@ -87,7 +96,6 @@ const addNewProduct = () => {
             ))}
           </select>
         </div>
-
         <div className='mb-4'>
           <label
             htmlFor='description'
@@ -116,6 +124,50 @@ const addNewProduct = () => {
             placeholder='Write a short description about this product...'
           ></textarea>
         </div>
+        <div className='mt-4'>
+          {uploadedImages?.length > 0 && (
+            <label
+              className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+              htmlFor='multiple_files'
+            >
+              Selected Product Images
+            </label>
+          )}
+          <div className='flex justify-start items-center gap-5'>
+            {uploadedImages?.map((productImage, index) => {
+              return (
+                <img
+                  key={index}
+                  className=' object-cover h-32 w-32 rounded-lg mb-8'
+                  alt='Image'
+                  // height={100}
+                  // width={100}
+                  src={productImage}
+                />
+              )
+            })}
+          </div>
+          <div className='flex items-center'>
+            <button
+              onClick={() => setOpenModal(true)}
+              type='button'
+              className='hover:-translate-y-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-4 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+            >
+              <BsImageFill />
+              Add Product Image
+            </button>
+            {uploadedImages?.length > 0 && (
+              <button
+                onClick={() => setUploadedImages([])}
+                type='button'
+                className='flex items-center gap-2 hover:translate-x-2 hover:translate-y-2 duration-300 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+              >
+                <RiDeleteBin2Fill />
+                {uploadedImages?.length === 1 ? 'Remove' : 'Remove All'}
+              </button>
+            )}
+          </div>
+        </div>
         <div className='mb-4'>
           <label
             htmlFor='price'
@@ -133,68 +185,26 @@ const addNewProduct = () => {
             required
           />
         </div>
-        <div className='flex justify-between items-end mb-4'>
-          <div>
-            {uploadedImages?.length > 0 && (
-              <label
-                className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
-                htmlFor='multiple_files'
-              >
-                Selected Product Images
-              </label>
-            )}
-            <div className='flex justify-start items-center gap-5'>
-              {uploadedImages?.map((productImage, index) => {
-                return (
-                  <Image
-                    key={index}
-                    className=' object-cover h-32 w-32 rounded-lg mb-8'
-                    alt='Image'
-                    height={100}
-                    width={100}
-                    src={productImage}
-                  />
-                )
-              })}
-            </div>
-            <div className='flex items-center'>
-              <button
-                onClick={() => setOpenModal(true)}
-                type='button'
-                className='hover:-translate-y-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
-              >
-                <BsImageFill />
-                Add Product Image
-              </button>
-              {uploadedImages?.length > 0 && (
-                <button
-                  onClick={() => setUploadedImages([])}
-                  type='button'
-                  className='flex items-center gap-2 hover:translate-x-2 hover:translate-y-2 duration-300 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-                >
-                  <RiDeleteBin2Fill />
-                  {uploadedImages?.length === 1 ? 'Remove' : 'Remove All'}
-                </button>
-              )}
-            </div>
-          </div>
-
-          <div className='flex gap-5'>
-            <button
-              onClick={() => router.back()}
-              type='button'
-              className='hover:-translate-x-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-            >
-              <BsArrowBarLeft />
-              Go Back
-            </button>
-            <Button
-              className='flex items-center hover:-translate-y-2 duration-300 '
-              type='submit'
-            >
-              <BsBuildingFillAdd className='mr-2' /> Add Product
-            </Button>
-          </div>
+        {/* extra Product Section */}
+        <ExtraProduct
+          setOpenExtraModal={setOpenExtraModal}
+          extraData={extraData}
+        />
+        <div className='flex justify-between md:justify-end items-center mb-4'>
+          <button
+            onClick={() => router.back()}
+            type='button'
+            className='hover:-translate-x-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+          >
+            <BsArrowBarLeft />
+            Go Back
+          </button>
+          <button
+            className='hover:-translate-y-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900'
+            type='submit'
+          >
+            <BsBuildingFillAdd className='mr-2' /> Add Product
+          </button>
         </div>
       </form>
       {/* Image Upload Modal  */}
@@ -205,6 +215,12 @@ const addNewProduct = () => {
           setOpenModal,
         }}
         isMultiple={true}
+      />
+      {/* Add Extra Modal */}
+      <AddExtraModal
+        openModal={openExtraModal}
+        setOpenModal={setOpenExtraModal}
+        states={{ extraData, setExtraData }}
       />
     </div>
   )
