@@ -23,7 +23,7 @@ export const category = async (req, res) => {
 
   //----   create category
   else if (req.method === "POST") {
-    const { name, parent_id } = JSON.parse(req.body);
+    const { name, parent_id, image } = JSON.parse(req.body);
 
     if (!name) return response.BAD_REQUEST(res, "Name can't be empty");
 
@@ -34,6 +34,7 @@ export const category = async (req, res) => {
       const category = new Category({
         name,
         slug,
+        image,
         parent_id: parent_id === "NA" ? null : parent_id,
         id,
       });
@@ -94,7 +95,7 @@ export const subCategory = async (req, res) => {
 
   //----   update category
   else if (req.method === "PATCH") {
-    const { name, parent_id } = JSON.parse(req.body);
+    const { name, parent_id, image } = JSON.parse(req.body);
 
     if (!name) response.BAD_REQUEST(res, "Name can't be empty");
 
@@ -108,12 +109,14 @@ export const subCategory = async (req, res) => {
         doc = {
           name,
           slug,
+          image,
           parent_id,
         };
       } else {
         doc = {
           name,
           slug,
+          image,
         };
       }
 
