@@ -13,6 +13,7 @@ export const resisterUser = async (body) => {
   if (json?.token?.length > 10) {
     setToken(json.token);
   }
+  return json;
 };
 
 // User Login
