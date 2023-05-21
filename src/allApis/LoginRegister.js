@@ -2,7 +2,7 @@ import { serverUrl } from "@config/index";
 import { setToken } from "./token";
 
 // User Registration
-export const resisterUser = async (body, push, toast) => {
+export const resisterUser = async (body) => {
   const res = await fetch(`/api/user`, {
     method: "POST",
     body: JSON.stringify({
@@ -12,8 +12,6 @@ export const resisterUser = async (body, push, toast) => {
   const json = await res.json();
   if (json?.token?.length > 10) {
     setToken(json.token);
-    toast.success("Register successfull");
-    push("/");
   }
 };
 

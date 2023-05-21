@@ -7,6 +7,7 @@ import { Container } from "@/components";
 import { resisterUser } from "@/allApis";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import useAuthStore from "@/store/auth";
 
 const register = () => {
   const {
@@ -18,6 +19,8 @@ const register = () => {
 
   const { push } = useRouter();
 
+  const { addUser } = useAuthStore();
+
   const onSubmit = (data) => {
     resisterUser(
       {
@@ -27,7 +30,13 @@ const register = () => {
       },
       push,
       toast
-    );
+    ).then((data) => {
+      if (data?.id) {
+        toast.success("Register successfull");
+        addUser(data);
+        push("/");
+      }
+    });
   };
 
   return (
