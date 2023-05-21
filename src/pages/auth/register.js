@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 
 import { Container } from "@/components";
 import { resisterUser } from "@/allApis";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const register = () => {
   const {
@@ -14,12 +16,18 @@ const register = () => {
     formState: { errors },
   } = useForm();
 
+  const { push } = useRouter();
+
   const onSubmit = (data) => {
-    resisterUser({
-      name: data?.firstName + " " + data?.lastName,
-      email: data?.email,
-      password: data?.password,
-    });
+    resisterUser(
+      {
+        name: data?.firstName + " " + data?.lastName,
+        email: data?.email,
+        password: data?.password,
+      },
+      push,
+      toast
+    );
   };
 
   return (
