@@ -9,6 +9,8 @@ const CategoryManage = () => {
   const { data: allCategory, isLoading, refetch } = getAllCategory();
   const { data, refetch: parentRefetch } = getCategory();
 
+  console.log(allCategory)
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -23,6 +25,9 @@ const CategoryManage = () => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th scope="col" className="px-6 py-3">
+                Category Image
+              </th>
               <th scope="col" className="px-6 py-3">
                 Category Name
               </th>

@@ -75,11 +75,12 @@ export const subCategory = async (req, res) => {
         const parentCategory = await Category.findOne({ id: id }, "name");
 
         result = result?.map((item) => {
-          const { name, slug, id, parent_id } = item;
+          const { name, slug, id, parent_id,image } = item;
 
           return {
             name,
             slug,
+            image,
             id,
             parent_id,
             parent_name: parentCategory?.name,

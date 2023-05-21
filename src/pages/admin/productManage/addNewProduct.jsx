@@ -39,22 +39,17 @@ const addNewProduct = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   // Add Product Function
   const onSubmit = (data) => {
-    console.log({
-      ...data,
-      images: uploadedImages,
-      description: `${content}`,
-    });
-
     newProductAdd({
       ...data,
       images: uploadedImages,
       description: `${content}`,
-    });
+    },reset);
   };
 
   if (categoryLoading) return <Spinner />;
