@@ -4,7 +4,7 @@ import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
 const CategoryTR = ({ category, refetch }) => {
-  const { name, id, slug, parent_id } = category
+  const { name, id, slug, parent_id,image } = category
 
   const handleDelete = () => {
     const del = window.confirm('Do you want to delete?')
@@ -15,6 +15,21 @@ const CategoryTR = ({ category, refetch }) => {
 
   return (
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
+      <th
+        scope='row'
+        className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+      >
+        <img
+          className=' object-cover h-12 w-12 border rounded-lg '
+          alt='Img'
+          // height={100}
+          // width={100}
+          src={
+            image ||
+            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'
+          }
+        />
+      </th>
       <th
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'

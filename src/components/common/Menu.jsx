@@ -22,7 +22,7 @@ function MenuItem({ menuItem }) {
           {data?.map((item, i) => (
             <Link key={i} href={`/c/${menuItem.slug}/${item?.slug}`}>
               <span className="flex justify-start items-center gap-2 my-1 hover:bg-gray-300 p-2 rounded">
-                <img src={item?.image} alt="" className="w-10 h-10 rounded" />
+                <img src={item?.image||'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'} alt="" className="w-10 h-10 rounded" />
                 <span className="text-xs font-medium text-gray-800 capitalize">
                   {item.name}
                 </span>
@@ -72,7 +72,7 @@ function MenuItemMobile({ menuItem, setOpen }) {
             key={i}
             className="flex justify-start items-center gap-2 my-1 hover:bg-gray-300 p-2 rounded"
           >
-            <img src={item?.image} alt="" className="w-10 h-10 rounded" />
+            <img src={item?.image||'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'} alt="" className="w-10 h-10 rounded" />
             <p className="text-xs font-medium text-gray-800 capitalize">
               {item.name}
             </p>
