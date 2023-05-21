@@ -23,7 +23,7 @@ export const category = async (req, res) => {
 
   //----   create category
   else if (req.method === "POST") {
-    const { name, parent_id } = JSON.parse(req.body);
+    const { name, parent_id, image } = JSON.parse(req.body);
 
     if (!name) return response.BAD_REQUEST(res, "Name can't be empty");
 
@@ -34,6 +34,7 @@ export const category = async (req, res) => {
       const category = new Category({
         name,
         slug,
+        image,
         parent_id: parent_id === "NA" ? null : parent_id,
         id,
       });
