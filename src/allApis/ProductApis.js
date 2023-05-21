@@ -32,25 +32,26 @@ export const getSingleProduct = (id) => {
 };
 
 // ADD New Product
-export const newProductAdd = (data) => {
+export const newProductAdd = (data, reset) => {
   fetch(`/api/product`, {
-    method: "POST",
+    method: 'POST',
     headers: {
       // authorization: `Bearer ${getToken()}`,
-      "Content-type": "application/json;",
+      'Content-type': 'application/json;',
     },
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then((json) => {
       if (!json.error && !json.message) {
-        toast.success("Successfully Added ");
+        toast.success('Successfully Added ')
+        reset()
         // refetch()
       } else {
-        toast.error(json.message || "Something is wrong!");
+        toast.error(json.message || 'Something is wrong!')
       }
-    });
-};
+    })
+}
 
 //  Delete Product
 export const removeProduct = (id, refetch) => {
