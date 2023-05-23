@@ -26,8 +26,7 @@ const CategoryTR = ({ category, refetch }) => {
           // width={100}
           src={
             image ||
-            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'
-          }
+            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'}
         />
       </th>
       <th
