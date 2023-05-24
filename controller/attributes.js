@@ -19,7 +19,7 @@ export const attribute = async (req, res) => {
 
     if (!body) return response.BAD_REQUEST(res, "Data is not included");
 
-    const { name, values } = JSON.parse(body);
+    const { name, values, category_id } = JSON.parse(body);
 
     if (!name) return response.BAD_REQUEST(res, "Name is required");
 
@@ -30,6 +30,7 @@ export const attribute = async (req, res) => {
         id,
         name,
         values: values || [],
+        category_id,
       });
 
       const result = await attribute.save();
@@ -61,7 +62,7 @@ export const singleAttribute = async (req, res) => {
 
     if (!body) return response.BAD_REQUEST(res, "Data is not included");
 
-    const { name, values } = JSON.parse(body);
+    const { name, values, category_id } = JSON.parse(body);
 
     try {
       const exists = await Attribute.findOne({ id });
@@ -73,6 +74,7 @@ export const singleAttribute = async (req, res) => {
         {
           name,
           values,
+          category_id,
         }
       );
 

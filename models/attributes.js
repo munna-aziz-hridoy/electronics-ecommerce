@@ -16,6 +16,7 @@ const attribute = new Schema({
       value: String,
     },
   ],
+  category_id: String,
   created_at: {
     type: Date,
     require: true,
