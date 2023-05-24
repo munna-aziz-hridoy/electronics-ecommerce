@@ -16,7 +16,7 @@ export const users = async (req, res) => {
 
     if (!body) return response.BAD_REQUEST(res, "Data is required");
 
-    const { name, email, password } = body;
+    const { name, email, password } = JSON.parse(body);
 
     if (!name) return response.BAD_REQUEST(res, "Name can't be empty");
     if (!email) return response.BAD_REQUEST(res, "Email can't be empty");
