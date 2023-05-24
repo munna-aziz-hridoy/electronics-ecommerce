@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Link from "next/link";
-import { useForm } from "react-hook-form";
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 
 import { Container, Spinner } from "@/components";
 import { resisterUser } from "@/allApis";
@@ -17,7 +17,7 @@ const register = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   const { push } = useRouter();
 
@@ -36,7 +36,7 @@ const register = () => {
     ).then((data) => {
       setLoading(false);
       if (data?.user) {
-        toast.success("Register successfull");
+        toast.success("Register successful");
         addUser(data?.user);
         push("/");
       }
@@ -137,7 +137,7 @@ const register = () => {
         )}
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default register;
+export default register

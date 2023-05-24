@@ -96,35 +96,39 @@ function Menu({ open, setOpen }) {
 
   return (
     <Fragment>
-      <div className="md:flex justify-center items-center gap-16 mt-5 hidden">
+      <div className='md:flex justify-center items-center gap-16 mt-5 hidden'>
         {data?.map((item, i) => (
           <MenuItem key={i} menuItem={item} />
-        ))}{" "}
+        ))}{' '}
       </div>
 
       <div
         className={`block md:hidden py-6 px-1 bg-white shadow-md fixed top-0 ${
-          open ? "left-0" : "left-[-1000px]"
+          open ? 'left-0' : 'left-[-1000px]'
         } w-3/4 sm:w-1/2 h-screen overflow-y-auto transition-all duration-500 z-50`}
       >
-        <div className="flex justify-between items-center w-full mb-4">
-          <p className="text-4xl font-light uppercase">m&s</p>
+        <div className='flex justify-between items-center w-full mb-4'>
+          <img
+            className='h-16 w-16 rounded-md'
+            src='https://res.cloudinary.com/dqbxqqhx0/image/upload/v1684818511/electronics%20e-commerce/pnig71djilv2lsatfny9.jpg'
+            alt=''
+          />
           <p
             onClick={() => setOpen(false)}
-            className="font-light text-lg text-gray-500 cursor-pointer"
+            className='font-light text-lg text-gray-500 cursor-pointer'
           >
             <BsX fontSize={24} />
           </p>
         </div>
 
-        <div className="flex flex-col justify-start items-start gap-1 ">
+        <div className='flex flex-col justify-start items-start gap-1 '>
           {data?.map((item, i) => (
             <MenuItemMobile key={i} menuItem={item} setOpen={setOpen} />
           ))}
         </div>
       </div>
     </Fragment>
-  );
+  )
 }
 
 export default Menu;
