@@ -1,9 +1,12 @@
 import { removeCategory } from '@/allApis/CategoryApis'
-import React from 'react'
+import React, { useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
+import EditCategoryModal from '../Modal/EditCategoryModal'
+
 
 const CategoryTR = ({ category, refetch }) => {
+  const [ openModal,setOpenModal]=useState(false)
   const { name, id, slug, parent_id,image } = category
 
   const handleDelete = () => {
@@ -26,7 +29,8 @@ const CategoryTR = ({ category, refetch }) => {
           // width={100}
           src={
             image ||
-            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'}
+            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'
+          }
         />
       </th>
       <th
@@ -38,7 +42,10 @@ const CategoryTR = ({ category, refetch }) => {
       <td className='px-6 py-2'>{parent_id || 'No Parent'}</td>
       <td className='px-6 py-2'>
         <div className='flex justify-end items-center gap-7 pr-4 text-2xl '>
-          <button className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '>
+          <button
+            onClick={() => setOpenModal(true)}
+            className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '
+          >
             <BiEdit />
           </button>
           <button
@@ -49,6 +56,11 @@ const CategoryTR = ({ category, refetch }) => {
           </button>
         </div>
       </td>
+      <EditCategoryModal
+        setOpenModal={setOpenModal}
+        openModal={openModal}
+        category={category}
+      />
     </tr>
   )
 }
