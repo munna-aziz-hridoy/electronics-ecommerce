@@ -32,6 +32,7 @@ const product = new Schema({
   extras: [
     {
       item: String,
+      item_value: String,
       price: Number,
       images: [{ type: String }],
     },

@@ -10,12 +10,7 @@ const attribute = new Schema({
     require: true,
   },
 
-  values: [
-    {
-      name: String,
-      value: String,
-    },
-  ],
+  values: [String],
   category_id: String,
   created_at: {
     type: Date,
