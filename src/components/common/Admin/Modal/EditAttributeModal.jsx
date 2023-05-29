@@ -9,11 +9,14 @@ import Spinner from '../../Spinner'
 const EditAttributeModal = ({
   setOpenModal,
   openModal,
-  refetch,
   attribute,
+  category: preCategory,
+  refetch,
 }) => {
   // States
   const [selectedTags, setSelectedTags] = useState([])
+
+  const { id, name, values, category_id } = attribute
 
   //All Sub Category
   const { isLoading: subCategoryLoading, data: subCategory } =
@@ -27,7 +30,7 @@ const EditAttributeModal = ({
     reset,
   } = useForm()
 
-  // Attribute add event
+  // Attribute Update event
   const onSubmit = (data) => {
     addNewAttribute(
       { ...data, values: selectedTags },
@@ -66,6 +69,7 @@ const EditAttributeModal = ({
                   {...register('name', { required: true })}
                   type='text'
                   name='name'
+                  defaultValue={name}
                   id='name'
                   className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   placeholder='Attribute Name'
@@ -84,14 +88,16 @@ const EditAttributeModal = ({
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   {...register('category_id')}
                 >
-                  <option selected disabled value='NA'>
-                    Select a Category
-                  </option>
-
                   {subCategory?.map((category) => (
-                    <option key={category?.id} value={category?.id}>
-                      {category?.name}
-                    </option>
+                    <>
+                      <option selected value={preCategory?.id}>
+                        
+                        {preCategory?.name}
+                      </option>
+                      <option key={category?.id} value={category?.id}>
+                        {category?.name}
+                      </option>
+                    </>
                   ))}
                 </select>
               </div>
@@ -104,7 +110,7 @@ const EditAttributeModal = ({
                 </label>
                 <TagsInput
                   required
-                  value={selectedTags}
+                  value={values}
                   onChange={setSelectedTags}
                   name='attributes'
                   placeHolder='Add attributes'

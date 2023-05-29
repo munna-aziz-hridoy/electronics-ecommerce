@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import EditAttributeModal from '../Modal/EditAttributeModal'
-import { getSingleCategory } from '@/allApis/CategoryApis'
-import Spinner from '../../Spinner'
+
 
 const AttributeTR = ({ attribute, refetch, index }) => {
   // State
@@ -81,6 +80,7 @@ const AttributeTR = ({ attribute, refetch, index }) => {
         setOpenModal={setOpenModal}
         openModal={openModal}
         attribute={attribute}
+        category={category}
         refetch={refetch}
       />
     </tr>
