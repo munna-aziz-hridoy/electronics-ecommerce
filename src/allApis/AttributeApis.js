@@ -1,12 +1,28 @@
+import { useQuery } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
-// ADD New Category
+// Get All Attribute Data
+export const getAllAttribute = () => {
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ['getAllAttribute'],
+    queryFn: () =>
+      fetch(`/api/attributes`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      }).then((res) => res.json()),
+  })
+
+  return { isLoading, error, data, refetch }
+}
+
+// ADD New Attribute
 export const addNewAttribute = (
-  data,
-  refetch,
+  setSelectedTags,
   setOpenModal,
+  refetch,
   reset,
-  setSelectedTags
+  data
 ) => {
   fetch(`/api/attributes`, {
     method: 'POST',
@@ -20,10 +36,10 @@ export const addNewAttribute = (
     .then((json) => {
       if (!json.error && !json.message) {
         toast.success('Successfully Added ')
-        refetch()
-        reset()
         setSelectedTags([])
         setOpenModal(false)
+        refetch()
+        reset()
       } else {
         toast.error(json.message || 'Something is wrong!')
       }

@@ -1,20 +1,28 @@
-import { getAllCategory, getAllSubCategory, getCategory } from "@/allApis";
-import { Spinner } from "@/components";
-import CategoryTR from "@/components/common/Admin/TR/CategoryTR";
-import React, { useState } from "react";
-import AttributeModal from "@/components/common/Admin/Modal/AttributeModal";
+import {  getAllSubCategory } from '@/allApis'
+import {  Spinner } from '@/components'
+import React, { useState } from 'react'
+import AttributeModal from '@/components/common/Admin/Modal/AttributeModal'
+import { getAllAttribute } from '@/allApis/AttributeApis'
+import AttributeTR from '@/components/common/Admin/TR/AttributeTR'
 
 const CategoryManage = () => {
-  const [openModal, setOpenModal] = useState(false);
+  // States
+  const [openModal, setOpenModal] = useState(false)
 
-    const {
-      data: subCategory,
-      refetch,
-      isLoading: subCategoryLoading,
-    } = getAllSubCategory()
+  //All Sub Category
+  const {
+    isLoading: subCategoryLoading,
+    data: subCategory,
+    // refetch,
+  } = getAllSubCategory()
+
+  // All Attributes
+    const { isLoading, refetch, data } = getAllAttribute()
+  
+  console.log(data)
 
 
-  // if (isLoading) return <Spinner />;
+  if (subCategoryLoading) return <Spinner />
 
   return (
     <>
@@ -29,29 +37,25 @@ const CategoryManage = () => {
           <thead className='text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                Attribute Image
-              </th>
-              <th scope='col' className='px-6 py-3'>
                 Attribute Name
               </th>
               <th scope='col' className='px-6 py-3'>
-                Parent Category
+                Attribute Values
               </th>
               <th scope='col' className='text-end pr-10 py-3'>
                 Action
               </th>
             </tr>
           </thead>
-          {/* <tbody>
-            {allCategory?.map((category) => (
-              <CategoryTR
-                key={category.id}
-                category={category}
+          <tbody>
+            {data?.map((attribute) => (
+              <AttributeTR
+                key={attribute.id}
+                attribute={attribute}
                 refetch={refetch}
-                parentRefetch={parentRefetch}
               />
             ))}
-          </tbody> */}
+          </tbody>
         </table>
       </div>
       {/* Modal */}
@@ -64,6 +68,6 @@ const CategoryManage = () => {
       />
     </>
   )
-};
+}
 
-export default CategoryManage;
+export default CategoryManage
