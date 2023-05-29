@@ -1,13 +1,23 @@
 import { addNewAttribute } from '@/allApis/AttributeApis'
-import { addNewCategory } from '@/allApis/CategoryApis'
+import { addNewCategory, getAllSubCategory } from '@/allApis/CategoryApis'
 import { Button, Modal } from 'flowbite-react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { TagsInput } from 'react-tag-input-component'
+import Spinner from '../../Spinner'
 
-const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
+const EditAttributeModal = ({
+  setOpenModal,
+  openModal,
+  refetch,
+  attribute,
+}) => {
   // States
   const [selectedTags, setSelectedTags] = useState([])
+
+  //All Sub Category
+  const { isLoading: subCategoryLoading, data: subCategory } =
+    getAllSubCategory()
 
   // Use Form Hook
   const {
@@ -19,7 +29,6 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
 
   // Attribute add event
   const onSubmit = (data) => {
-    console.log({ ...data, values: selectedTags })
     addNewAttribute(
       { ...data, values: selectedTags },
       setSelectedTags,
@@ -28,6 +37,8 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
       reset
     )
   }
+
+  if (subCategoryLoading) return <Spinner />
 
   return (
     <React.Fragment>
@@ -41,7 +52,7 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
         <Modal.Body>
           <div className=''>
             <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
-              Add New Attribute
+              Edit Attribute
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='mb-4'>
@@ -77,7 +88,7 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
                     Select a Category
                   </option>
 
-                  {category?.map((category) => (
+                  {subCategory?.map((category) => (
                     <option key={category?.id} value={category?.id}>
                       {category?.name}
                     </option>
@@ -105,7 +116,7 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
                   type='submit'
                   className='bg-lime-500 hover:bg-lime-600 '
                 >
-                  Add Attribute
+                  Edit Attribute
                 </Button>
                 <Button color='failure' onClick={() => setOpenModal(false)}>
                   Cancel
@@ -119,4 +130,4 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
   )
 }
 
-export default AttributeModal
+export default EditAttributeModal

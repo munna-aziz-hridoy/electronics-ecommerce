@@ -18,11 +18,8 @@ const CategoryManage = () => {
 
   // All Attributes
     const { isLoading, refetch, data } = getAllAttribute()
-  
-  console.log(data)
 
-
-  if (subCategoryLoading) return <Spinner />
+  if (isLoading||subCategoryLoading) return <Spinner />
 
   return (
     <>
@@ -37,10 +34,16 @@ const CategoryManage = () => {
           <thead className='text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
+                 No
+              </th>
+              <th scope='col' className='px-6 py-3'>
                 Attribute Name
               </th>
               <th scope='col' className='px-6 py-3'>
                 Attribute Values
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Category
               </th>
               <th scope='col' className='text-end pr-10 py-3'>
                 Action
@@ -48,11 +51,12 @@ const CategoryManage = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((attribute) => (
+            {data?.map((attribute,index) => (
               <AttributeTR
                 key={attribute.id}
                 attribute={attribute}
                 refetch={refetch}
+                index={index}
               />
             ))}
           </tbody>

@@ -6,7 +6,6 @@ import { MdDelete } from 'react-icons/md'
 const ProductTR = ({ product, refetch }) => {
   const { name, id, category, price, description, short_description, images } =
     product 
-
   
   const handleDelete = () => {
     const del = window.confirm('Do you want delete?')

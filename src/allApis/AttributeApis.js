@@ -18,12 +18,13 @@ export const getAllAttribute = () => {
 
 // ADD New Attribute
 export const addNewAttribute = (
+  data,
   setSelectedTags,
   setOpenModal,
   refetch,
-  reset,
-  data
+  reset
 ) => {
+  console.log(data)
   fetch(`/api/attributes`, {
     method: 'POST',
     headers: {
