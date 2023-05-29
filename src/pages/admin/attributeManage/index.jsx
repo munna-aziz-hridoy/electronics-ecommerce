@@ -1,4 +1,4 @@
-import { getAllCategory, getCategory } from "@/allApis";
+import { getAllCategory, getAllSubCategory, getCategory } from "@/allApis";
 import { Spinner } from "@/components";
 import CategoryTR from "@/components/common/Admin/TR/CategoryTR";
 import React, { useState } from "react";
@@ -6,12 +6,15 @@ import AttributeModal from "@/components/common/Admin/Modal/AttributeModal";
 
 const CategoryManage = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { data: allCategory, isLoading, refetch } = getAllCategory();
-  const { data, refetch: parentRefetch } = getCategory();
 
-  console.log(allCategory)
+    const {
+      data: subCategory,
+      refetch,
+      isLoading: subCategoryLoading,
+    } = getAllSubCategory()
 
-  if (isLoading) return <Spinner />;
+
+  // if (isLoading) return <Spinner />;
 
   return (
     <>
@@ -39,7 +42,7 @@ const CategoryManage = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {allCategory?.map((category) => (
               <CategoryTR
                 key={category.id}
@@ -48,16 +51,16 @@ const CategoryManage = () => {
                 parentRefetch={parentRefetch}
               />
             ))}
-          </tbody>
+          </tbody> */}
         </table>
       </div>
       {/* Modal */}
       <AttributeModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        category={data}
+        category={subCategory}
         refetch={refetch}
-        parentRefetch={parentRefetch}
+        // parentRefetch={parentRefetch}
       />
     </>
   )
