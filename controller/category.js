@@ -75,7 +75,7 @@ export const subCategory = async (req, res) => {
         const parentCategory = await Category.findOne({ id: id }, "name");
 
         result = result?.map((item) => {
-          const { name, slug, id, parent_id,image } = item;
+          const { name, slug, id, parent_id, image } = item;
 
           return {
             name,
@@ -150,6 +150,24 @@ export const allSubCategories = async (req, res) => {
         { parent_id: { $ne: null } },
         "-_id -created_at -__v"
       );
+
+      response.SUCCESS(res, result);
+    } catch (error) {
+      response.INTERNAL_SERVER_ERROR(res, error);
+    }
+  } else {
+    response.METHOD_NOT_ALLOWED(res, req);
+  }
+};
+
+// -------- single category -------- //
+
+export const singleCategory = async (req, res) => {
+  const id = req.query.id;
+
+  if (req.method === "GET") {
+    try {
+      const result = await Category.findOne({ id }, "-_id -created_at -__v");
 
       response.SUCCESS(res, result);
     } catch (error) {

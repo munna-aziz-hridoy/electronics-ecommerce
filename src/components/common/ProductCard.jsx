@@ -27,7 +27,7 @@ function ProductCard({ product, sub = false }) {
       return push("/auth/login");
     }
 
-    const { id, images, category, name, price } = product;
+    const { id, images, category, name, price, extras } = product;
 
     addToCart({ id, images, category, name, price });
   };
