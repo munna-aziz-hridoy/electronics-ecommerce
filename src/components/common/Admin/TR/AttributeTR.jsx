@@ -1,4 +1,4 @@
-import { removeCategory } from '@/allApis/CategoryApis'
+import { removeAttribute } from '@/allApis/AttributeApis'
 import React, { useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
@@ -11,7 +11,7 @@ const AttributeTR = ({ attribute, refetch }) => {
   const handleDelete = () => {
     const del = window.confirm('Do you want to delete?')
     if (del) {
-      removeCategory(id, refetch)
+      removeAttribute(id, refetch)
     }
   }
 

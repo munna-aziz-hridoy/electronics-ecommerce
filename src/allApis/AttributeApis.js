@@ -45,3 +45,15 @@ export const addNewAttribute = (
       }
     })
 }
+
+// Delete Attribute
+export const removeAttribute = (id, refetch) => {
+  fetch(`/api/attributes/${id}`, {
+    method: 'DELETE',
+  }).then((res) => {
+    if (res?.status === 200) {
+      refetch()
+      toast.success('Successfully Deleted ')
+    }
+  })
+}

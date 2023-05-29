@@ -35,8 +35,6 @@ export const getAllSubCategory = () => {
 
 // Get parent category
 export const getParentCategory = () => {
-  console.log(serverUrl);
-
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getParentCategory"],
     queryFn: () =>
@@ -90,7 +88,7 @@ export const addNewCategory = (data, refetch, setOpenModal, parentRefetch) => {
     });
 };
 
-// Get Delete Category
+//  Delete Category
 export const removeCategory = (id, refetch, parentRefetch) => {
   fetch(`/api/category/${id}`, {
     method: "DELETE",
