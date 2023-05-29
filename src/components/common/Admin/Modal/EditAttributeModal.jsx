@@ -1,4 +1,4 @@
-import { addNewAttribute } from '@/allApis/AttributeApis'
+import { addNewAttribute, editAttribute } from '@/allApis/AttributeApis'
 import { addNewCategory, getAllSubCategory } from '@/allApis/CategoryApis'
 import { Button, Modal } from 'flowbite-react'
 import React, { useState } from 'react'
@@ -15,8 +15,7 @@ const EditAttributeModal = ({
 }) => {
   // States
   const [selectedTags, setSelectedTags] = useState([])
-
-  const { id, name, values, category_id } = attribute
+  const { id, name, values } = attribute
 
   //All Sub Category
   const { isLoading: subCategoryLoading, data: subCategory } =
@@ -32,8 +31,13 @@ const EditAttributeModal = ({
 
   // Attribute Update event
   const onSubmit = (data) => {
-    addNewAttribute(
-      { ...data, values: selectedTags },
+    editAttribute(
+      id,
+      {
+        ...data,
+        values: selectedTags?.length < 1 ? values : selectedTags,
+        category_id: data?.category_id < 1 ? preCategory.id : data.category_id,
+      },
       setSelectedTags,
       setOpenModal,
       refetch,
@@ -85,15 +89,15 @@ const EditAttributeModal = ({
                   Select Category
                 </label>
                 <select
+                  required
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   {...register('category_id')}
                 >
+                  <option selected value={preCategory?.id}>
+                    {preCategory?.name}
+                  </option>
                   {subCategory?.map((category) => (
                     <>
-                      <option selected value={preCategory?.id}>
-                        
-                        {preCategory?.name}
-                      </option>
                       <option key={category?.id} value={category?.id}>
                         {category?.name}
                       </option>
@@ -109,7 +113,6 @@ const EditAttributeModal = ({
                   Attribute Value
                 </label>
                 <TagsInput
-                  required
                   value={values}
                   onChange={setSelectedTags}
                   name='attributes'

@@ -24,7 +24,7 @@ export const addNewAttribute = (
   refetch,
   reset
 ) => {
-  console.log(data)
+ 
   fetch(`/api/attributes`, {
     method: 'POST',
     headers: {
@@ -37,6 +37,38 @@ export const addNewAttribute = (
     .then((json) => {
       if (!json.error && !json.message) {
         toast.success('Successfully Added ')
+        setSelectedTags([])
+        setOpenModal(false)
+        refetch()
+        reset()
+      } else {
+        toast.error(json.message || 'Something is wrong!')
+      }
+    })
+}
+// Edit Attribute
+export const editAttribute = (
+    id,
+  data,
+  setSelectedTags,
+  setOpenModal,
+  refetch,
+  reset
+) => {
+
+
+  fetch(`/api/attributes/${id}`, {
+    method: 'PATCH',
+    headers: {
+      // authorization: `Bearer ${getToken()}`,
+      'Content-type': 'application/json;',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (!json.error && !json.message) {
+        toast.success('Successfully Edited ')
         setSelectedTags([])
         setOpenModal(false)
         refetch()

@@ -19,7 +19,7 @@ const AttributeModal = ({ setOpenModal, openModal, category, refetch }) => {
 
   // Attribute add event
   const onSubmit = (data) => {
-    console.log({ ...data, values: selectedTags })
+    
     addNewAttribute(
       { ...data, values: selectedTags },
       setSelectedTags,

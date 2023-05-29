@@ -15,7 +15,6 @@ const EditCategoryModal = ({
   const [imgModal, setImgModal] = useState(false)
   const { id, name, image } = category
 
-  console.log(category)
   const {
     register,
     handleSubmit,

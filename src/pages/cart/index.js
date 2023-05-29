@@ -63,7 +63,7 @@ function Cart() {
                 {/*  */}
 
                 {cart?.items?.map((item, i) => {
-                  console.log(item);
+               
 
                   return (
                     <div
