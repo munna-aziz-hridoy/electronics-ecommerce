@@ -32,7 +32,7 @@ export const getSingleProduct = (id) => {
 };
 
 // ADD New Product
-export const newProductAdd = (data, reset) => {
+export const newProductAdd = (data, reset, setExtraData) => {
   fetch(`/api/product`, {
     method: 'POST',
     headers: {
@@ -46,6 +46,7 @@ export const newProductAdd = (data, reset) => {
       if (!json.error && !json.message) {
         toast.success('Successfully Added ')
         reset()
+        setExtraData([])
         // refetch()
       } else {
         toast.error(json.message || 'Something is wrong!')
