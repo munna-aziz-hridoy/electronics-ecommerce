@@ -10,12 +10,46 @@ import { CartContext } from "@/context/cart";
 function ProductDetails() {
   const { query } = useRouter();
 
+  const [selectedVariant, setSelectedVariant] = useState(null);
+
   const { data, isLoading } = getSingleProduct(query?.product_id);
+
+  const [selectedImage, setSelectedImage] = useState("");
+  const [imagesArr, setImagesArr] = useState([]);
+
+  useEffect(() => {
+    if (selectedVariant) {
+      setImagesArr(selectedVariant?.images);
+    } else {
+      setImagesArr(data?.images);
+    }
+  }, [data, selectedVariant]);
+
+  useEffect(() => {
+    if (imagesArr?.length > 0) {
+      setSelectedImage(imagesArr[0]);
+    } else {
+      setSelectedImage(data?.images[0]);
+    }
+  }, [imagesArr, data]);
 
   const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = () => {
-    addToCart(data);
+    const { name, images, price, id } = data;
+
+    const cartData = {
+      id,
+      name,
+      image: selectedImage || selectedVariant?.images[0] || images[0],
+      price: selectedVariant?.price || price,
+
+      variant: selectedVariant?.variant_name || "",
+      variant_id: selectedVariant?._id || "",
+      variant_value: selectedVariant?.variant_value || "",
+    };
+
+    addToCart(cartData);
   };
 
   return (
@@ -27,11 +61,16 @@ function ProductDetails() {
           <div className="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 mb-16">
             <div className=" w-full md:w-1/2">
               <div className="w-full sm:w-[80%] md:w-[90%] lg:w-[500px]  bg-gray-300">
-                <img className="w-full" src={data?.images?.[0]} />
+                <img className="w-full" src={selectedImage} />
               </div>
               <div className="flex flex-wrap gap-3 h-28 max-w-full w-full  my-4">
-                {data?.images?.map((item) => (
-                  <img className="h-full w-[20%] " key={item} src={item} />
+                {imagesArr?.map((item) => (
+                  <img
+                    onClick={() => setSelectedImage(item)}
+                    className="h-28 w-28 cursor-pointer border-2 border-gray-300"
+                    key={item}
+                    src={item}
+                  />
                 ))}
               </div>
             </div>
@@ -40,44 +79,41 @@ function ProductDetails() {
                 {data?.name}
               </h2>
               <p className="text-lg font-semibold text-green-700 mt-1">
-                Price: {data?.price}
+                Price: ${data?.price}
               </p>
               <p className="text-sm text-gray-500 pr-3 my-3">
                 {data?.short_description}
               </p>
 
-              {/* <div className="flex flex-col gap-3 flex-wrap mt-8">
-                <div className="flex items-center mr-4">
-                  <input
-                    id="red-radio"
-                    type="radio"
-                    defaultValue=""
-                    name="colored-radio"
-                    className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    htmlFor="red-radio"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Product only
-                  </label>
-                </div>
-                <div className="flex items-center mr-4">
-                  <input
-                    id="green-radio"
-                    type="radio"
-                    defaultValue=""
-                    name="colored-radio"
-                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    htmlFor="green-radio"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    With cover
-                  </label>
-                </div>
-              </div> */}
+              <div className="flex flex-col gap-3 flex-wrap mt-8">
+                {data?.extras?.map((item) => (
+                  <div className="flex items-center mr-4">
+                    <input
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedVariant(item);
+                        } else {
+                          setSelectedVariant(null);
+                        }
+                      }}
+                      id="green-radio"
+                      type="checkbox"
+                      defaultValue=""
+                      name="colored-radio"
+                      className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="green-radio"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {item?.variant_name} ({item?.variant_value})
+                      <span className="text-base ml-4 font-semibold inline-block text-green-700">
+                        Price: ${item?.price}
+                      </span>
+                    </label>
+                  </div>
+                ))}
+              </div>
 
               <div className="flex justify-center items-center gap-5 mt-8">
                 <button

@@ -9,7 +9,18 @@ const response = new Response();
 export const products = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const products = await Product.find({}, "-_id -created_at -__v");
+      const searchTerm = req.query?.search;
+
+      let products;
+
+      if (searchTerm) {
+        products = await Product.find(
+          { name: { $regex: searchTerm, $options: "i" } },
+          "-_id -created_at -__v"
+        );
+      } else {
+        products = await Product.find({}, "-_id -created_at -__v");
+      }
 
       response.SUCCESS(res, products);
     } catch (error) {

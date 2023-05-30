@@ -38,25 +38,33 @@ const CartProvider = ({ children }) => {
     setCart((prev) => {
       const { user, items } = prev;
 
-      let newItems = [...items, { ...product, quantity: 1 }];
+      let cartItems;
 
-      newItems = newItems.map((item) => {
-        const { price, ...rest } = item;
+      const exists = items?.find((p) => p.id === product.id);
 
-        let extra_price = 0;
-        if (item?.extras) {
-          extra_price = item.extras
-            .map((extra) => extra.price)
-            .reduce((a, b) => a + b);
-        }
+      if (exists) {
+        let qty = exists.quantity;
 
-        return { ...rest, price, extra_price };
-      });
+        qty++;
 
-      const prices = newItems
-        .map((item) => item.price * item.quantity + item.extra_price)
+        const selectedData = {
+          ...exists,
+          quantity: qty,
+        };
+
+        const existsIndex = items.indexOf(product);
+
+        cartItems = items.filter((item) => item.id !== product.id);
+
+        cartItems.splice(existsIndex, 0, selectedData);
+      } else {
+        cartItems = [...items, { ...product, quantity: 1 }];
+      }
+
+      const prices = cartItems
+        .map((item) => item.price * item.quantity)
         .reduce((a, b) => a + b);
-      const quantities = newItems
+      const quantities = cartItems
         .map((item) => item.quantity)
         .reduce((a, b) => a + b);
 
@@ -64,7 +72,7 @@ const CartProvider = ({ children }) => {
         "ec_cart",
         JSON.stringify({
           user,
-          items: newItems,
+          items: cartItems,
           total_price: prices,
           total_products: quantities,
         })
@@ -72,7 +80,7 @@ const CartProvider = ({ children }) => {
 
       return {
         user,
-        items: newItems,
+        items: cartItems,
         total_price: prices,
         total_products: quantities,
       };
@@ -88,7 +96,7 @@ const CartProvider = ({ children }) => {
       const prices =
         newItems.length !== 0
           ? newItems
-              .map((item) => item.price * item.quantity + item.extra_price)
+              .map((item) => item.price * item.quantity)
               .reduce((a, b) => a + b)
           : 0;
       const quantities =
@@ -129,16 +137,23 @@ const CartProvider = ({ children }) => {
 
       const exists = items.find((item) => item.id === product.id);
 
-      exists.quantity = exists.quantity + 1;
+      let qty = exists.quantity;
+
+      qty++;
+
+      const selectedData = {
+        ...exists,
+        quantity: qty,
+      };
 
       const existsIndex = items.indexOf(product);
 
       const newItems = items.filter((item) => item.id !== product.id);
 
-      newItems.splice(existsIndex, 0, exists);
+      newItems.splice(existsIndex, 0, selectedData);
 
       const prices = newItems
-        .map((item) => item.price * item.quantity + item.extra_price)
+        .map((item) => item.price * item.quantity)
         .reduce((a, b) => a + b);
       const quantities = newItems
         .map((item) => item.quantity)
@@ -176,18 +191,26 @@ const CartProvider = ({ children }) => {
       if (exists.quantity === 1) {
         newItems = items.filter((item) => item.id !== product.id);
       } else {
-        exists.quantity = exists.quantity - 1;
+        let qty = exists.quantity;
+
+        qty--;
+
+        const selectedData = {
+          ...exists,
+          quantity: qty,
+        };
+
         const existsIndex = items.indexOf(product);
 
         newItems = items.filter((item) => item.id !== product.id);
 
-        newItems.splice(existsIndex, 0, exists);
+        newItems.splice(existsIndex, 0, selectedData);
       }
 
       const prices =
         newItems.length !== 0
           ? newItems
-              .map((item) => item.price * item.quantity + item.extra_price)
+              .map((item) => item.price * item.quantity)
               .reduce((a, b) => a + b)
           : 0;
       const quantities =

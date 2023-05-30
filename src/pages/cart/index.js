@@ -63,18 +63,18 @@ function Cart() {
                 {/*  */}
 
                 {cart?.items?.map((item, i) => {
-               
-
                   return (
                     <div
                       key={i}
                       className="flex justify-between items-center my-8 border-b pb-4"
                     >
                       <div className="flex gap-3">
-                        <img src={item?.images?.[0]} className="w-16 h-16" />
+                        <img src={item?.image} className="w-16 h-16" />
                         <div>
                           <h2 className="text-xl font-semibold text-gray-800 capitalize">
-                            {item?.name}
+                            {item?.name?.length > 30
+                              ? `${item?.name?.slice(0, 30)}...`
+                              : item?.name}
                           </h2>
                           <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
                             {item?.short_description?.slice(0, 50)}...
@@ -93,24 +93,25 @@ function Cart() {
                       <div className="flex gap-5">
                         <div className="flex items-center justify-between">
                           <p
-                            onClick={() => increaseQuantity(item)}
-                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
-                          >
-                            +
-                          </p>
-                          <input
-                            className=" h-8 w-14 border border-gray-200 pl-4"
-                            value={item?.quantity}
-                          />
-                          <p
                             onClick={() => decreaseQuantity(item)}
                             className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
                           >
                             -
                           </p>
+                          <input
+                            className=" h-8 w-14 border border-gray-200 pl-4"
+                            value={item?.quantity}
+                          />
+
+                          <p
+                            onClick={() => increaseQuantity(item)}
+                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
+                          >
+                            +
+                          </p>
                         </div>
                         <p className=" text-gray-500 text-xl font-light">
-                          ${item?.price * item?.quantity + item?.extra_price}
+                          ${item?.price * item?.quantity}
                         </p>
                       </div>
                     </div>
