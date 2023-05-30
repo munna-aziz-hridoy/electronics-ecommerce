@@ -45,11 +45,16 @@ const addNewProduct = () => {
 
   // Add Product Function
   const onSubmit = (data) => {
-    newProductAdd({
-      ...data,
-      images: uploadedImages,
-      description: `${content}`,
-    },reset);
+    newProductAdd(
+      {
+        ...data,
+        images: uploadedImages,
+        extras: extraData,
+        description: `${content}`,
+      },
+      reset,
+      setExtraData
+    )
   };
 
   if (categoryLoading) return <Spinner />;
