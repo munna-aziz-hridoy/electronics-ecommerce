@@ -1,12 +1,11 @@
-import Image from "next/image";
 import React from "react";
 
 const ExtraProductsItem = ({ data }) => {
   const { id, variant_name, variant_value, price, images } = data
   
-  console.log(data)
   return (
-    <div className='border-dashed border-2 border-yellow-300 bg-gray-100 m-4 p-6 rounded-lg'>
+    <div className='border-dashed border-2 border-yellow-300 bg-gray-100 m-4 p-6 rounded-lg relative'>
+      <div className=" absolute cursor-pointer top-3 shadow-lg right-3 border-2 border-red-500 text-red-500 font-bold hover:bg-red-600 hover:text-gray-100 duration-300 rounded-full px-2">x</div>
       <div className='mb-4'>
         <label
           htmlFor={`Variant_Name_${id}`}
