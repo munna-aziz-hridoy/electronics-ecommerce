@@ -9,7 +9,7 @@ const ExtraProduct = ({ extraData, setOpenExtraModal }) => {
         htmlFor='extra-price'
         className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
       >
-        Extra Product (Optional)
+        Product Variant (Optional)
       </label>
       <div
         id='extra-price'
@@ -26,7 +26,7 @@ const ExtraProduct = ({ extraData, setOpenExtraModal }) => {
           className='hover:-translate-y-2 duration-300 flex items-center gap-2 focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2.5 mr-2 mb-4 ml-8 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800'
         >
           <GrStackOverflow />
-          Add Extra Product
+          Add Variant Product
         </button>
       </div>
     </>

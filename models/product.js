@@ -31,14 +31,14 @@ const product = new Schema({
   },
   extras: [
     {
-      item: String,
-      item_value: String,
+      variant_name: String,
+      variant_value: String,
       price: Number,
       images: [{ type: String }],
     },
   ],
   images: [{ type: String }],
-});
+})
 
 const Product = models.products || model("products", product);
 
