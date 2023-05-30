@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { BiObjectsHorizontalLeft } from 'react-icons/bi'
 import { FaBoxOpen } from 'react-icons/fa'
 import { RiDashboardLine } from 'react-icons/ri'
 
@@ -64,6 +65,15 @@ const AdminSideBar = ({ children }) => {
                 <span className='ml-3'>Category </span>
               </Link>
             </li>
+            <li>
+              <Link
+                href='/admin/attributeManage'
+                className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+              >
+                <BiObjectsHorizontalLeft className='text-2xl text-gray-500' />
+                <span className='ml-3'>Attribute </span>
+              </Link>
+            </li>
 
             <li>
               <Link
@@ -116,7 +126,6 @@ const AdminSideBar = ({ children }) => {
 
                 <span className='ml-3'>Orders </span>
               </Link>
-              
             </li>
           </ul>
         </div>

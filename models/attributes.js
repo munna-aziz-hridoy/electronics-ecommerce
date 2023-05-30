@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const { Schema, model, models } = mongoose;
+const { Schema, model, models } = mongoose
 
 const attribute = new Schema({
   id: String,
@@ -17,8 +17,8 @@ const attribute = new Schema({
     require: true,
     default: Date.now(),
   },
-});
+})
 
-const Attribute = models.attributes || model("attributes", attribute);
+const Attribute = models.attributes || model('attributes', attribute)
 
-export { Attribute };
+export { Attribute }

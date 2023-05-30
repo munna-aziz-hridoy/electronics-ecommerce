@@ -1,16 +1,42 @@
 import { Button, Modal } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useId } from 'react-id-generator'
 import ImageUploadModal from './ImageUploadModal'
 import { BsImageFill } from 'react-icons/bs'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
+import { getAllAttribute } from '@/allApis/AttributeApis'
 
 const AddExtraModal = ({ setOpenModal, openModal, states }) => {
+  // States
+  const [selectedAttribute, setSelectedAttribute] = useState({})
+  const [selectedAttributeValues, setSelectedAttributeValues] = useState([])
+  const [selectedAttributeName, setSelectedAttributeName] = useState('')
   const [oenImageModal, setOpenImageModal] = useState(false)
   const [uploadedImages, setUploadedImages] = useState([])
   const { extraData, setExtraData } = states
+
+  // U Id
   const [id] = useId()
+
+  // Attribute Data
+  const {
+    data: attributes,
+    isLoading: attributesLoading,
+    refetch,
+  } = getAllAttribute()
+
+  useEffect(() => {
+    const a = attributes?.find(
+      (attribute) => attribute?.id === selectedAttribute
+    )
+    if (a) {
+      setSelectedAttributeValues(a.values)
+      setSelectedAttributeName(a.name)
+    }
+  }, [selectedAttribute])
+
+  
 
   const {
     register,
@@ -19,7 +45,16 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    setExtraData([...extraData, { id: id, images: uploadedImages, ...data }])
+ 
+    setExtraData([
+      ...extraData,
+      {
+        id: id,
+        variant_name: selectedAttributeName,
+        images: uploadedImages,
+        ...data,
+      },
+    ])
     setUploadedImages([])
     setOpenModal(false)
     reset()
@@ -40,32 +75,63 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
         <Modal.Body>
           <div className=''>
             <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
-              Add Extra Product
+              Add Variant
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='mb-4'>
                 <label
-                  htmlFor='item'
-                  className='block  text-sm font-bold text-gray-600 dark:text-white'
+                  htmlFor='category'
+                  className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
                 >
-                  Item Name
+                  Select Variant
                 </label>
-                <input
-                  {...register('item', { required: true })}
-                  type='text'
-                  name='item'
-                  id='item'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  placeholder='Item Name'
-                  required
-                />
+                <select
+                  value={selectedAttribute}
+                  onChange={(e) => setSelectedAttribute(e.target.value)}
+                  className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  // {...register('variant_name')}
+                >
+                  <option selected disabled value=''>
+                    Select a Variant
+                  </option>
+
+                  {attributes?.map((attribute) => (
+                    <option key={attribute?.id} value={attribute.id}>
+                      {attribute?.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className='mb-4'>
+                <label
+                  htmlFor='category'
+                  className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                >
+                  Select Variant value
+                </label>
+                <select
+                  // value={selectedAttribute}
+                  // onChange={(e) => setSelectedAttribute(e.target.value)}
+                  className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                  {...register('variant_value')}
+                >
+                  <option selected disabled value=''>
+                    Select a Variant value
+                  </option>
+
+                  {selectedAttributeValues?.map((value, index) => (
+                    <option key={index} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className='mb-4'>
                 <label
                   htmlFor='price'
                   className='block  text-sm font-bold text-gray-600 dark:text-white'
                 >
-                  Item price
+                  Price
                 </label>
                 <input
                   {...register('price', { required: true })}
@@ -73,7 +139,7 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
                   name='price'
                   id='price'
                   className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-                  placeholder='Item Price'
+                  placeholder='Price'
                   required
                 />
               </div>
@@ -128,7 +194,7 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
                   type='submit'
                   className='bg-lime-500 hover:bg-lime-600 '
                 >
-                  Add Extra
+                  Add Variant
                 </Button>
                 <Button
                   color='failure'

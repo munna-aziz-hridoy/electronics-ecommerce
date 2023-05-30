@@ -11,7 +11,7 @@ import { Spinner } from "..";
 function MenuItem({ menuItem }) {
   const { data, loading } = useGetSubcategoriesById(menuItem?.id);
 
-  console.log(data);
+  
 
   return (
     <>

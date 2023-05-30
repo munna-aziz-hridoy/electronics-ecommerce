@@ -1,18 +1,37 @@
-import { removeCategory } from '@/allApis/CategoryApis'
-import React, { useState } from 'react'
+import { removeAttribute } from '@/allApis/AttributeApis'
+import React, { useEffect, useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
-import EditCategoryModal from '../Modal/EditCategoryModal'
+import EditAttributeModal from '../Modal/EditAttributeModal'
 
 
-const CategoryTR = ({ category, refetch }) => {
-  const [ openModal,setOpenModal]=useState(false)
-  const { name, id, slug, parent_id,image } = category
+const AttributeTR = ({ attribute, refetch, index }) => {
+  // State
+  const [openModal, setOpenModal] = useState(false)
+  const [category, setCategory] = useState({})
 
+  // Attribute Data Destructors
+  const { name, id, values, category_id } = attribute
+
+  // Category Data
+  useEffect(() => {
+    fetch(`/api/category/single-category/${category_id}`, {
+      // headers: {
+      //   authorization: `Bearer ${getToken()}`,
+      // },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCategory(data)
+      })
+  }, [category_id])
+
+
+  // Attribute Delete Handler
   const handleDelete = () => {
     const del = window.confirm('Do you want to delete?')
     if (del) {
-      removeCategory(id, refetch)
+      removeAttribute(id, refetch)
     }
   }
 
@@ -22,16 +41,7 @@ const CategoryTR = ({ category, refetch }) => {
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
       >
-        <img
-          className=' object-cover h-12 w-12 border rounded-lg '
-          alt='Img'
-          // height={100}
-          // width={100}
-          src={
-            image ||
-            'https://ps.w.org/gazchaps-woocommerce-auto-category-product-thumbnails/assets/icon-256x256.png?rev=1848416'
-          }
-        />
+        {index + 1}
       </th>
       <th
         scope='row'
@@ -39,7 +49,17 @@ const CategoryTR = ({ category, refetch }) => {
       >
         {name}
       </th>
-      <td className='px-6 py-2'>{parent_id || 'No Parent'}</td>
+      <td className='px-6 py-2'>
+        {values.map((value) => (
+          <span>{value + ' '}</span>
+        ))}
+      </td>
+      <td
+        scope='row'
+        className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+      >
+        {category?.name}
+      </td>
       <td className='px-6 py-2'>
         <div className='flex justify-end items-center gap-7 pr-4 text-2xl '>
           <button
@@ -56,13 +76,15 @@ const CategoryTR = ({ category, refetch }) => {
           </button>
         </div>
       </td>
-      <EditCategoryModal
+      <EditAttributeModal
         setOpenModal={setOpenModal}
         openModal={openModal}
+        attribute={attribute}
         category={category}
+        refetch={refetch}
       />
     </tr>
   )
 }
 
-export default CategoryTR
+export default AttributeTR

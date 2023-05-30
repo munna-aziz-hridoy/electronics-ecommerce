@@ -9,7 +9,7 @@ const CategoryManage = () => {
   const { data: allCategory, isLoading, refetch } = getAllCategory();
   const { data, refetch: parentRefetch } = getCategory();
 
-  console.log(allCategory)
+
 
   if (isLoading) return <Spinner />;
 
