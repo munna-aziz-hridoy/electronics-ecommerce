@@ -30,7 +30,11 @@ function Category() {
           <div className="flex justify-center items-center gap-8 flex-wrap">
             {subCategories?.map((item, i) => (
               <div
-                onClick={() => push(`/c/${query.category}/${item.slug}`)}
+                onClick={() =>
+                  push(
+                    `/c/${query.category}/${item.slug}?parent=${item?.parent_id}`
+                  )
+                }
                 key={i}
                 className="flex flex-col justify-center items-center gap-3 cursor-pointer"
               >

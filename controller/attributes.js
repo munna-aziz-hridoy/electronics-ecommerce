@@ -8,7 +8,18 @@ const response = new Response();
 export const attribute = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const attributes = await Attribute.find({}, "-_id -_created_at -__v");
+      const category_id = req.query?.category;
+
+      let attributes;
+
+      if (category_id) {
+        attributes = await Attribute.find(
+          { category_id },
+          "-_id -_created_at -__v"
+        );
+      } else {
+        attributes = await Attribute.find({}, "-_id -_created_at -__v");
+      }
 
       response.SUCCESS(res, attributes);
     } catch (error) {

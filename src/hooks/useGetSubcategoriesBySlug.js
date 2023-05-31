@@ -1,14 +1,27 @@
 import { useState, useEffect } from "react";
-import { getCategory } from "@/allApis";
-import { serverUrl } from "@config/index";
 
 const useGetSubcategoriesBySlug = (slug) => {
   const [subCategories, setSubCategories] = useState([]);
+  const [parent, setParent] = useState([]);
+  const [parentCategory, setParentCategory] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { data: parent } = getCategory();
+  useEffect(() => {
+    fetch(`/api/category/null`)
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else return [];
+      })
+      .then((data) => {
+        setParent(data);
+      });
+  }, []);
 
-  const parentCategory = parent?.find((item) => item.slug === slug);
+  useEffect(() => {
+    const parentCategory = parent?.find((item) => item.slug === slug);
+    setParentCategory(parentCategory);
+  }, [slug]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +35,7 @@ const useGetSubcategoriesBySlug = (slug) => {
         setSubCategories(data);
         setLoading(false);
       });
-  }, [parentCategory]);
+  }, [parentCategory, slug]);
 
   return {
     loading,

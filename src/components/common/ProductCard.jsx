@@ -29,7 +29,17 @@ function ProductCard({ product, sub = false }) {
 
     const { id, images, category, name, price, extras } = product;
 
-    addToCart({ id, images, category, name, price });
+    const cartData = {
+      id,
+      name,
+      image: images[0],
+      price,
+      variant: "",
+      variant_id: "",
+      variant_value: "",
+    };
+
+    addToCart(cartData);
   };
 
   return (
@@ -59,7 +69,9 @@ function ProductCard({ product, sub = false }) {
       </div>
       <div className="mt-3 mb-1 py-2 pl-1">
         <h2 className="text-xl font-semibold capitalize text-gray-900">
-          {product.name}
+          {product?.name?.length > 30
+            ? `${product?.name?.slice(0, 30)}...`
+            : product?.name}
         </h2>
         <p className="text-lg font-medium capitalize text-gray-700">
           Price:{" "}

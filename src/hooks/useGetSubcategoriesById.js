@@ -15,6 +15,8 @@ const useGetSubcategoriesById = (id) => {
         } else return [];
       })
       .then((data) => {
+        setLoading(false);
+
         setData(data);
       });
   }, [id]);
