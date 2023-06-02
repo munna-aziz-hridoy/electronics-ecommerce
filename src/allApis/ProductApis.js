@@ -44,10 +44,10 @@ export const newProductAdd = (data, reset, setExtraData) => {
     .then((response) => response.json())
     .then((json) => {
       if (!json.error && !json.message) {
-        toast.success('Successfully Added ')
+        toast.success('Successfully Added')
         reset()
-        setExtraData([])
         // refetch()
+        setExtraData([])
       } else {
         toast.error(json.message || 'Something is wrong!')
       }
