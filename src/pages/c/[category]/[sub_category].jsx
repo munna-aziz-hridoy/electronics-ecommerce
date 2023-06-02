@@ -8,6 +8,7 @@ import DropdownSearch from '@/components/common/Admin/Others/DropdownSearch'
 
 function SubCategory() {
   const [products, setProducts] = useState([])
+  const [storedProducts, setStoredProducts] = useState([])
   const [attributes, setAttributes] = useState([])
   const [checkedValues, setCheckedValues] = useState([])
   const [loading, setLoading] = useState(false)
@@ -36,35 +37,47 @@ function SubCategory() {
       })
       .then((data) => {
         setLoading(false)
+        setStoredProducts(data)
         setProducts(data)
       })
   }, [query])
 
   useEffect(() => {
-   const matchedProducts = products.filter((item) => {
-     const matchedExtras = item.extras.some((extra) =>
-       checkedValues.includes(extra.variant_value)
-     )
-     return matchedExtras
-   })
-    setProducts(matchedProducts)
-    // console.log(matchedProducts)
-  }, [checkedValues])
+    const matchedProducts = storedProducts.filter((item) => {
+      const matchedExtras = item.extras.some((extra) =>
+        checkedValues.includes(extra.variant_value)
+      )
+      return matchedExtras
+    })
 
-  // console.log(checkedValues)
-  // console.log(products)
+    if (checkedValues.length > 0) {
+      setProducts(matchedProducts)
+    } else {
+      setProducts(storedProducts)
+    }
+  }, [checkedValues])
 
   return (
     <Container>
       <div className='my-10'>
-        <div className='border p-4 bg-slate-100 flex flex-wrap'>
-          {/* Other content */}
-          {attributes?.map((attribute) => (
-            <DropdownSearch
-              attribute={attribute}
-              setCheckedValues={setCheckedValues}
-            />
-          ))}
+        <div className='p-4 bg-slate-100 '>
+          <div className='  flex flex-wrap'>
+            {/* Other content */}
+            {attributes?.map((attribute) => (
+              <DropdownSearch
+                attribute={attribute}
+                setCheckedValues={setCheckedValues}
+              />
+            ))}
+          </div>
+          {checkedValues.length > 0 && (
+            <div className='flex mt-3 gap-4 items-center'>
+              <div className=''>Variant:</div>
+              {checkedValues?.map((i) => (
+                <div className=' px-3 border bg-gray-50'>{i}</div>
+              ))}
+            </div>
+          )}
         </div>
 
         <h2 className='text-2xl font-light capitalize my-5 text-center flex justify-center items-center gap-10'>

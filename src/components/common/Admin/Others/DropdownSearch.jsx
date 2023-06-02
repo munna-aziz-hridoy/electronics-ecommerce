@@ -112,7 +112,10 @@ const DropdownSearch = ({ attribute, setCheckedValues }) => {
 
           {/* Rest of the list items */}
         </ul>
-        <button className='  p-3 font-semibold text-gray-100 border-t border-gray-200  bg-[#BBD850] hover:bg-[#cde966] w-full'>
+        <button
+          onClick={toggleDropdown}
+          className='  p-3 font-semibold text-gray-100 border-t border-gray-200  bg-[#BBD850] hover:bg-[#cde966] w-full'
+        >
           View Items
         </button>
       </div>
