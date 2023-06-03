@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { footerData } from "@/assets/data/footer";
-import { AddressForm, Container } from "@/components";
+import { AddressForm, CardForm, Container } from "@/components";
 import { FaCartArrowDown, FaStore, FaTruck } from "react-icons/fa";
 
 import earbud from "@/assets/earbud1.jpg";
@@ -9,6 +9,13 @@ import { CartContext } from "@/context/cart";
 import { placeOrder } from "@/allApis/order";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/auth";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51L1uNJFwLOKoh01CCS9qXRUMMyLfpPSmGNGCuytfehODVTvoNROZNGCcoGWHcJg9rJEHy2Zz3EWrJoWIUvSNnAAz00ggzNgcNs"
+);
 
 const Checkout = () => {
   const [street, setStreet] = useState("");
@@ -44,7 +51,6 @@ const Checkout = () => {
       return {
         id: item?.id,
         name: item?.name,
-        extras: item?.extras,
         images: item?.images,
         quantity: item?.quantity,
         price: item?.price,
@@ -121,6 +127,10 @@ const Checkout = () => {
             3. Payment Method
           </h2>
           <div className="w-full h-[1px] bg-gray-300 my-3" />
+
+          <Elements stripe={stripePromise}>
+            <CardForm />
+          </Elements>
 
           <div className="flex  items-center gap-5 my-5">
             {footerData.payment_options.map((item, i) => (

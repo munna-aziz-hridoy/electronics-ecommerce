@@ -1,77 +1,79 @@
 import React from "react";
 
 const ExtraProductsItem = ({ data }) => {
-  const { id, variant_name, variant_value, price, images } = data
-  
+  const { id, variant_name, variant_value, price, images } = data;
+
   return (
-    <div className='border-dashed border-2 border-yellow-300 bg-gray-100 m-4 p-6 rounded-lg relative'>
-      <div className=" absolute cursor-pointer top-3 shadow-lg right-3 border-2 border-red-500 text-red-500 font-bold hover:bg-red-600 hover:text-gray-100 duration-300 rounded-full px-2">x</div>
-      <div className='mb-4'>
+    <div className="border-dashed border-2 border-yellow-300 bg-gray-100 m-4 p-6 rounded-lg relative">
+      <div className=" absolute cursor-pointer top-3 shadow-lg right-3 border-2 border-red-500 text-red-500 font-bold hover:bg-red-600 hover:text-gray-100 duration-300 rounded-full px-2">
+        x
+      </div>
+      <div className="mb-4">
         <label
           htmlFor={`Variant_Name_${id}`}
-          className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+          className="block mb-2 text-sm font-bold text-gray-600 dark:text-white"
         >
           Variant Name/Title
         </label>
         <input
           value={variant_name}
-          type='text'
-          name='name'
+          type="text"
+          name="name"
           id={`Variant_Name_${id}`}
-          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           disabled
         />
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
           htmlFor={`Variant_Value_${id}`}
-          className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+          className="block mb-2 text-sm font-bold text-gray-600 dark:text-white"
         >
           Variant Value
         </label>
         <input
           value={variant_value}
-          type='text'
-          name='name'
+          type="text"
+          name="name"
           id={`Variant_Value_${id}`}
-          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           disabled
         />
       </div>
-      <div className='mb-4'>
+      <div className="mb-4">
         <label
           htmlFor={`Item Name ${id}`}
-          className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+          className="block mb-2 text-sm font-bold text-gray-600 dark:text-white"
         >
           Price
         </label>
         <input
           value={price}
-          type='text'
-          name='name'
+          type="text"
+          name="name"
           id={`Item Name ${id}`}
-          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           disabled
         />
       </div>
-      <div className='mt-4'>
-        <div className='flex justify-start items-center gap-5'>
+      <div className="mt-4">
+        <div className="flex justify-start items-center gap-5">
           {images?.map((productImage, index) => {
             return (
               <img
                 key={index}
-                className=' object-cover h-28 w-28 rounded-lg '
-                alt='Image'
+                className=" object-cover h-28 w-28 rounded-lg "
+                alt="Image"
                 height={100}
                 width={100}
                 src={productImage}
               />
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default ExtraProductsItem;

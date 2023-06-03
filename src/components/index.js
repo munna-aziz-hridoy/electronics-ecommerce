@@ -27,6 +27,8 @@ import AddUserModal from "./common/Admin/Modal/AddUserModal";
 
 import Spinner from "./common/Spinner";
 
+import CardForm from "./payment/CardForm";
+
 export {
   Header,
   Navbar,
@@ -53,4 +55,5 @@ export {
   UserTR,
   AddUserModal,
   Spinner,
+  CardForm,
 };
