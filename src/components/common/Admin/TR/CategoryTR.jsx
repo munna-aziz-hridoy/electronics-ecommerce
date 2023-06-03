@@ -1,13 +1,29 @@
 import { removeCategory } from '@/allApis/CategoryApis'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import EditCategoryModal from '../Modal/EditCategoryModal'
 
-
 const CategoryTR = ({ category, refetch }) => {
-  const [ openModal,setOpenModal]=useState(false)
-  const { name, id, slug, parent_id,image } = category
+  const [openModal, setOpenModal] = useState(false)
+  const { name, id, slug, parent_id, image } = category
+  const [categoryName, setCategoryName] = useState('')
+
+  // Category Data// Category Data
+  useEffect(() => {
+    if (parent_id) {
+      fetch(`/api/category/single-category/${parent_id}`, {
+        // headers: {
+        //   authorization: `Bearer ${getToken()}`,
+        // },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          
+          setCategoryName(data?.name)
+        })
+    }
+  }, [parent_id])
 
   const handleDelete = () => {
     const del = window.confirm('Do you want to delete?')
@@ -17,7 +33,7 @@ const CategoryTR = ({ category, refetch }) => {
   }
 
   return (
-    <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
+    <tr className={` border-b dark:bg-gray-900 dark:border-gray-700`}>
       <th
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
@@ -39,7 +55,11 @@ const CategoryTR = ({ category, refetch }) => {
       >
         {name}
       </th>
-      <td className='px-6 py-2'>{parent_id || 'No Parent'}</td>
+      <td className={` px-6 py-2`}>
+        <span className={`${parent_id ? 'bg-green-500' : 'bg-red-500 '} text-gray-100 px-3 py-1 rounded-full`}>
+          {categoryName || 'This is a Parent'}
+        </span>
+      </td>
       <td className='px-6 py-2'>
         <div className='flex justify-end items-center gap-7 pr-4 text-2xl '>
           <button

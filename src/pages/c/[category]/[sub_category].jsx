@@ -25,7 +25,7 @@ function SubCategory() {
         } else return []
       })
       .then((data) => setAttributes(data))
-  }, [parent_id])
+  }, [query])
 
   useEffect(() => {
     setLoading(true)

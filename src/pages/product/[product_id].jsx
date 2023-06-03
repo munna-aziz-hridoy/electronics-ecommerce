@@ -86,7 +86,7 @@ function ProductDetails() {
               </p>
 
               <div className="flex flex-col gap-3 flex-wrap mt-8">
-                {data?.extras?.map((item) => (
+                {data?.extras?.map((item,i) => (
                   <div className="flex items-center mr-4">
                     <input
                       onChange={(e) => {
@@ -96,7 +96,7 @@ function ProductDetails() {
                           setSelectedVariant(null);
                         }
                       }}
-                      id="green-radio"
+                      id={`green-radio-${i}`}
                       type="checkbox"
                       defaultValue=""
                       checked={selectedVariant?._id === item?._id}
@@ -104,7 +104,7 @@ function ProductDetails() {
                       className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
-                      htmlFor="green-radio"
+                      htmlFor={`green-radio-${i}`}
                       className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       {item?.variant_name} ({item?.variant_value})
