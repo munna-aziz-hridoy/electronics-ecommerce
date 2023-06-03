@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import AttributeModal from '@/components/common/Admin/Modal/AttributeModal'
 import { getAllAttribute } from '@/allApis/AttributeApis'
 import AttributeTR from '@/components/common/Admin/TR/AttributeTR'
+import { getParentCategory } from '@/allApis/CategoryApis'
 
 const CategoryManage = () => {
   // States
@@ -12,9 +13,9 @@ const CategoryManage = () => {
   //All Sub Category
   const {
     isLoading: subCategoryLoading,
-    data: subCategory,
+    data: category,
     // refetch,
-  } = getAllSubCategory()
+  } = getParentCategory()
 
   // All Attributes
     const { isLoading, refetch, data } = getAllAttribute()
@@ -66,7 +67,7 @@ const CategoryManage = () => {
       <AttributeModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        category={subCategory}
+        category={category}
         refetch={refetch}
         // parentRefetch={parentRefetch}
       />
