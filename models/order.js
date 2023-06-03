@@ -35,6 +35,8 @@ const order = new Schema({
   total_products: Number,
   paid: Boolean,
   delivery: Boolean,
+  payment_method: String,
+  payment_id: String || null,
 
   created_at: {
     type: Date,

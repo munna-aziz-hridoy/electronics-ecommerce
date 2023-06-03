@@ -251,7 +251,6 @@ export const order = async (req, res) => {
       const order = new Order({
         id,
         ...body,
-        paid: false,
         delivery: false,
       });
 
