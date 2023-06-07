@@ -81,7 +81,7 @@ export const addNewCategory = (data, refetch, setOpenModal, parentRefetch) => {
     .then((json) => {
       if (!json.error && !json.message) {
         toast.success('Successfully Added ')
-        refetch()
+        // refetch()
         parentRefetch()
         setOpenModal(false)
       } else {
