@@ -73,9 +73,7 @@ const ProductManage = () => {
         <Pagination
           currentPage={pageNumber}
           layout='pagination'
-          nextLabel='Go forward'
           onPageChange={pageChange}
-          previousLabel='Go back'
           showIcons
           totalPages={totalPage}
         />
