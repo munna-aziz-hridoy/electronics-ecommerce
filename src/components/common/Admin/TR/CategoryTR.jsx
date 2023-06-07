@@ -22,8 +22,7 @@ const CategoryTR = ({ category, refetch }) => {
     }
   }, [currentPath])
 
-
-
+  
   // Category Data// Category Data
   useEffect(() => {
     if (parent_id) {
@@ -47,7 +46,8 @@ const CategoryTR = ({ category, refetch }) => {
   }
 
   return (
-    <tr id={id} className={` border-b ${s?'bg-red-500':''}`}>
+    <tr id={id} className={` border-b ${s ? 'bg-red-500' : ''}`}>
+      
       <th
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
