@@ -54,7 +54,7 @@ const addNewProduct = () => {
       },
       reset,
       setExtraData
-    )
+    );
   };
 
   if (categoryLoading) return <Spinner />;

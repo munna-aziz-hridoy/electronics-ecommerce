@@ -1,4 +1,3 @@
-import { serverUrl } from "@config/index";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,14 +30,15 @@ export const placeOrder = (
     .then((data) => {
       if (data?.id) {
         toast.success("Order placed");
-        push("/order-complete");
-        setAddress("");
-        setCity("");
-        setCountry("");
-        setPostCode("");
-        setState("");
-        setStreet("");
-        clearCart();
+        push && push("/order-complete");
+        setAddress && setAddress("");
+        setCity && setCity("");
+        setCountry && setCountry("");
+        setPostCode && setPostCode("");
+        setState && setState("");
+
+        setStreet && setStreet("");
+        clearCart && clearCart();
       } else {
         toast.error("Order place failed");
         return;

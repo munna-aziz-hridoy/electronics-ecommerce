@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { footerData } from "@/assets/data/footer";
-import { AddressForm, Container } from "@/components";
+import { AddressForm, CardForm, Container } from "@/components";
 import { FaCartArrowDown, FaStore, FaTruck } from "react-icons/fa";
 
 import earbud from "@/assets/earbud1.jpg";
@@ -10,6 +10,13 @@ import { placeOrder } from "@/allApis/order";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/auth";
 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51L1uNJFwLOKoh01CCS9qXRUMMyLfpPSmGNGCuytfehODVTvoNROZNGCcoGWHcJg9rJEHy2Zz3EWrJoWIUvSNnAAz00ggzNgcNs"
+);
+
 const Checkout = () => {
   const [street, setStreet] = useState("");
   const [postCode, setPostCode] = useState("");
@@ -17,6 +24,8 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
+
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
 
   const [error, setError] = useState(true);
 
@@ -44,7 +53,6 @@ const Checkout = () => {
       return {
         id: item?.id,
         name: item?.name,
-        extras: item?.extras,
         images: item?.images,
         quantity: item?.quantity,
         price: item?.price,
@@ -63,6 +71,9 @@ const Checkout = () => {
         address,
       },
       user: user?.id,
+      payment_method: "cod",
+      paid: false,
+      payment_id: null,
     };
 
     placeOrder(
@@ -120,7 +131,64 @@ const Checkout = () => {
           <h2 className="text-2xl font-semibold text-gray-700 capitalize mt-10">
             3. Payment Method
           </h2>
+
+          <form className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="card"
+                name="radioGroup"
+                value="card"
+                defaultChecked
+                onChange={(e) => {
+                  setSelectedPaymentMethod(e.target.value);
+                }}
+              />
+              <label>Card</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="paypal"
+                name="radioGroup"
+                value="paypal"
+                onChange={(e) => {
+                  setSelectedPaymentMethod(e.target.value);
+                }}
+              />
+              <label>Paypal</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                id="cod"
+                name="radioGroup"
+                value="cod"
+                onChange={(e) => {
+                  setSelectedPaymentMethod(e.target.value);
+                }}
+              />
+              <label>Cash On delivery</label>
+            </div>
+          </form>
+
           <div className="w-full h-[1px] bg-gray-300 my-3" />
+
+          <Elements stripe={stripePromise}>
+            {selectedPaymentMethod === "card" && (
+              <CardForm
+                shippingAddress={{
+                  street,
+                  postCode,
+                  state,
+                  city,
+                  country,
+                  address,
+                }}
+                setError={setError}
+              />
+            )}
+          </Elements>
 
           <div className="flex  items-center gap-5 my-5">
             {footerData.payment_options.map((item, i) => (
@@ -133,12 +201,14 @@ const Checkout = () => {
             ))}
           </div>
 
-          <button
-            onClick={handlePlaseOrder}
-            className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
-          >
-            Place Order
-          </button>
+          {selectedPaymentMethod === "cod" && (
+            <button
+              onClick={handlePlaseOrder}
+              className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
+            >
+              Place Order
+            </button>
+          )}
         </div>
         <div className="w-full md:w-[35%]">
           <div className="border-2 border-gray-200 rounded shadow p-4">
@@ -160,10 +230,12 @@ const Checkout = () => {
                   className="flex justify-between items-center my-8 border-b pb-4"
                 >
                   <div className="flex gap-3">
-                    <img src={item?.images?.[0]} className="w-16 h-16" />
+                    <img src={item?.image} className="w-16 h-16" />
                     <div>
                       <h2 className="text-xl font-semibold text-gray-800 capitalize">
-                        {item?.name}
+                        {item?.name?.length > 30
+                          ? item?.name?.slice(0, 30) + "..."
+                          : item?.name}
                       </h2>
                       <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
                         {item?.description?.slice(0, 20)}...
