@@ -14,7 +14,7 @@ const CategoryTR = ({ category, refetch }) => {
   const [s, setS] = useState(false)
   const router = useRouter()
   const currentPath = router.asPath
-  console.log(id)
+
   useEffect(() => {
     const h = currentPath.includes(id)
     if (h) {
