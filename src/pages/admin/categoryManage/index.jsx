@@ -70,13 +70,11 @@ const CategoryManage = () => {
       </div>
 
       {/* Pagination */}
-      <div className='flex items-center justify-center text-center mt-10'>
+      <div className='flex items-center justify-center text-center mt-10 md:mr-56'>
         <Pagination
           currentPage={pageNumber}
           layout='pagination'
-          nextLabel='Go forward'
           onPageChange={pageChange}
-          previousLabel='Go back'
           showIcons
           totalPages={totalPage}
         />
