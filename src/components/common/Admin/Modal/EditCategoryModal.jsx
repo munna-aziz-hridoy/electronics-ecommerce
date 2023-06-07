@@ -21,13 +21,14 @@ const EditCategoryModal = ({
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    addNewCategory(
-      { ...data, image: uploadedImages?.[0] || null },
-      refetch,
-      setOpenModal,
-      parentRefetch
-    )
+    // addNewCategory(
+    //   { ...data, image: uploadedImages?.[0] || null },
+    //   refetch,
+    //   setOpenModal,
+    //   parentRefetch
+    // )
   }
+  console.log(uploadedImages?.length)
 
   return (
     <React.Fragment>
@@ -62,46 +63,89 @@ const EditCategoryModal = ({
                   required
                 />
               </div>
-              <div className='mb-4'>
-                <label
-                  className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
-                  htmlFor='multiple_files'
-                >
-                  {uploadedImages.length > 0 && 'Selected Category Image'}
-                </label>
-                <div className='flex justify-start items-center gap-5'>
-                  {uploadedImages?.map((productImage, index) => {
-                    return (
-                      <img
-                        key={index}
-                        className=' object-cover h-32 w-32 rounded-lg mb-8'
-                        alt='Image'
-                        height={100}
-                        width={100}
-                        src={productImage}
-                      />
-                    )
-                  })}
-                </div>
-                <div>
-                  <button
-                    onClick={() => setImgModal(true)}
-                    type='button'
-                    className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+              {uploadedImages?.length === 0 ? (
+                <div className='mb-4'>
+                  <label
+                    className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                    htmlFor='multiple_files'
                   >
-                    Add Category Image
-                  </button>
-                  {uploadedImages?.length > 0 && (
+                    Selected Category Image
+                  </label>
+                  <div className='flex justify-start items-center gap-5'>
+                    {/* {uploadedImages?.map((productImage, index) => {
+                    return ( */}
+                    <img
+                      // key={index}
+                      className=' object-cover h-32 w-32 rounded-lg mb-8'
+                      alt='Image'
+                      height={100}
+                      width={100}
+                      src={image}
+                    />
+                    {/* )
+                  })} */}
+                  </div>
+                  <div>
                     <button
-                      onClick={() => setUploadedImages([])}
+                      onClick={() => setImgModal(true)}
                       type='button'
-                      className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                      className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
                     >
-                      Remove
+                      Add Category Image
                     </button>
-                  )}
+                    {uploadedImages?.length > 0 && (
+                      <button
+                        onClick={() => setUploadedImages([])}
+                        type='button'
+                        className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className='mb-4'>
+                  <label
+                    className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                    htmlFor='multiple_files'
+                  >
+                    Selected Category Image
+                  </label>
+                  <div className='flex justify-start items-center gap-5'>
+                    {uploadedImages?.map((productImage, index) => {
+                      return (
+                        <img
+                          key={index}
+                          className=' object-cover h-32 w-32 rounded-lg mb-8'
+                          alt='Image'
+                          height={100}
+                          width={100}
+                          src={productImage}
+                        />
+                      )
+                    })}
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => setImgModal(true)}
+                      type='button'
+                      className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+                    >
+                      Add Category Image
+                    </button>
+                    {uploadedImages?.length > 0 && (
+                      <button
+                        onClick={() => setUploadedImages([])}
+                        type='button'
+                        className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
               {/* <div className="mb-4">
                 <label
                   htmlFor="category"
