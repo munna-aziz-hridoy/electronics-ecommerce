@@ -1,10 +1,12 @@
 import {  getAllSubCategory } from '@/allApis'
 import {  Spinner } from '@/components'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AttributeModal from '@/components/common/Admin/Modal/AttributeModal'
 import { getAllAttribute } from '@/allApis/AttributeApis'
 import AttributeTR from '@/components/common/Admin/TR/AttributeTR'
 import { getParentCategory } from '@/allApis/CategoryApis'
+import { paginate } from '@/components/common/Pagination/CategoryPagination'
+import { Pagination } from 'flowbite-react'
 
 const CategoryManage = () => {
   // States
@@ -18,9 +20,25 @@ const CategoryManage = () => {
   } = getParentCategory()
 
   // All Attributes
-    const { isLoading, refetch, data } = getAllAttribute()
+  const { isLoading, refetch, data } = getAllAttribute()
 
-  if (isLoading||subCategoryLoading) return <Spinner />
+  // Pagination Pages
+  const [pageNumber, setPageNumber] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const pageChange = (page) => {
+    setPageNumber(page)
+  }
+  useEffect(() => {
+    const p = Math.ceil(data?.length / 8)
+    if (p > 0) {
+      setTotalPage(p)
+    }
+  }, [data])
+
+  if (isLoading || subCategoryLoading) return <Spinner />
+
+  // Pagination Function
+  const paginated_data = paginate(data, pageNumber)
 
   return (
     <>
@@ -35,7 +53,7 @@ const CategoryManage = () => {
           <thead className='text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6 py-3'>
-                 No
+                No
               </th>
               <th scope='col' className='px-6 py-3'>
                 Attribute Name
@@ -52,7 +70,7 @@ const CategoryManage = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((attribute,index) => (
+            {paginated_data?.map((attribute, index) => (
               <AttributeTR
                 key={attribute.id}
                 attribute={attribute}
@@ -63,6 +81,20 @@ const CategoryManage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      <div className='flex items-center justify-center text-center mt-10 '>
+        <Pagination
+          currentPage={pageNumber}
+          layout='pagination'
+          
+          onPageChange={pageChange}
+       
+          showIcons
+          totalPages={totalPage}
+        />
+      </div>
+
       {/* Modal */}
       <AttributeModal
         openModal={openModal}

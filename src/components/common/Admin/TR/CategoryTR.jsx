@@ -3,11 +3,26 @@ import React, { useState, useEffect } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import EditCategoryModal from '../Modal/EditCategoryModal'
+import { useRouter } from 'next/router'
 
 const CategoryTR = ({ category, refetch }) => {
   const [openModal, setOpenModal] = useState(false)
   const { name, id, slug, parent_id, image } = category
   const [categoryName, setCategoryName] = useState('')
+  
+  // Test
+  const [s, setS] = useState(false)
+  const router = useRouter()
+  const currentPath = router.asPath
+
+  useEffect(() => {
+    const h = currentPath.includes(id)
+    if (h) {
+      setS(true)
+    }
+  }, [currentPath])
+
+
 
   // Category Data// Category Data
   useEffect(() => {
@@ -19,7 +34,6 @@ const CategoryTR = ({ category, refetch }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          
           setCategoryName(data?.name)
         })
     }
@@ -33,7 +47,7 @@ const CategoryTR = ({ category, refetch }) => {
   }
 
   return (
-    <tr className={` border-b dark:bg-gray-900 dark:border-gray-700`}>
+    <tr id={id} className={` border-b ${s?'bg-red-500':''}`}>
       <th
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
@@ -56,7 +70,11 @@ const CategoryTR = ({ category, refetch }) => {
         {name}
       </th>
       <td className={` px-6 py-2`}>
-        <span className={`${parent_id ? 'bg-green-500' : 'bg-red-500 '} text-gray-100 px-3 py-1 rounded-full`}>
+        <span
+          className={`${
+            parent_id ? 'bg-green-500' : 'bg-red-500 '
+          } text-gray-100 px-3 py-1 rounded-full`}
+        >
           {categoryName || 'This is a Parent'}
         </span>
       </td>

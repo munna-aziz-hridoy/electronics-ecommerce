@@ -24,6 +24,7 @@ const AttributeTR = ({ attribute, refetch, index }) => {
       .then((data) => {
         setCategory(data)
       })
+
   }, [category_id])
 
 
