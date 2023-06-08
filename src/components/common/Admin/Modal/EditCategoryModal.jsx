@@ -1,4 +1,3 @@
-import { addNewCategory } from '@/allApis/CategoryApis'
 import { Button, Modal } from 'flowbite-react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -28,7 +27,7 @@ const EditCategoryModal = ({
     //   parentRefetch
     // )
   }
-  console.log(uploadedImages?.length)
+
 
   return (
     <React.Fragment>
@@ -180,14 +179,14 @@ const EditCategoryModal = ({
               </div>
             </form>
             {/* Image Upload Modal  */}
-            <ImageUploadModal
+            {/* <ImageUploadModal
               allStates={{
                 setUploadedImages,
                 openModal: imgModal,
                 setOpenModal: setImgModal,
               }}
               isMultiple={false}
-            />
+            /> */}
           </div>
         </Modal.Body>
       </Modal>
