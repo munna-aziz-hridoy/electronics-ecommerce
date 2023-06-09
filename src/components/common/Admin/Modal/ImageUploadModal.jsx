@@ -7,21 +7,15 @@ import { RiDeleteBin2Fill } from 'react-icons/ri'
 const ImageUploadModal = ({ allStates, isMultiple }) => {
   const { setUploadedImages, openModal, setOpenModal } = allStates
 
-
-  const [imageSrc, setImageSrc] = useState([])
-
   const [uploadButtonDisable, setUploadButtonDisable] = useState(false)
-
-
-
+  const [imageSrc, setImageSrc] = useState([])
   const [images, setImages] = useState([])
   const maxNumber = 10
 
   const onChange = (imageList) => {
-    setImages(imageList)
     setImageSrc(imageList)
+    setImages(imageList)
   }
-
 
   const handleSubmit = () => {
     setUploadButtonDisable(true)
@@ -42,10 +36,10 @@ const ImageUploadModal = ({ allStates, isMultiple }) => {
             })
           }
           setUploadButtonDisable(false)
+          setOpenModal(false)
         })
     })
   }
-
 
   return (
     <React.Fragment>
@@ -74,7 +68,6 @@ const ImageUploadModal = ({ allStates, isMultiple }) => {
                 isDragging,
                 dragProps,
               }) => (
-                // write your building UI
                 <div className='upload__image-wrapper'>
                   <div>
                     <div
@@ -117,7 +110,7 @@ const ImageUploadModal = ({ allStates, isMultiple }) => {
                       </label>
                     </div>
                   </div>
-                  &nbsp;
+
                   <div className='flex flex-wrap gap-5 items-center mt-10 mb-8'>
                     {imageList?.map((image, index) => (
                       <div key={index} className='image-item relative'>
@@ -141,20 +134,19 @@ const ImageUploadModal = ({ allStates, isMultiple }) => {
                   </div>
                   <div className='flex items-center'>
                     <button
-                      onClick={handleSubmit}
+                      onClick={() => {
+                        onImageRemoveAll()
+                        handleSubmit()
+                      }}
                       disabled={uploadButtonDisable}
                       className=' hover:text-white relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800'
                     >
                       <span className='relative px-5 py-2.5 flex justify-center items-center gap-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
-                        {/* {uploadButtonDisable ? (
-                          <ButtonSpinner />
-                        ) : (
-                          <GoCloudUpload />
-                        )} */}
+                       
                         {uploadButtonDisable
                           ? 'Uploading Images... '
                           : 'Upload Images'}
-                        {/* {imageSrc.length === 1 ? 'Image' : 'Images'} */}
+                 
                       </span>
                     </button>
                     <button

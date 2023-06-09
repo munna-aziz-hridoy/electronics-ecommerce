@@ -66,56 +66,56 @@ function Cart() {
                   return (
                     <div
                       key={i}
-                      className="flex justify-between items-center my-8 border-b pb-4"
+                      className='flex justify-between items-center my-8 border-b pb-4'
                     >
-                      <div className="flex gap-3">
-                        <img src={item?.image} className="w-16 h-16" />
+                      <div className='flex gap-3'>
+                        <img src={item?.image} className='w-16 h-16' />
                         <div>
-                          <h2 className="text-xl font-semibold text-gray-800 capitalize">
+                          <h2 className='text-xl font-semibold text-gray-800 capitalize'>
                             {item?.name?.length > 30
                               ? `${item?.name?.slice(0, 30)}...`
                               : item?.name}
                           </h2>
-                          <p className="text-sm font-light text-gray-600 capitalizes w-2/3">
+                          <p className='text-sm font-light text-gray-600 capitalizes w-2/3'>
                             {item?.short_description?.slice(0, 50)}...
                           </p>
-                          <p className="text-green-600 text-sm font-semibold capitalize">
+                          <p className='text-green-600 text-sm font-semibold capitalize'>
                             Price: ${item?.price}
                           </p>
                           <span
                             onClick={() => removeFromCart(item)}
-                            className="font-light text-lg text-gray-400 flex items-center gap-3 mt-2 cursor-pointer"
+                            className='font-light text-lg text-gray-400 flex items-center gap-3 mt-2 cursor-pointer'
                           >
                             <BsX fontSize={26} /> Remove
                           </span>
                         </div>
                       </div>
-                      <div className="flex gap-5">
-                        <div className="flex items-center justify-between">
+                      <div className='flex gap-5'>
+                        <div className='flex items-center justify-between'>
                           <p
                             onClick={() => decreaseQuantity(item)}
-                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
+                            className='text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer'
                           >
                             -
                           </p>
                           <input
-                            className=" h-8 w-14 border border-gray-200 pl-4"
+                            className=' h-8 w-14 border border-gray-200 pl-4'
                             value={item?.quantity}
                           />
 
                           <p
                             onClick={() => increaseQuantity(item)}
-                            className="text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer"
+                            className='text-3xl font-light h-8 w-8 border border-gray-200 text-gray-500 flex justify-center items-center cursor-pointer'
                           >
                             +
                           </p>
                         </div>
-                        <p className=" text-gray-500 text-xl font-light">
-                          ${item?.price * item?.quantity}
+                        <p className=' text-gray-500 text-xl font-light'>
+                          ${(item?.price * item?.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
-                  );
+                  )
                 })}
               </div>
             )}
@@ -156,7 +156,7 @@ function Cart() {
                   Total
                 </p>
                 <p className="text-2xl font-medium text-gray-700 capitalize">
-                  ${cart?.total_price || 0}
+                  ${(cart?.total_price).toFixed(2) || 0}
                 </p>
               </div>
               <button

@@ -61,7 +61,7 @@ function ProductDetails() {
           <div className="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 mb-16">
             <div className=" w-full md:w-1/2">
               <div className="w-full sm:w-[80%] md:w-[90%] lg:w-[500px]  bg-gray-300">
-                <img className="w-full" src={selectedImage} />
+                <img className="w-full h-[500px] object-cover" src={selectedImage} />
               </div>
               <div className="flex flex-wrap gap-3 h-28 max-w-full w-full  my-4">
                 {imagesArr?.map((item) => (

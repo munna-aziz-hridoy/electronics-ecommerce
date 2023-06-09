@@ -31,7 +31,7 @@ const CategoryTR = ({ category, refetch }) => {
         //   authorization: `Bearer ${getToken()}`,
         // },
       })
-        .then((res) => res.json())
+        // .then((res) => res.json())
         .then((data) => {
           setCategoryName(data?.name)
         })
