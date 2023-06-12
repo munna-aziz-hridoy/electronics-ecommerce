@@ -4,11 +4,13 @@ import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import EditCategoryModal from '../Modal/EditCategoryModal'
 import { useRouter } from 'next/router'
+import Spinner from '../../Spinner'
 
 const CategoryTR = ({ category, refetch }) => {
   const [openModal, setOpenModal] = useState(false)
   const { name, id, slug, parent_id, image } = category
   const [categoryName, setCategoryName] = useState('')
+
   
   // Test
   const [s, setS] = useState(false)
@@ -26,17 +28,18 @@ const CategoryTR = ({ category, refetch }) => {
   // Category Data// Category Data
   useEffect(() => {
     if (parent_id) {
-      fetch(`/api/category/single-category/${parent_id}`, {
-        // headers: {
-        //   authorization: `Bearer ${getToken()}`,
-        // },
-      })
-        // .then((res) => res.json())
+      fetch(`/api/category/single-category/${parent_id}`)
+        .then((res) => res.json())
         .then((data) => {
           setCategoryName(data?.name)
+      
+        })
+        .catch((error) => {
+          console.error('Error while parsing JSON:', error)
         })
     }
   }, [parent_id])
+
 
   const handleDelete = () => {
     const del = window.confirm('Do you want to delete?')
@@ -47,7 +50,6 @@ const CategoryTR = ({ category, refetch }) => {
 
   return (
     <tr id={id} className={` border-b ${s ? 'bg-red-500' : ''}`}>
-      
       <th
         scope='row'
         className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
@@ -98,6 +100,7 @@ const CategoryTR = ({ category, refetch }) => {
         setOpenModal={setOpenModal}
         openModal={openModal}
         category={category}
+        refetch={refetch}
       />
     </tr>
   )
