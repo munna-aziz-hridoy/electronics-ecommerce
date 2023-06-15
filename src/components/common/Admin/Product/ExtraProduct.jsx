@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { GrStackOverflow } from 'react-icons/gr'
 import ExtraProductsItem from './ExtraProductsItem'
+import { ProductContext } from '@/context/product'
 
-const ExtraProduct = ({ extraData, setOpenExtraModal }) => {
+const ExtraProduct = ({ setOpenExtraModal }) => {
+  const { extraData } = useContext(ProductContext)
+
   return (
     <>
       <label

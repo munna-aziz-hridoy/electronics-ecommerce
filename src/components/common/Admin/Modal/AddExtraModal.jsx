@@ -1,23 +1,26 @@
 import { Button, Modal } from 'flowbite-react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useId } from 'react-id-generator'
 import ImageUploadModal from './ImageUploadModal'
 import { BsImageFill } from 'react-icons/bs'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
 import { getAllAttribute } from '@/allApis/AttributeApis'
+import { ProductContext } from '@/context/product'
 
-const AddExtraModal = ({ setOpenModal, openModal, states }) => {
+const AddExtraModal = ({ setOpenModal, openModal }) => {
   // States
   const [selectedAttribute, setSelectedAttribute] = useState({})
   const [selectedAttributeValues, setSelectedAttributeValues] = useState([])
   const [selectedAttributeName, setSelectedAttributeName] = useState('')
   const [oenImageModal, setOpenImageModal] = useState(false)
   const [uploadedImages, setUploadedImages] = useState([])
-  const { extraData, setExtraData } = states
+
+  // Product Context
+  const { extraData, setExtraData } = useContext(ProductContext)
 
   // U Id
-  const [id] = useId()
+const { uuid } = require('uuidv4')
+
 
   // Attribute Data
   const {
@@ -36,8 +39,6 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
     }
   }, [selectedAttribute])
 
-  
-
   const {
     register,
     handleSubmit,
@@ -45,11 +46,10 @@ const AddExtraModal = ({ setOpenModal, openModal, states }) => {
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
- 
     setExtraData([
       ...extraData,
       {
-        id: id,
+        id: uuid(),
         variant_name: selectedAttributeName,
         images: uploadedImages,
         ...data,

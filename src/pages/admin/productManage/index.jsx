@@ -46,12 +46,7 @@ const ProductManage = () => {
               <th scope='col' className='px-6 py-3'>
                 Category
               </th>
-              {/* <th scope="col" className="px-6 py-3">
-                Description
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Short Description
-              </th> */}
+            
               <th scope='col' className='px-6 py-3'>
                 Price
               </th>
