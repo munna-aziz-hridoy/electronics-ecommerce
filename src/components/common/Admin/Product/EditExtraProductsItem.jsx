@@ -1,16 +1,16 @@
 import { ProductContext } from '@/context/product'
 import React, { useContext } from 'react'
 
-const ExtraProductsItem = ({ data }) => {
-  const { id, variant_name, variant_value, price, images } = data
+const EditExtraProductsItem = ({ data }) => {
+  const {  _id, variant_name, variant_value, price, images } = data
   // Product Context
-  const { extraData,setExtraData } = useContext(ProductContext)
-
+  const { editExtraData, setEditExtraData } = useContext(ProductContext)
+  
 
   // remove one by one
   const removeExtraProductItem = () => {
-    const isExist = extraData.filter((extra) => extra.id !== id)
-    setExtraData(isExist)
+    const isExist = editExtraData.filter((extra) => extra._id !== _id)
+    setEditExtraData(isExist)
   }
 
   return (
@@ -23,7 +23,7 @@ const ExtraProductsItem = ({ data }) => {
       </div>
       <div className='mb-4'>
         <label
-          htmlFor={`Variant_Name_${id}`}
+          htmlFor={`Variant_Name_${_id}`}
           className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
         >
           Variant Name/Title
@@ -32,14 +32,14 @@ const ExtraProductsItem = ({ data }) => {
           value={variant_name}
           type='text'
           name='name'
-          id={`Variant_Name_${id}`}
+          id={`Variant_Name_${_id}`}
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
           disabled
         />
       </div>
       <div className='mb-4'>
         <label
-          htmlFor={`Variant_Value_${id}`}
+          htmlFor={`Variant_Value_${_id}`}
           className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
         >
           Variant Value
@@ -48,14 +48,14 @@ const ExtraProductsItem = ({ data }) => {
           value={variant_value}
           type='text'
           name='name'
-          id={`Variant_Value_${id}`}
+          id={`Variant_Value_${_id}`}
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
           disabled
         />
       </div>
       <div className='mb-4'>
         <label
-          htmlFor={`Item Name ${id}`}
+          htmlFor={`Item Name ${_id}`}
           className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
         >
           Price
@@ -64,7 +64,7 @@ const ExtraProductsItem = ({ data }) => {
           value={price}
           type='text'
           name='name'
-          id={`Item Name ${id}`}
+          id={`Item Name ${_id}`}
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
           disabled
         />
@@ -94,4 +94,4 @@ const ExtraProductsItem = ({ data }) => {
   )
 }
 
-export default ExtraProductsItem
+export default EditExtraProductsItem

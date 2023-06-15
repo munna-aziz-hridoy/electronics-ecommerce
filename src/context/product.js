@@ -6,6 +6,7 @@ export const ProductContext = createContext('')
 const ProductProvider = ({ children }) => {
 
      const [extraData, setExtraData] = useState([])
+     const [editExtraData, setEditExtraData] = useState([])
 
 
 
@@ -15,12 +16,8 @@ const ProductProvider = ({ children }) => {
           value={{
             extraData,
             setExtraData,
-            // cart,
-            // addToCart,
-            // removeFromCart,
-            // clearCart,
-            // increaseQuantity,
-            // decreaseQuantity,
+            editExtraData,
+            setEditExtraData,         
           }}
         >
           {children}

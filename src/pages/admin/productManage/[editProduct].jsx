@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { getAllSubCategory, newProductAdd } from '@/allApis'
 import { useForm } from 'react-hook-form'
 import ImageUploadModal from '@/components/common/Admin/Modal/ImageUploadModal'
@@ -9,6 +9,8 @@ import { RiDeleteBin2Fill } from 'react-icons/ri'
 import dynamic from 'next/dynamic'
 import AddExtraModal from '@/components/common/Admin/Modal/AddExtraModal'
 import ExtraProduct from '@/components/common/Admin/Product/ExtraProduct'
+import { ProductContext } from '@/context/product'
+import EditExtraProduct from '@/components/common/Admin/Product/EditExtraProduct'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 const editProduct = () => {
@@ -18,18 +20,26 @@ const editProduct = () => {
   const router = useRouter()
   const [openModal, setOpenModal] = useState(false)
   const [openExtraModal, setOpenExtraModal] = useState(false)
-  
+
   // Current Product State
   const [sLoading, setSLoading] = useState(false)
   const [currentProduct, setCurrentProduct] = useState({})
-  const [extraData, setExtraData] = useState([])
-  const { name, category, description, short_description,price, images,extras } = currentProduct
+  const { extraData, setExtraData, editExtraData, setEditExtraData } =
+    useContext(ProductContext)
+  const {
+    name,
+    category,
+    description,
+    short_description,
+    price,
+    images,
+    extras,
+  } = currentProduct
 
   // editor
   const [content, setContent] = useState('')
   const { editProduct } = router.query
   const editor = useRef(null)
-  console.log(currentProduct)
 
   //Single Product Data Fetching
   useEffect(() => {
@@ -65,19 +75,22 @@ const editProduct = () => {
 
   // Add Product Function
   const onSubmit = (data) => {
-    newProductAdd(
-      {
-        ...data,
-        images: uploadedImages,
-        extras: extraData,
-        description: `${content}`,
-      },
-      reset,
-      setExtraData
-    )
+    // newProductAdd(
+    //   {
+    //     ...data,
+    //     images: uploadedImages,
+    //     extras: extraData,
+    //     description: `${content}`,
+    //   },
+    //   reset,
+    //   setExtraData
+    // )
   }
 
   if (categoryLoading || sLoading) return <Spinner />
+  if (editExtraData.length === 0 && extras) {
+    setEditExtraData(extras)
+  }
 
   return (
     <div>
@@ -159,7 +172,7 @@ const editProduct = () => {
             Selected Product Images
           </label>
 
-          {uploadedImages.length>0 ? (
+          {uploadedImages.length > 0 ? (
             <div className='flex justify-start items-center gap-5'>
               {uploadedImages?.map((productImage, index) => {
                 return (
@@ -226,10 +239,7 @@ const editProduct = () => {
           />
         </div>
         {/* extra Product Section */}
-        <ExtraProduct
-          setOpenExtraModal={setOpenExtraModal}
-          extraData={extraData.length>0 ?extraData:extras}
-        />
+        <EditExtraProduct setOpenExtraModal={setOpenExtraModal} />
         <div className='flex justify-between md:justify-end items-center mb-4'>
           <button
             onClick={() => router.back()}

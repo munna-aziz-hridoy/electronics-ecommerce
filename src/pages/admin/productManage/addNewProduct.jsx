@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { getAllSubCategory, newProductAdd } from "@/allApis";
 import { Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ import { GrStackOverflow } from "react-icons/gr";
 import dynamic from "next/dynamic";
 import AddExtraModal from "@/components/common/Admin/Modal/AddExtraModal";
 import ExtraProduct from "@/components/common/Admin/Product/ExtraProduct";
+import { ProductContext } from "@/context/product";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const addNewProduct = () => {
@@ -21,7 +22,7 @@ const addNewProduct = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openExtraModal, setOpenExtraModal] = useState(false);
-  // const [extraData, setExtraData] = useState([]);
+  const {extraData, setExtraData} = useContext(ProductContext);
 
   // editor
   const editor = useRef(null);
