@@ -77,3 +77,23 @@ export const getAllOrders = () => {
 
   return { isLoading, error, data, refetch };
 };
+
+export const changeDeliveryStatus = async (id) => {
+  const res = await fetch(`/api/user/order/${id}`, {
+    method: "POST",
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const changePaymentStatus = async (id) => {
+  const res = await fetch(`/api/user/order/${id}`, {
+    method: "PATCH",
+  });
+
+  const data = await res.json();
+
+  return data;
+};

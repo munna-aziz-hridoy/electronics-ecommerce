@@ -118,17 +118,32 @@ const PaymentForm = ({ shippingAddress, setError }) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>
-            Card details
+            <p className="text-gray-700 font-semibold my-2">Card Details</p>
+            {/* <div className="h-10 w-full border border-gray-300 rounded-md"> */}
             <CardElement
               options={{
                 style: {
                   base: {
+                    iconColor: "#000",
+                    color: "#424242",
+                    fontWeight: "600",
+                    fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
                     fontSize: "16px",
-
-                    padding: "20px",
+                    fontSmoothing: "antialiased",
+                    ":-webkit-autofill": {
+                      color: "#fce883",
+                    },
+                    "::placeholder": {
+                      color: "#424242",
+                    },
+                  },
+                  invalid: {
+                    iconColor: "#FFC7EE",
+                    color: "#FFC7EE",
                   },
                 },
               }}
+              className="stripe_card"
             />
           </label>
         </div>
@@ -148,7 +163,7 @@ const PaymentForm = ({ shippingAddress, setError }) => {
         ) : (
           <button
             type="submit"
-            className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
+            className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-8"
           >
             Place Order
           </button>

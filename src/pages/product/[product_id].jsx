@@ -10,7 +10,7 @@ import { CartContext } from "@/context/cart";
 function ProductDetails() {
   const { query } = useRouter();
 
-  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState([]);
 
   const { data, isLoading } = getSingleProduct(query?.product_id);
 
@@ -18,8 +18,10 @@ function ProductDetails() {
   const [imagesArr, setImagesArr] = useState([]);
 
   useEffect(() => {
-    if (selectedVariant) {
-      setImagesArr(selectedVariant?.images);
+    if (selectedVariant?.length > 0) {
+      const lastVariant = selectedVariant[selectedVariant.length - 1];
+
+      setImagesArr(lastVariant?.images);
     } else {
       setImagesArr(data?.images);
     }
@@ -38,15 +40,18 @@ function ProductDetails() {
   const handleAddToCart = () => {
     const { name, images, price, id } = data;
 
+    const variantPrices = selectedVariant?.map((vr) => {
+      return parseFloat(((vr.price / 100) * price).toFixed(2));
+    });
+
+    const totalVariantPrice = variantPrices?.reduce((a, b) => a + b, 0);
+
     const cartData = {
       id,
       name,
-      image: selectedImage || selectedVariant?.images[0] || images[0],
-      price: selectedVariant?.price || price,
-
-      variant: selectedVariant?.variant_name || "",
-      variant_id: selectedVariant?._id || "",
-      variant_value: selectedVariant?.variant_value || "",
+      image: images[0],
+      price: (price + totalVariantPrice).toFixed(2),
+      variant: selectedVariant,
     };
 
     addToCart(cartData);
@@ -60,8 +65,8 @@ function ProductDetails() {
         <div className="px-1 md:px-10">
           <div className="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 mb-16">
             <div className=" w-full md:w-1/2">
-              <div className="w-full sm:w-[80%] md:w-[90%] lg:w-[500px]  bg-gray-300">
-                <img className="w-full" src={selectedImage} />
+              <div className="w-full sm:w-[80%] md:w-[90%] lg:w-[500px]  bg-gray-300 h-[550px]">
+                <img className="w-full h-full" src={selectedImage} />
               </div>
               <div className="flex flex-wrap gap-3 h-28 max-w-full w-full  my-4">
                 {imagesArr?.map((item) => (
@@ -86,34 +91,50 @@ function ProductDetails() {
               </p>
 
               <div className="flex flex-col gap-3 flex-wrap mt-8">
-                {data?.extras?.map((item,i) => (
-                  <div className="flex items-center mr-4">
-                    <input
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedVariant(item);
-                        } else {
-                          setSelectedVariant(null);
-                        }
-                      }}
-                      id={`green-radio-${i}`}
-                      type="checkbox"
-                      defaultValue=""
-                      checked={selectedVariant?._id === item?._id}
-                      name="colored-radio"
-                      className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label
-                      htmlFor={`green-radio-${i}`}
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      {item?.variant_name} ({item?.variant_value})
-                      <span className="text-base ml-4 font-semibold inline-block text-green-700">
-                        Price: ${item?.price}
-                      </span>
-                    </label>
-                  </div>
-                ))}
+                {data?.extras?.map((item, i) => {
+                  const current_variant = selectedVariant?.find(
+                    (v) => v?._id === item?._id
+                  );
+
+                  return (
+                    <div className="flex items-center mr-4">
+                      <input
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedVariant((prev) => {
+                              return [
+                                ...prev,
+                                { ...item, images: item?.images[0] },
+                              ];
+                            });
+                          } else {
+                            setSelectedVariant((prev) => {
+                              const restItems = prev?.filter(
+                                (p) => p._id !== item?._id
+                              );
+                              return restItems;
+                            });
+                          }
+                        }}
+                        id={`green-radio-${i}`}
+                        type="checkbox"
+                        defaultValue=""
+                        checked={current_variant}
+                        name="colored-radio"
+                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        htmlFor={`green-radio-${i}`}
+                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        {item?.variant_name} ({item?.variant_value})
+                        <span className="text-base ml-4 font-semibold inline-block text-green-700">
+                          Price: ${data?.price} + {item?.price}%
+                        </span>
+                      </label>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="flex justify-center items-center gap-5 mt-8">
