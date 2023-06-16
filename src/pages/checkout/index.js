@@ -73,6 +73,7 @@ const Checkout = () => {
       payment_method: "cod",
       paid: false,
       payment_id: null,
+      picking_method: pickingMethod,
     };
 
     placeOrder(
