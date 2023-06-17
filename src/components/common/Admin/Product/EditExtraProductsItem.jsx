@@ -4,13 +4,15 @@ import React, { useContext } from 'react'
 const EditExtraProductsItem = ({ data }) => {
   const {  _id, variant_name, variant_value, price, images } = data
   // Product Context
-  const { editExtraData, setEditExtraData } = useContext(ProductContext)
+  const { extraData, setExtraData } = useContext(ProductContext)
+
+  
   
 
   // remove one by one
   const removeExtraProductItem = () => {
-    const isExist = editExtraData.filter((extra) => extra._id !== _id)
-    setEditExtraData(isExist)
+    const isExist = extraData.filter((extra) => extra._id !== _id)
+    setExtraData(isExist)
   }
 
   return (

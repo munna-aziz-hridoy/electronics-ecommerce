@@ -7,6 +7,7 @@ const ProductProvider = ({ children }) => {
 
      const [extraData, setExtraData] = useState([])
      const [editExtraData, setEditExtraData] = useState([])
+     const [editExtraDataImage, setEditExtraDataImage] = useState([])
 
 
 
@@ -17,7 +18,9 @@ const ProductProvider = ({ children }) => {
             extraData,
             setExtraData,
             editExtraData,
-            setEditExtraData,         
+            setEditExtraData,
+            editExtraDataImage,
+            setEditExtraDataImage,
           }}
         >
           {children}

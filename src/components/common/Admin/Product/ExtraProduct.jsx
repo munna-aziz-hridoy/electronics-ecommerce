@@ -5,7 +5,7 @@ import { ProductContext } from '@/context/product'
 
 const ExtraProduct = ({ setOpenExtraModal }) => {
   const { extraData } = useContext(ProductContext)
-
+  
 
   return (
     <>

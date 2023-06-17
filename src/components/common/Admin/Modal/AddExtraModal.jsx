@@ -49,7 +49,7 @@ const { uuid } = require('uuidv4')
     setExtraData([
       ...extraData,
       {
-        id: uuid(),
+        _id: uuid(),
         variant_name: selectedAttributeName,
         images: uploadedImages,
         ...data,

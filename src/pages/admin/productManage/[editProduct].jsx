@@ -24,8 +24,14 @@ const editProduct = () => {
   // Current Product State
   const [sLoading, setSLoading] = useState(false)
   const [currentProduct, setCurrentProduct] = useState({})
-  const { extraData, setExtraData, editExtraData, setEditExtraData } =
-    useContext(ProductContext)
+  const {
+    extraData,
+    setExtraData,
+    editExtraData,
+    setEditExtraData,
+    editExtraDataImage,
+    setEditExtraDataImage,
+  } = useContext(ProductContext)
   const {
     name,
     category,
@@ -87,9 +93,23 @@ const editProduct = () => {
     // )
   }
 
+  // Remove Product Image
+  const removeProductImage = (index) => {
+    console.log(index)
+    const removeOne = editExtraDataImage.splice(index, 1)
+
+    const isExist = editExtraDataImage.filter((img) => img !== removeOne[0])
+
+    setEditExtraDataImage(isExist)
+    console.log(isExist)
+  }
+
   if (categoryLoading || sLoading) return <Spinner />
-  if (editExtraData.length === 0 && extras) {
-    setEditExtraData(extras)
+  if (extraData?.length === 0 && extras) {
+    setExtraData(extras)
+  }
+  if (editExtraDataImage?.length === 0 && images) {
+    setEditExtraDataImage(images)
   }
 
   return (
@@ -172,33 +192,27 @@ const editProduct = () => {
             Selected Product Images
           </label>
 
-          {uploadedImages.length > 0 ? (
-            <div className='flex justify-start items-center gap-5'>
-              {uploadedImages?.map((productImage, index) => {
-                return (
+          <div className='flex justify-start items-center gap-5'>
+            {editExtraDataImage?.map((productImage, index) => {
+              return (
+                <div className='relative'>
                   <img
                     key={index}
-                    className=' object-cover h-32 w-32 rounded-lg mb-8'
+                    className=' object-cover h-32 w-32 rounded-lg mb-8 border'
                     alt='Image'
                     src={productImage}
                   />
-                )
-              })}
-            </div>
-          ) : (
-            <div className='flex justify-start items-center gap-5'>
-              {images?.map((productImage, index) => {
-                return (
-                  <img
-                    key={index}
-                    className=' object-cover h-32 w-32 rounded-lg mb-8'
-                    alt='Image'
-                    src={productImage}
-                  />
-                )
-              })}
-            </div>
-          )}
+                  <div
+                    onClick={() => removeProductImage(index)}
+                    className=' absolute cursor-pointer -top-1 shadow-lg -right-1 border-2 border-red-500 text-red-500 font-bold hover:bg-red-600 hover:text-gray-100 duration-300 rounded-full px-1 text-xs bg-gray-300'
+                  >
+                    x
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
           <div className='flex items-center'>
             <button
               onClick={() => setOpenModal(true)}
@@ -270,7 +284,7 @@ const editProduct = () => {
       <AddExtraModal
         openModal={openExtraModal}
         setOpenModal={setOpenExtraModal}
-        states={{ extraData, setExtraData }}
+        // states={{ extraData, setExtraData }}
       />
     </div>
   )

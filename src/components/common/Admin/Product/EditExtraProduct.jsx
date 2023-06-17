@@ -5,8 +5,9 @@ import { ProductContext } from '@/context/product'
 import EditExtraProductsItem from './EditExtraProductsItem'
 
 const EditExtraProduct = ({ setOpenExtraModal }) => {
-  const { editExtraData } = useContext(ProductContext)
-  console.log(editExtraData)
+  const { extraData } = useContext(ProductContext)
+  console.log(extraData)
+ 
 
   return (
     <>
@@ -21,8 +22,8 @@ const EditExtraProduct = ({ setOpenExtraModal }) => {
         className='mb-4 p-2.5 rounded-lg border-double border-4 border-sky-300'
       >
         <div className='p-5'>
-          {editExtraData?.map((data) => (
-            <EditExtraProductsItem data={data} />
+          {extraData?.map((data) => (
+            <EditExtraProductsItem key={data._id} data={data} />
           ))}
         </div>
         <button
