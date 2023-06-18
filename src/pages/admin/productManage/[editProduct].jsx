@@ -11,6 +11,7 @@ import AddExtraModal from '@/components/common/Admin/Modal/AddExtraModal'
 import ExtraProduct from '@/components/common/Admin/Product/ExtraProduct'
 import { ProductContext } from '@/context/product'
 import EditExtraProduct from '@/components/common/Admin/Product/EditExtraProduct'
+import { productEdit } from '@/allApis/ProductApis'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 const editProduct = () => {
@@ -33,6 +34,7 @@ const editProduct = () => {
     setEditExtraDataImage,
   } = useContext(ProductContext)
   const {
+    id,
     name,
     category,
     description,
@@ -79,29 +81,36 @@ const editProduct = () => {
     formState: { errors },
   } = useForm()
 
+  const [imm, setImm] = useState([])
+  useEffect(() => {
+    setImm([...uploadedImages, ...editExtraDataImage])
+  }, [uploadedImages, editExtraDataImage])
+
+  const goBack = () => {
+    router.push('/admin/productManage')
+  }
+
   // Add Product Function
   const onSubmit = (data) => {
-    // newProductAdd(
-    //   {
-    //     ...data,
-    //     images: uploadedImages,
-    //     extras: extraData,
-    //     description: `${content}`,
-    //   },
-    //   reset,
-    //   setExtraData
-    // )
+    productEdit(
+      {
+        ...data,
+        images: imm,
+        extras: extraData,
+        description: `${content}`,
+      },
+      reset,
+      setExtraData,
+      id,
+      goBack
+      )
+   
   }
 
   // Remove Product Image
   const removeProductImage = (index) => {
-    console.log(index)
-    const removeOne = editExtraDataImage.splice(index, 1)
-
-    const isExist = editExtraDataImage.filter((img) => img !== removeOne[0])
-
-    setEditExtraDataImage(isExist)
-    console.log(isExist)
+    const isExist = imm.filter((img) => img !== index)
+    setImm(isExist)
   }
 
   if (categoryLoading || sLoading) return <Spinner />
@@ -128,7 +137,7 @@ const editProduct = () => {
             type='text'
             name='name'
             id='name'
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+            className='bg-graycategory-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
             placeholder='Product Name/ Title'
             defaultValue={name}
             required
@@ -193,7 +202,7 @@ const editProduct = () => {
           </label>
 
           <div className='flex justify-start items-center gap-5'>
-            {editExtraDataImage?.map((productImage, index) => {
+            {imm?.map((productImage, index) => {
               return (
                 <div className='relative'>
                   <img
@@ -203,7 +212,7 @@ const editProduct = () => {
                     src={productImage}
                   />
                   <div
-                    onClick={() => removeProductImage(index)}
+                    onClick={() => removeProductImage(productImage)}
                     className=' absolute cursor-pointer -top-1 shadow-lg -right-1 border-2 border-red-500 text-red-500 font-bold hover:bg-red-600 hover:text-gray-100 duration-300 rounded-full px-1 text-xs bg-gray-300'
                   >
                     x

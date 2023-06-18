@@ -9,6 +9,8 @@ const ProductTR = ({ product, refetch }) => {
     product 
   
   const router = useRouter()
+
+  console.log(product)
   
   
   const handleDelete = () => {

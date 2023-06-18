@@ -6,7 +6,7 @@ import EditExtraProductsItem from './EditExtraProductsItem'
 
 const EditExtraProduct = ({ setOpenExtraModal }) => {
   const { extraData } = useContext(ProductContext)
-  console.log(extraData)
+
  
 
   return (
