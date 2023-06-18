@@ -3,8 +3,6 @@ import { footerData } from "@/assets/data/footer";
 import { AddressForm, CardForm, Container } from "@/components";
 import { FaCartArrowDown, FaStore, FaTruck } from "react-icons/fa";
 
-import earbud from "@/assets/earbud1.jpg";
-
 import { CartContext } from "@/context/cart";
 import { placeOrder } from "@/allApis/order";
 import { useRouter } from "next/router";
@@ -24,6 +22,7 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
+  const [pickingMethod, setPickingMethod] = useState("delivery");
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
 
@@ -74,6 +73,7 @@ const Checkout = () => {
       payment_method: "cod",
       paid: false,
       payment_id: null,
+      picking_method: pickingMethod,
     };
 
     placeOrder(
@@ -98,35 +98,61 @@ const Checkout = () => {
           </h2>
           <div className="w-full h-[1px] bg-gray-300 my-3" />
           <div className="flex justify-center items-center gap-5">
-            <button className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4 shadow bg-[#b8d94b]">
+            <button
+              onClick={() => setPickingMethod("collection")}
+              className={`flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4 shadow ${
+                pickingMethod === "collection" ? "bg-[#b8d94b]" : "bg-white"
+              }`}
+            >
               <FaStore />
               Collection
             </button>
-            <button className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4 shadow">
+            <button
+              onClick={() => setPickingMethod("delivery")}
+              className={`flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4 shadow ${
+                pickingMethod === "delivery" ? "bg-[#b8d94b]" : "bg-white"
+              }`}
+            >
               <FaTruck />
               Delivery
             </button>
           </div>
           <h2 className="text-2xl font-semibold text-gray-700 capitalize mt-10">
-            2. Address
+            2. <span className="capitalize">{pickingMethod}</span> Address
           </h2>
           <div className="w-full h-[1px] bg-gray-300 my-3" />
 
-          <AddressForm
-            setAddress={setAddress}
-            setCity={setCity}
-            setCountry={setCountry}
-            setPostCode={setPostCode}
-            setState={setState}
-            setStreet={setStreet}
-            address={address}
-            city={city}
-            country={country}
-            postCode={postCode}
-            state={state}
-            street={street}
-            error={error}
-          />
+          {pickingMethod === "delivery" && (
+            <AddressForm
+              setAddress={setAddress}
+              setCity={setCity}
+              setCountry={setCountry}
+              setPostCode={setPostCode}
+              setState={setState}
+              setStreet={setStreet}
+              address={address}
+              city={city}
+              country={country}
+              postCode={postCode}
+              state={state}
+              street={street}
+              error={error}
+            />
+          )}
+
+          {pickingMethod === "collection" && (
+            <div>
+              <p className="font-medium text-gray-600">
+                Address: 14 Arundel Close, Tonbridge TN9 2UG, UK
+              </p>
+              <p className="font-medium text-gray-600">
+                Phone Number: +44 07403746033
+              </p>
+              <p className="font-medium text-gray-600">
+                Email address: contact@etcetera21.com
+              </p>
+            </div>
+          )}
 
           <h2 className="text-2xl font-semibold text-gray-700 capitalize mt-10">
             3. Payment Method
@@ -190,6 +216,15 @@ const Checkout = () => {
             )}
           </Elements>
 
+          {selectedPaymentMethod === "cod" && (
+            <button
+              onClick={handlePlaseOrder}
+              className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
+            >
+              Place Order
+            </button>
+          )}
+
           <div className="flex  items-center gap-5 my-5">
             {footerData.payment_options.map((item, i) => (
               <img
@@ -200,15 +235,6 @@ const Checkout = () => {
               />
             ))}
           </div>
-
-          {selectedPaymentMethod === "cod" && (
-            <button
-              onClick={handlePlaseOrder}
-              className="flex justify-center items-center w-1/2 p-2 border border-gray-300 gap-4  bg-[#b8d94b] mt-16"
-            >
-              Place Order
-            </button>
-          )}
         </div>
         <div className="w-full md:w-[35%]">
           <div className="border-2 border-gray-200 rounded shadow p-4">

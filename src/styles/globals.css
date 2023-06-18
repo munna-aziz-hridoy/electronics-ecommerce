@@ -24,6 +24,16 @@ body {
   display: block;
 }
 
+.stripe_card {
+  background: #dbdbdb7c;
+  border-radius: 6px;
+  padding: 20px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
