@@ -19,7 +19,12 @@ function ProductDetails() {
 
   useEffect(() => {
     if (selectedVariant?.length > 0) {
-      const lastVariant = selectedVariant[selectedVariant.length - 1];
+      let lastVariant;
+      if (selectedVariant?.length > 1) {
+        lastVariant = selectedVariant[selectedVariant.length - 1];
+      } else {
+        lastVariant = selectedVariant[0];
+      }
 
       setImagesArr(lastVariant?.images);
     } else {
@@ -56,6 +61,8 @@ function ProductDetails() {
 
     addToCart(cartData);
   };
+
+  console.log(selectedVariant);
 
   return (
     <Container>
@@ -102,10 +109,7 @@ function ProductDetails() {
                         onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedVariant((prev) => {
-                              return [
-                                ...prev,
-                                { ...item, images: item?.images[0] },
-                              ];
+                              return [...prev, { ...item }];
                             });
                           } else {
                             setSelectedVariant((prev) => {
