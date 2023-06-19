@@ -44,6 +44,10 @@ const addNewProduct = () => {
     formState: { errors },
   } = useForm();
 
+  const goBack = () => {
+    router.push('/admin/productManage')
+  }
+
   // Add Product Function
   const onSubmit = (data) => {
     newProductAdd(
@@ -54,8 +58,9 @@ const addNewProduct = () => {
         description: `${content}`,
       },
       reset,
-      setExtraData
-    );
+      setExtraData,
+      goBack
+    )
   };
 
   if (categoryLoading) return <Spinner />;

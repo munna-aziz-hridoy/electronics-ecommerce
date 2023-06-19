@@ -76,7 +76,7 @@ const EditExtraModal = ({ setOpenModal, openModal, data }) => {
         <Modal.Header />
         <Modal.Body>
           <div className=''>
-            <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
+            <h3 >
               Edit Variant
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
