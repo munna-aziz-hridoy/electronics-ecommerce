@@ -2,10 +2,12 @@ import React, { useContext } from 'react'
 import { GrStackOverflow } from 'react-icons/gr'
 import ExtraProductsItem from './ExtraProductsItem'
 import { ProductContext } from '@/context/product'
+import EditExtraProductsItem from './EditExtraProductsItem'
 
-const ExtraProduct = ({ setOpenExtraModal }) => {
+const EditExtraProduct = ({ setOpenExtraModal }) => {
   const { extraData } = useContext(ProductContext)
-  
+
+ 
 
   return (
     <>
@@ -21,7 +23,7 @@ const ExtraProduct = ({ setOpenExtraModal }) => {
       >
         <div className='p-5'>
           {extraData?.map((data) => (
-            <ExtraProductsItem data={data} />
+            <EditExtraProductsItem key={data._id} data={data} />
           ))}
         </div>
         <button
@@ -37,4 +39,4 @@ const ExtraProduct = ({ setOpenExtraModal }) => {
   )
 }
 
-export default ExtraProduct
+export default EditExtraProduct

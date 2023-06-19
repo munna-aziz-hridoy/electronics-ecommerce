@@ -90,6 +90,28 @@ export const addNewCategory = (data, refetch, setOpenModal, parentRefetch) => {
     })
 }
 
+// Edit Category
+export const editCategory = (data, id, refetch, setOpenModal) => {
+  fetch(`/api/category/${id}`, {
+    method: 'PATCH',
+    headers: {
+      // authorization: `Bearer ${getToken()}`,
+      'Content-type': 'application/json;',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (!json.error && !json.message) {
+        toast.success('Successfully Edited ')
+        refetch()
+        setOpenModal(false)
+      } else {
+        toast.error(json.message || 'Something is wrong!')
+      }
+    })
+}
+
 //  Delete Category
 export const removeCategory = (id, refetch, parentRefetch) => {
   fetch(`/api/category/${id}`, {

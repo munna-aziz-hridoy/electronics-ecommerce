@@ -7,7 +7,9 @@ import { RiDeleteBin2Fill } from 'react-icons/ri'
 import { getAllAttribute } from '@/allApis/AttributeApis'
 import { ProductContext } from '@/context/product'
 
-const AddExtraModal = ({ setOpenModal, openModal }) => {
+const EditExtraModal = ({ setOpenModal, openModal, data }) => {
+  const { _id, variant_name, variant_value, price, images } = data
+
   // States
   const [selectedAttribute, setSelectedAttribute] = useState({})
   const [selectedAttributeValues, setSelectedAttributeValues] = useState([])
@@ -19,8 +21,7 @@ const AddExtraModal = ({ setOpenModal, openModal }) => {
   const { extraData, setExtraData } = useContext(ProductContext)
 
   // U Id
-const { uuid } = require('uuidv4')
-
+  const { uuid } = require('uuidv4')
 
   // Attribute Data
   const {
@@ -46,10 +47,11 @@ const { uuid } = require('uuidv4')
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
+    const isExist = extraData.filter((data) => data._id !== _id)
     setExtraData([
-      ...extraData,
+      ...isExist,
       {
-        _id: uuid(),
+        _id: _id,
         variant_name: selectedAttributeName,
         images: uploadedImages,
         ...data,
@@ -75,7 +77,7 @@ const { uuid } = require('uuidv4')
         <Modal.Body>
           <div className=''>
             <h3 className='text-center mb-5 text-xl font-bold text-gray-500 dark:text-gray-400'>
-              Add Variant
+              Edit Variant
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className='mb-4'>
@@ -91,8 +93,8 @@ const { uuid } = require('uuidv4')
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   // {...register('variant_name')}
                 >
-                  <option selected disabled value=''>
-                    Select a Variant
+                  <option  value=''>
+                    Select Variant
                   </option>
 
                   {attributes?.map((attribute) => (
@@ -115,7 +117,7 @@ const { uuid } = require('uuidv4')
                   className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                   {...register('variant_value')}
                 >
-                  <option selected disabled value=''>
+                  <option selected value=''>
                     Select a Variant value
                   </option>
 
@@ -225,4 +227,4 @@ const { uuid } = require('uuidv4')
   )
 }
 
-export default AddExtraModal
+export default EditExtraModal

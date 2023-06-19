@@ -1,11 +1,17 @@
 import { removeProduct } from '@/allApis/ProductApis'
+import  { useRouter } from 'next/router';
 import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 
 const ProductTR = ({ product, refetch }) => {
-  const { name, id, category, price, description, short_description, images } =
+  const { name, id, category, price, images } =
     product 
+  
+  const router = useRouter()
+
+  console.log(product)
+  
   
   const handleDelete = () => {
     const del = window.confirm('Do you want delete?')
@@ -17,7 +23,7 @@ const ProductTR = ({ product, refetch }) => {
     <tr className='bg-white border-b dark:bg-gray-900 dark:border-gray-700'>
       <th
         scope='row'
-        className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+        className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap w-full dark:text-white'
       >
         <div className='flex justify-start items-center gap-2'>
           {images?.map((productImage, index) => {
@@ -26,8 +32,6 @@ const ProductTR = ({ product, refetch }) => {
                 key={index}
                 className=' object-cover h-12 w-12 border rounded-lg '
                 alt='Image'
-                // height={100}
-                // width={100}
                 src={productImage}
               />
             )
@@ -36,17 +40,19 @@ const ProductTR = ({ product, refetch }) => {
       </th>
       <th
         scope='row'
-        className='px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+        className='px-6 py-2 break-words w-full font-medium  text-gray-900 whitespace-nowrap dark:text-white'
       >
         {name}
       </th>
       <td className='px-6 py-2'>{category?.name}</td>
-      {/* <td className="px-6 py-2 max-w-lg break-words">{description.slice(0,250)}</td> */}
-      {/* <td className="px-6 py-2">{short_description}</td> */}
+
       <td className='px-6 py-2'>{price}</td>
       <td className='px-6 py-2'>
         <div className='flex justify-end items-center gap-7 pr-4 text-2xl '>
-          <button className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '>
+          <button
+            onClick={() => router.push(`/admin/productManage/${id}`)}
+            className='duration-300 rounded-md p-1 hover:bg-green-600 hover:text-gray-50 '
+          >
             <BiEdit />
           </button>
           <button

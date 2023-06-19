@@ -121,7 +121,7 @@ export const product = async (req, res) => {
         images,
       } = JSON.parse(req.body);
 
-      const cat = await Category?.find({ id: category });
+      const cat = await Category?.findOne({ id: category });
 
       const doc = {
         name: name || exists?.name,
