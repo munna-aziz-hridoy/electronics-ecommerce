@@ -35,10 +35,11 @@ const product = new Schema({
       variant_value: String,
       price: Number,
       images: [{ type: String }],
+      _id: String,
     },
   ],
   images: [{ type: String }],
-})
+});
 
 const Product = models.products || model("products", product);
 
