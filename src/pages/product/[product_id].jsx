@@ -1,55 +1,64 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
-import { Container, ProductCard, SignMeUp, Spinner } from "@/components";
-import { products } from "@/assets/data/products";
-import { AiOutlineHeart } from "react-icons/ai";
-import { getSingleProduct } from "@/allApis/ProductApis";
-import { CartContext } from "@/context/cart";
+import { Container, ProductCard, SignMeUp, Spinner } from '@/components'
+import { products } from '@/assets/data/products'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { getSingleProduct } from '@/allApis/ProductApis'
+import { CartContext } from '@/context/cart'
+import { toast } from 'react-hot-toast'
+import useAuthStore from '@/store/auth'
 
 function ProductDetails() {
-  const { query } = useRouter();
+  const { query,push } = useRouter()
 
-  const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariant, setSelectedVariant] = useState([])
 
-  const { data, isLoading } = getSingleProduct(query?.product_id);
+  const { data, isLoading } = getSingleProduct(query?.product_id)
 
-  const [selectedImage, setSelectedImage] = useState("");
-  const [imagesArr, setImagesArr] = useState([]);
+  const [selectedImage, setSelectedImage] = useState('')
+  const [imagesArr, setImagesArr] = useState([])
 
   useEffect(() => {
     if (selectedVariant?.length > 0) {
-      let lastVariant;
+      let lastVariant
       if (selectedVariant?.length > 1) {
-        lastVariant = selectedVariant[selectedVariant.length - 1];
+        lastVariant = selectedVariant[selectedVariant.length - 1]
       } else {
-        lastVariant = selectedVariant[0];
+        lastVariant = selectedVariant[0]
       }
 
-      setImagesArr(lastVariant?.images);
+      setImagesArr(lastVariant?.images)
     } else {
-      setImagesArr(data?.images);
+      setImagesArr(data?.images)
     }
-  }, [data, selectedVariant]);
+  }, [data, selectedVariant])
 
   useEffect(() => {
     if (imagesArr?.length > 0) {
-      setSelectedImage(imagesArr[0]);
+      setSelectedImage(imagesArr[0])
     } else {
-      setSelectedImage(data?.images[0]);
+      setSelectedImage(data?.images[0])
     }
-  }, [imagesArr, data]);
+  }, [imagesArr, data])
 
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext) 
+    const { user } = useAuthStore()
 
   const handleAddToCart = () => {
-    const { name, images, price, id } = data;
+
+ if (!user) {
+   toast.error('Please sign in to continue shopping')
+   return push('/auth/login')
+ }
+
+    const { name, images, price, id } = data
 
     const variantPrices = selectedVariant?.map((vr) => {
-      return parseFloat(((vr.price / 100) * price).toFixed(2));
-    });
+      return parseFloat(((vr.price / 100) * price).toFixed(2))
+    })
 
-    const totalVariantPrice = variantPrices?.reduce((a, b) => a + b, 0);
+    const totalVariantPrice = variantPrices?.reduce((a, b) => a + b, 0)
 
     const cartData = {
       id,
@@ -57,12 +66,12 @@ function ProductDetails() {
       image: images[0],
       price: (price + totalVariantPrice).toFixed(2),
       variant: selectedVariant,
-    };
+    }
 
-    addToCart(cartData);
-  };
+    addToCart(cartData)
+  }
 
-  console.log(selectedVariant);
+  console.log(data)
 
   return (
     <Container>
@@ -97,49 +106,50 @@ function ProductDetails() {
                 {data?.short_description}
               </p>
 
-              {/* <div className="flex flex-col gap-3 flex-wrap mt-8">
+              <div className='flex flex-col gap-3 flex-wrap mt-8'>
                 {data?.extras?.map((item, i) => {
                   const current_variant = selectedVariant?.find(
                     (v) => v?._id === item?._id
-                  );
+                  )
 
                   return (
-                    <div className="flex items-center mr-4">
+                    <div className='flex items-center mr-4'>
                       <input
                         onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedVariant((prev) => {
-                              return [...prev, { ...item }];
-                            });
+                              return [...prev, { ...item }]
+                            })
                           } else {
                             setSelectedVariant((prev) => {
                               const restItems = prev?.filter(
                                 (p) => p._id !== item?._id
-                              );
-                              return restItems;
-                            });
+                              )
+                              return restItems
+                            })
                           }
                         }}
                         id={`green-radio-${i}`}
-                        type="checkbox"
-                        defaultValue=""
+                        type='checkbox'
+                        defaultValue=''
                         checked={current_variant}
-                        name="colored-radio"
-                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        name='colored-radio'
+                        className='w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                       />
                       <label
                         htmlFor={`green-radio-${i}`}
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
                       >
                         {item?.variant_name} ({item?.variant_value})
-                        <span className="text-base ml-4 font-semibold inline-block text-green-700">
-                          Price: ${data?.price} + {item?.price}%
+                        <span className='text-base ml-4 font-semibold inline-block text-green-700'>
+                          Price: £{' '}
+                          {(data?.price + (item?.price * data?.price) / 100).toFixed(2)}
                         </span>
                       </label>
                     </div>
-                  );
+                  )
                 })}
-              </div> */}
+              </div>
 
               <div className='flex justify-center items-center gap-5 mt-8'>
                 <button
@@ -194,4 +204,4 @@ function ProductDetails() {
   )
 }
 
-export default ProductDetails;
+export default ProductDetails

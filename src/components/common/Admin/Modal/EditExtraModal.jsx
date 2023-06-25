@@ -46,7 +46,8 @@ const EditExtraModal = ({ setOpenModal, openModal, data }) => {
     reset,
     formState: { errors },
   } = useForm()
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+    console.log(e)
     const isExist = extraData.filter((data) => data._id !== _id)
     setExtraData([
       ...isExist,
@@ -76,7 +77,7 @@ const EditExtraModal = ({ setOpenModal, openModal, data }) => {
         <Modal.Header />
         <Modal.Body>
           <div className=''>
-            <h3 >
+            <h3 className='text-xl text-center mb-4'>
               Edit Variant
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -192,12 +193,12 @@ const EditExtraModal = ({ setOpenModal, openModal, data }) => {
               </div>
 
               <div className='flex justify-between mt-5 mx-1'>
-                <Button
-                  type='submit'
-                  className='bg-lime-500 hover:bg-lime-600 '
+                <button
+                  // type='submit'
+                  className='bg-lime-500 hover:bg-lime-600 px-4 rounded-lg text-gray-100'
                 >
-                  Add Variant
-                </Button>
+                  Edit Variant
+                </button>
                 <Button
                   color='failure'
                   onClick={() => {
