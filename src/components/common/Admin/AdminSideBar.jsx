@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { BiObjectsHorizontalLeft } from 'react-icons/bi'
 import { FaBoxOpen } from 'react-icons/fa'
+import { GiWorld } from 'react-icons/gi'
 import { RiDashboardLine } from 'react-icons/ri'
 
 const AdminSideBar = ({ children }) => {
@@ -35,7 +36,7 @@ const AdminSideBar = ({ children }) => {
         className='fixed  top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0'
         aria-label='Sidebar'
       >
-        <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+        <div className='h-full  px-3 py-4 overflow-y-auto relative bg-gray-50 dark:bg-gray-800'>
           <ul className='space-y-2 font-medium'>
             <li>
               <Link
@@ -125,6 +126,19 @@ const AdminSideBar = ({ children }) => {
                 <FaBoxOpen className='text-2xl text-gray-500' />
 
                 <span className='ml-3'>Orders </span>
+              </Link>
+            </li>
+          </ul>
+          <ul className='absolute bottom-5'>
+            <li>
+              <Link
+                target='_blank'
+                href='/'
+                className=' flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:underline duration-300'
+              >
+                <GiWorld className='text-2xl text-gray-500' />
+
+                <span className='ml-3'> Go to clint site</span>
               </Link>
             </li>
           </ul>
