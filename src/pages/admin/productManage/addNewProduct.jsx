@@ -150,8 +150,6 @@ const addNewProduct = () => {
                   key={index}
                   className=' object-cover h-32 w-32 rounded-lg mb-8'
                   alt='Image'
-                  // height={100}
-                  // width={100}
                   src={productImage}
                 />
               )
@@ -180,6 +178,21 @@ const addNewProduct = () => {
         </div>
         <div className='mb-4'>
           <label
+        
+            className='block  text-sm font-bold text-gray-600 dark:text-white'
+          >
+            Available Quantity
+          </label>
+          <input
+            {...register('quantity', { required: true })}
+            type='text'
+      
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+            placeholder='Available Quantity'
+          />
+        </div>
+        <div className='mb-4'>
+          <label
             htmlFor='price'
             className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
           >
@@ -196,10 +209,7 @@ const addNewProduct = () => {
           />
         </div>
         {/* extra Product Section */}
-        <ExtraProduct
-          setOpenExtraModal={setOpenExtraModal}
-          // extraData={extraData}
-        />
+        <ExtraProduct setOpenExtraModal={setOpenExtraModal} />
         <div className='flex justify-between md:justify-end items-center mb-4'>
           <button
             onClick={() => router.back()}
