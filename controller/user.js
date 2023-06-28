@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Order } from "@models/order";
 import { mergeArrays } from "@helper/index";
+import { Product } from "@models/product";
 
 const response = new Response();
 
@@ -252,6 +253,36 @@ export const order = async (req, res) => {
         id,
         ...body,
         delivery: false,
+      });
+
+      body?.items?.forEach(async (item) => {
+        const product = await Product.findOne({ id: item.id });
+
+        let variants = product?.extras;
+
+        if (!product) return response.NOT_FOUND(res);
+
+        if (item?.is_variant) {
+          let chosedVariant = product?.extras?.find(
+            (extra) => extra?._id === item?.variant_id
+          );
+          chosedVariant.quantity = chosedVariant?.quantity - item?.quantity;
+
+          const restVariants = product?.extras?.filter(
+            (extra) => extra?._id !== item?.variant_id
+          );
+
+          variants = [...restVariants, chosedVariant];
+        }
+
+        const quantity = product?.quantity - item?.quantity;
+
+        const doc = {
+          quantity,
+          extras: variants,
+        };
+
+        await Product.findOneAndUpdate({ id: item.id }, doc);
       });
 
       const result = await order.save();

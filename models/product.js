@@ -29,11 +29,20 @@ const product = new Schema({
     type: Number,
     require: true,
   },
+  quantity: {
+    type: Number,
+    require: true,
+  },
   extras: [
     {
-      variant_name: String,
-      variant_value: String,
+      variations: [
+        {
+          variant_name: String,
+          variant_value: String,
+        },
+      ],
       price: Number,
+      quantity: { type: Number, default: 1, require: true },
       images: [{ type: String }],
       _id: String,
     },

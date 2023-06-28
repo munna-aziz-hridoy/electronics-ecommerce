@@ -35,6 +35,7 @@ export const products = async (req, res) => {
       category,
       extras,
       images,
+      quantity,
     } = JSON.parse(req.body);
 
     if (!name) return response.BAD_REQUEST(res, "name can't be empty");
@@ -60,6 +61,7 @@ export const products = async (req, res) => {
         category: cat,
         extras: extras || null,
         images,
+        quantity,
       };
 
       const product = new Product(doc);
@@ -119,6 +121,7 @@ export const product = async (req, res) => {
         category,
         extras,
         images,
+        quantity,
       } = JSON.parse(req.body);
 
       const cat = await Category?.findOne({ id: category });
@@ -131,6 +134,7 @@ export const product = async (req, res) => {
         category: cat || exists?.category,
         extras: extras || exists?.extras,
         images: images || exists?.images,
+        quantity: quantity || exists?.quantity,
       };
 
       const result = await Product.findOneAndUpdate({ id }, doc);
