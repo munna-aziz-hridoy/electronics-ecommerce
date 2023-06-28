@@ -256,13 +256,14 @@ export const order = async (req, res) => {
       });
 
       body?.items?.forEach(async (item) => {
-        const product = await Product.findOne({ id: item.id });
-
-        let variants = product?.extras;
+        const product = await Product.findOne({ id: item.product_id });
 
         if (!product) return response.NOT_FOUND(res);
 
+        let doc = {};
+
         if (item?.is_variant) {
+          let variants = product?.extras;
           let chosedVariant = product?.extras?.find(
             (extra) => extra?._id === item?.variant_id
           );
@@ -273,16 +274,19 @@ export const order = async (req, res) => {
           );
 
           variants = [...restVariants, chosedVariant];
+
+          doc = {
+            extras: variants,
+          };
+        } else {
+          const quantity = product?.quantity - item?.quantity;
+
+          doc = {
+            quantity,
+          };
         }
 
-        const quantity = product?.quantity - item?.quantity;
-
-        const doc = {
-          quantity,
-          extras: variants,
-        };
-
-        await Product.findOneAndUpdate({ id: item.id }, doc);
+        await Product.findOneAndUpdate({ id: item.product_id }, doc);
       });
 
       const result = await order.save();

@@ -49,13 +49,25 @@ const Checkout = () => {
     const { items, ...rest } = cart;
 
     const products = items?.map((item) => {
-      return {
+      const pr = {
         id: item?.id,
+        product_id: item?.product_id,
         name: item?.name,
-        images: item?.images,
+        images: item?.image,
         quantity: item?.quantity,
         price: item?.price,
+        is_variant: false,
+        variant_id: null,
+        variations: null,
       };
+
+      if (item?.variant) {
+        pr.is_variant = true;
+        pr.variant_id = item?.variant?._id;
+
+        pr.variations = item?.variant?.variations;
+      }
+      return pr;
     });
 
     const data = {
@@ -75,6 +87,8 @@ const Checkout = () => {
       payment_id: null,
       picking_method: pickingMethod,
     };
+
+    console.log(data);
 
     placeOrder(
       data,

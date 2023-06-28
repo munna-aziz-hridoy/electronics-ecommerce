@@ -12,7 +12,8 @@ import useAuthStore from "@/store/auth";
 function ProductDetails() {
   const { query, push } = useRouter();
 
-  const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [productPrice, setProductPrice] = useState(0);
 
   const { data, isLoading } = getSingleProduct(query?.product_id);
 
@@ -20,15 +21,8 @@ function ProductDetails() {
   const [imagesArr, setImagesArr] = useState([]);
 
   useEffect(() => {
-    if (selectedVariant?.length > 0) {
-      let lastVariant;
-      if (selectedVariant?.length > 1) {
-        lastVariant = selectedVariant[selectedVariant.length - 1];
-      } else {
-        lastVariant = selectedVariant[0];
-      }
-
-      setImagesArr(lastVariant?.images);
+    if (selectedVariant) {
+      setImagesArr(selectedVariant?.images);
     } else {
       setImagesArr(data?.images);
     }
@@ -42,6 +36,14 @@ function ProductDetails() {
     }
   }, [imagesArr, data]);
 
+  useEffect(() => {
+    if (selectedVariant) {
+      setProductPrice(selectedVariant?.price);
+    } else {
+      setProductPrice(data?.price);
+    }
+  }, [data, selectedVariant]);
+
   const { addToCart } = useContext(CartContext);
   const { user } = useAuthStore();
 
@@ -51,20 +53,15 @@ function ProductDetails() {
       return push("/auth/login");
     }
 
-    const { name, images, price, id } = data;
-
-    const variantPrices = selectedVariant?.map((vr) => {
-      return parseFloat(((vr.price / 100) * price).toFixed(2));
-    });
-
-    const totalVariantPrice = variantPrices?.reduce((a, b) => a + b, 0);
+    const { name, id } = data;
 
     const cartData = {
-      id,
+      id: selectedVariant?._id || id,
+      product_id: id,
       name,
-      image: images[0],
-      price: (price + totalVariantPrice).toFixed(2),
-      variant: selectedVariant,
+      image: selectedImage,
+      price: productPrice,
+      variant: selectedVariant || null,
     };
 
     addToCart(cartData);
@@ -97,58 +94,41 @@ function ProductDetails() {
                 {data?.name}
               </h2>
               <p className="text-lg font-semibold text-green-700 mt-1">
-                Price: £{data?.price}
+                Price: £{productPrice}
               </p>
               <p className="text-sm text-gray-500 pr-3 my-3">
                 {data?.short_description}
               </p>
 
               <div className="flex flex-col gap-3 flex-wrap mt-8">
-                {data?.extras?.map((item, i) => {
-                  const current_variant = selectedVariant?.find(
-                    (v) => v?._id === item?._id
-                  );
+                <select
+                  onChange={(e) => {
+                    if (e.target.value === "1") {
+                      setSelectedVariant(null);
+                    } else {
+                      const id = e.target.value;
+                      const selectedItem = data?.extras?.find(
+                        (ext) => ext?._id === id
+                      );
 
-                  return (
-                    <div className="flex items-center mr-4">
-                      <input
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedVariant((prev) => {
-                              return [...prev, { ...item }];
-                            });
-                          } else {
-                            setSelectedVariant((prev) => {
-                              const restItems = prev?.filter(
-                                (p) => p._id !== item?._id
-                              );
-                              return restItems;
-                            });
-                          }
-                        }}
-                        id={`green-radio-${i}`}
-                        type="checkbox"
-                        defaultValue=""
-                        checked={current_variant}
-                        name="colored-radio"
-                        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label
-                        htmlFor={`green-radio-${i}`}
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        {item?.variant_name} ({item?.variant_value})
-                        <span className="text-base ml-4 font-semibold inline-block text-green-700">
-                          Price: £{" "}
-                          {(
-                            data?.price +
-                            (item?.price * data?.price) / 100
-                          ).toFixed(2)}
-                        </span>
-                      </label>
-                    </div>
-                  );
-                })}
+                      setSelectedVariant(selectedItem);
+                    }
+                  }}
+                  defaultValue={"1"}
+                >
+                  <option value="1">Select variations</option>
+                  {data?.extras?.map((item, i) => {
+                    return (
+                      <option value={item?._id}>
+                        {item?.variations?.map((v) => (
+                          <span>
+                            {v?.variant_name}: {v?.variant_value},{" "}
+                          </span>
+                        ))}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
 
               <div className="flex justify-center items-center gap-5 mt-8">

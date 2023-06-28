@@ -8,6 +8,7 @@ const order = new Schema({
     {
       id: String,
       name: String,
+      product_id: String,
       is_variant: Boolean,
       variant_id: String,
       variations: [
@@ -16,7 +17,7 @@ const order = new Schema({
           variant_value: String,
         },
       ],
-      images: [{ type: String }],
+      image: String,
       quantity: Number,
       price: Number,
     },

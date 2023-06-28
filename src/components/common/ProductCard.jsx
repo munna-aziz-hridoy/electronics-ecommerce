@@ -30,13 +30,12 @@ function ProductCard({ product, sub = false }) {
     const { id, images, category, name, price, extras } = product;
 
     const cartData = {
-      id,
+      id: id,
+      product_id: id,
       name,
       image: images[0],
-      price,
-      variant: "",
-      variant_id: "",
-      variant_value: "",
+      price: price,
+      variant: null,
     };
 
     addToCart(cartData);
