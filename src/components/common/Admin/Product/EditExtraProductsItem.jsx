@@ -3,7 +3,9 @@ import React, { useContext, useState } from 'react'
 import EditExtraModal from '../Modal/EditExtraModal'
 
 const EditExtraProductsItem = ({ data }) => {
-  const { _id, variant_name, variant_value, price, images } = data
+  const { _id, price,variations, quantity, images } = data
+
+  console.log(data)
 
   const [openModal, setOpenModal] = useState(false)
   // Product Context
@@ -24,38 +26,48 @@ const EditExtraProductsItem = ({ data }) => {
         >
           x
         </div>
-        <div className='mb-4'>
-          <label
-            htmlFor={`Variant_Name_${_id}`}
-            className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
-          >
-            Variant Name/Title
-          </label>
-          <input
-            value={variant_name}
-            type='text'
-            name='name'
-            id={`Variant_Name_${_id}`}
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-            disabled
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor={`Variant_Value_${_id}`}
-            className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
-          >
-            Variant Value
-          </label>
-          <input
-            value={variant_value}
-            type='text'
-            name='name'
-            id={`Variant_Value_${_id}`}
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-            disabled
-          />
-        </div>
+        <>
+          {variations.map((variation) => {
+            const { variant_name, variant_value,id } = variation
+            return (
+              <>
+                <div className='mb-4'>
+                  <label
+                    htmlFor={`Variant_Name_${id}`}
+                    className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  >
+                    Variant Name/Title
+                  </label>
+                  <input
+                    value={variant_name}
+                    type='text'
+                    name='name'
+                    id={`Variant_Name_${id}`}
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                    disabled
+                  />
+                </div>
+                <div className='mb-4'>
+                  <label
+                    htmlFor={`Variant_Value_${id}`}
+                    className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+                  >
+                    Variant Value
+                  </label>
+                  <input
+                    value={variant_value}
+                    type='text'
+                    name='name'
+                    id={`Variant_Value_${id}`}
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+                    disabled
+                  />
+                </div>
+              </>
+            )
+          })}
+        </>
+
         <div className='mb-4'>
           <label
             htmlFor={`Item Name ${_id}`}
@@ -65,6 +77,22 @@ const EditExtraProductsItem = ({ data }) => {
           </label>
           <input
             value={price}
+            type='text'
+            name='name'
+            id={`Item Name ${_id}`}
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+            disabled
+          />
+        </div>
+        <div className='mb-4'>
+          <label
+            htmlFor={`Item Name ${_id}`}
+            className='block mb-2 text-sm font-bold text-gray-600 dark:text-white'
+          >
+            Available Quantity
+          </label>
+          <input
+            value={quantity}
             type='text'
             name='name'
             id={`Item Name ${_id}`}
@@ -97,7 +125,11 @@ const EditExtraProductsItem = ({ data }) => {
           </div>
         </div>
       </div>
-      <EditExtraModal setOpenModal={setOpenModal} openModal={openModal} data={data} />
+      <EditExtraModal
+        setOpenModal={setOpenModal}
+        openModal={openModal}
+        data={data}
+      />
     </>
   )
 }
