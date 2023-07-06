@@ -24,34 +24,36 @@ const EditExtraProductsItem = ({ data }) => {
         >
           x
         </div>
-        <div className="p-4 border rounded-lg border-gray-400 mt-8">
-          {variations.map((variation) => {
-            const { variant_name, variant_value, id } = variation;
-            return (
-              <p className=" text-lg font-bold text-gray-700 capitalize flex justify-start items-center gap-2">
-                {variant_name}:{" "}
-                <span className="text-green-600">{variant_value}</span>
-                {variant_name?.toLowerCase()?.includes("color") && (
-                  <span
-                    className="inline-block w-4 h-4 rounded"
-                    style={{
-                      background: variant_value?.toLowerCase(),
-                    }}
-                  />
-                )}
-              </p>
-            );
-          })}
-        </div>
+        <div className="flex flex-col md:flex-row justify-center  items-stretch gap-2 mr-10">
+          <div className="p-4 border rounded-lg border-gray-400 mt-4 w-full md:w-1/2">
+            {variations.map((variation) => {
+              const { variant_name, variant_value, id } = variation;
+              return (
+                <p className=" text-lg font-bold text-gray-700 capitalize flex justify-start items-center gap-2">
+                  {variant_name}:{" "}
+                  <span className="text-green-600">{variant_value}</span>
+                  {variant_name?.toLowerCase()?.includes("color") && (
+                    <span
+                      className="inline-block w-4 h-4 rounded"
+                      style={{
+                        background: variant_value?.toLowerCase(),
+                      }}
+                    />
+                  )}
+                </p>
+              );
+            })}
+          </div>
 
-        <div className="p-4 border rounded-lg border-gray-400 mt-4">
-          <p className="text-lg font-bold text-gray-700 capitalize">
-            Price: <span className="text-green-600">{price}</span>
-          </p>
-          <p className="text-lg font-bold text-gray-700 capitalize">
-            Available Quantity:{" "}
-            <span className="text-green-600">{quantity}</span>
-          </p>
+          <div className="p-4 border rounded-lg border-gray-400 mt-4 w-full md:w-1/2">
+            <p className="text-lg font-bold text-gray-700 capitalize">
+              Price: <span className="text-green-600">{price}</span>
+            </p>
+            <p className="text-lg font-bold text-gray-700 capitalize">
+              Available Quantity:{" "}
+              <span className="text-green-600">{quantity}</span>
+            </p>
+          </div>
         </div>
 
         <div className="mt-4 flex justify-between items-end">
