@@ -179,6 +179,7 @@ const Checkout = () => {
           <form className='flex flex-col gap-2'>
             <div className='flex items-center gap-2'>
               <input
+                className=' cursor-pointer'
                 type='radio'
                 id='card'
                 name='radioGroup'
@@ -188,11 +189,14 @@ const Checkout = () => {
                   setSelectedPaymentMethod(e.target.value)
                 }}
               />
-              <label>Card</label>
+              <label className=' cursor-pointer' htmlFor='card'>
+                Card
+              </label>
             </div>
             <div className='flex items-center gap-2'>
               <input
                 type='radio'
+                className=' cursor-pointer'
                 id='paypal'
                 name='radioGroup'
                 value='paypal'
@@ -200,7 +204,9 @@ const Checkout = () => {
                   setSelectedPaymentMethod(e.target.value)
                 }}
               />
-              <label>Paypal</label>
+              <label className=' cursor-pointer' htmlFor='paypal'>
+                Paypal
+              </label>
             </div>
             <div className='flex items-center gap-2'>
               <input
