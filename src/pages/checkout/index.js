@@ -12,6 +12,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import ButtonWrapper from '@/components/common/Payment/ButtonWrapper'
 import PayPalSDKProvider from '@/components/common/Payment/PayPalSDKProvider'
+import Head from 'next/head'
 
 const stripePromise = loadStripe(
   'pk_test_51L1uNJFwLOKoh01CCS9qXRUMMyLfpPSmGNGCuytfehODVTvoNROZNGCcoGWHcJg9rJEHy2Zz3EWrJoWIUvSNnAAz00ggzNgcNs'
@@ -105,6 +106,9 @@ const Checkout = () => {
 
   return (
     <Container>
+      <Head>
+        <script src='https://www.paypal.com/sdk/js?client-id=Afg0xZRAH-ud4duvymCZS7lCZ00Qi3erkP3pUt9mbTcPOsgMqJAXWCSZYV5r1TNI_tJ7rYH9zEQ9uB9x'></script>
+      </Head>
       <div className='flex flex-col md:flex-row justify-between gap-10 my-5 md:my-12 p-2 '>
         <div className='w-full md:w-[65%]'>
           <h2 className='text-2xl font-semibold text-gray-700 capitalize'>
@@ -242,7 +246,11 @@ const Checkout = () => {
           {selectedPaymentMethod === 'paypal' && (
             <div style={{ maxWidth: '750px', minHeight: '200px' }}>
               <PayPalSDKProvider>
-              <ButtonWrapper currency={'USD'} showSpinner={true} amount={'50'} />
+                <ButtonWrapper
+                  currency={'USD'}
+                  showSpinner={true}
+                  amount={'50'}
+                />
               </PayPalSDKProvider>
             </div>
           )}
