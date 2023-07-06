@@ -29,6 +29,8 @@ import Spinner from "./common/Spinner";
 
 import CardForm from "./payment/CardForm";
 
+import LatestProduct from "./common/LatestProduct";
+
 export {
   Header,
   Navbar,
@@ -56,4 +58,5 @@ export {
   AddUserModal,
   Spinner,
   CardForm,
+  LatestProduct,
 };

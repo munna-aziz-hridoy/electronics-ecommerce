@@ -39,6 +39,7 @@ function ProductCard({ product, sub = false }) {
     };
 
     addToCart(cartData);
+    toast.success("Product added to cart");
   };
 
   return (

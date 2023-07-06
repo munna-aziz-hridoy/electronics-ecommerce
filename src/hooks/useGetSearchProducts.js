@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useGetSearchProducts = (searchTerm) => {
+const useGetSearchProducts = (searchTerm = "") => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
