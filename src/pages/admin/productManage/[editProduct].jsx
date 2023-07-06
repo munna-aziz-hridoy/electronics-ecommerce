@@ -43,6 +43,7 @@ const editProduct = () => {
     images,
     extras,
   } = currentProduct
+console.log(currentProduct)
 
   // editor
   const [content, setContent] = useState('')
