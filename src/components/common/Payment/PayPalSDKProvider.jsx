@@ -8,7 +8,9 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js'
  // Replace with your PayPal client ID
 
   return (
-    <PayPalScriptProvider options={{ 'client-id': clientId }}>
+    <PayPalScriptProvider
+      options={{ 'client-id': clientId, components: 'buttons' }}
+    >
       {children}
     </PayPalScriptProvider>
   )
