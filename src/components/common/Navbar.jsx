@@ -34,11 +34,11 @@ function Navbar() {
             <div className='flex justify-start items-center gap-2'>
               <Link href='/'>
                 <img
-                  src='https://res.cloudinary.com/dqbxqqhx0/image/upload/v1688712625/electronics%20e-commerce/m1bu4awwmfisxfagpfou.png'
+                  src='https://res.cloudinary.com/dqbxqqhx0/image/upload/v1688753427/electronics%20e-commerce/qhtckscemqhnwjfawqzv.png'
                   alt='Logo'
                   height={200}
                   width={400}
-                  className='h-18 w-32 rounded object-cover'
+                  className='h-24 w-48 rounded object-cover'
                 />
 
                 {/* <img
