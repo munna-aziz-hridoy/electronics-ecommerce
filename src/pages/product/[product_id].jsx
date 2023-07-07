@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { Container, ProductCard, SignMeUp, Spinner } from "@/components";
+import {
+  Container,
+  LatestProduct,
+  ProductCard,
+  SignMeUp,
+  Spinner,
+} from "@/components";
 import { products } from "@/assets/data/products";
 import { AiOutlineHeart } from "react-icons/ai";
 import { getSingleProduct } from "@/allApis/ProductApis";
@@ -65,6 +71,7 @@ function ProductDetails() {
     };
 
     addToCart(cartData);
+    toast.success("Product added to cart");
   };
 
   return (
@@ -119,11 +126,13 @@ function ProductDetails() {
                   <option value="1">Select variations</option>
                   {data?.extras?.map((item, i) => {
                     return (
-                      <option value={item?._id}>
+                      <option className="inline-block" value={item?._id}>
                         {item?.variations?.map((v) => (
-                          <span>
-                            {v?.variant_name}: {v?.variant_value},{" "}
-                          </span>
+                          <>
+                            <span>
+                              {v?.variant_name}: {v?.variant_value},{" "}
+                            </span>
+                          </>
                         ))}
                       </option>
                     );
@@ -159,21 +168,7 @@ function ProductDetails() {
             ></div>
           </div>
 
-          {/* related products */}
-
-          <div className="my-14">
-            <h2 className="text-center text-2xl font-semibold text-gray-700 mt-10 mb-5">
-              Related Products
-            </h2>
-
-            <div className="flex items-center justify-center gap-12 flex-wrap">
-              {products.slice(0, 3).map((item) => (
-                <div className="max-w-[280px]">
-                  <ProductCard product={item} sub />
-                </div>
-              ))}
-            </div>
-          </div>
+          <LatestProduct />
         </div>
       ) : (
         <p>No data Found</p>

@@ -8,6 +8,7 @@ import {
   CategorySectionThird,
   CategorySectionBottom,
   Spinner,
+  LatestProduct,
 } from "@/components";
 
 import useGetSubcategoriesBySlug from "@/hooks/useGetSubcategoriesBySlug";
