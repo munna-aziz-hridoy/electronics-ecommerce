@@ -1,28 +1,28 @@
-import React, { useState, useContext } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Container, Menu } from "..";
-import useAuthStore from "@/store/auth";
-import { CartContext } from "@/context/cart";
-import Image from "next/image";
+import React, { useState, useContext } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { HiOutlineMagnifyingGlass } from 'react-icons/hi2'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { Container, Menu } from '..'
+import useAuthStore from '@/store/auth'
+import { CartContext } from '@/context/cart'
+import Image from 'next/image'
 
 function Navbar() {
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false)
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('')
 
-  const router = useRouter();
-  const isCheckoutPage = router.asPath.includes("checkout");
+  const router = useRouter()
+  const isCheckoutPage = router.asPath.includes('checkout')
 
-  const { user } = useAuthStore();
+  const { user } = useAuthStore()
 
-  const { cart } = useContext(CartContext);
+  const { cart } = useContext(CartContext)
 
   const handleSearch = () => {
-    router.push(`/product?search=${searchTerm}`);
-  };
+    router.push(`/product?search=${searchTerm}`)
+  }
 
   return (
     <div className='border-b'>
@@ -40,6 +40,14 @@ function Navbar() {
                   width={400}
                   className='h-24 w-48 rounded object-cover'
                 />
+
+                {/* <img
+                  src='https://res.cloudinary.com/dqbxqqhx0/image/upload/v1688712625/electronics%20e-commerce/m1bu4awwmfisxfagpfou.png'
+                  alt='Logo'
+                  height={200}
+                  width={400}
+                  className='h-18 w-32 rounded object-cover'
+                /> */}
 
                 {/* <img
                   className="h-14 w-20 rounded object-cover"
@@ -146,4 +154,4 @@ function Navbar() {
   )
 }
 
-export default Navbar;
+export default Navbar
