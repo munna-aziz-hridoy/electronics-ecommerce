@@ -39,7 +39,7 @@ const Checkout = () => {
   }
   useEffect(() => {
     addPaypalScript()
-  }, [router])
+  }, [router, selectedPaymentMethod])
 
   const [error, setError] = useState(true)
 
