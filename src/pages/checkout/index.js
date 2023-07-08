@@ -270,7 +270,7 @@ const Checkout = () => {
             </button>
           )}
 
-          {selectedPaymentMethod === 'paypal' && (
+          {selectedPaymentMethod === 'paypal1' && (
             <div style={{ maxWidth: '750px', minHeight: '200px' }}>
               <PayPalSDKProvider>
                 <ButtonWrapper
