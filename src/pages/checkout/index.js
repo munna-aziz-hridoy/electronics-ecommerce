@@ -317,7 +317,7 @@ const Checkout = () => {
                 {cart?.total_products || 0} Items
               </p>
               <p className='text-gray-800 font-semibold capitalize'>
-                ${cart?.total_price || 0}
+                £ {cart?.total_price || 0}
               </p>
             </div>
             <div className='w-full h-[1px] bg-gray-300 my-3' />
@@ -344,7 +344,7 @@ const Checkout = () => {
                           Qty: {item?.quantity}
                         </p>
                         <p className='text-green-600 text-lg font-semibold capitalize'>
-                          Price: ${item?.quantity * item?.price}
+                          Price: £ {item?.quantity * item?.price}
                         </p>
                       </div>
                     </div>
@@ -357,13 +357,13 @@ const Checkout = () => {
               <div className='flex justify-between items-center'>
                 <p className='text-gray-600 text-medium text-lg'>Order Value</p>
                 <p className='text-gray-600 text-medium text-lg'>
-                  ${cart?.total_price || 0}
+                  £ {cart?.total_price || 0}
                 </p>
               </div>
               <div className='flex justify-between items-center mt-6'>
                 <p className='text-gray-800 font-bold text-2xl'>Total pay</p>
                 <p className='text-gray-800 font-bold text-2xl'>
-                  ${cart?.total_price || 0}
+                  £ {cart?.total_price || 0}
                 </p>
               </div>
             </div>
